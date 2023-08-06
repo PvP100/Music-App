@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_app/config/app_routes.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/di/injection.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:music_app/l10n/l10n.dart';
 import 'config/network_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppInjection.configureInjection(BuildMode.dev);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+    statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+  ));
   runApp(const MyApp());
 }
 
@@ -24,8 +31,16 @@ class MyApp extends StatelessWidget {
     return BlocProvider.value(
       value: GetIt.I.get<AppBloc>(),
       child: MaterialApp(
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: const Locale('vi'),
+        supportedLocales: L10n.all,
         navigatorKey: navigatorKey,
-        title: 'Flutter Demo',
+        title: 'Music App',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.getRoute,
         initialRoute: RouteConstants.splash,

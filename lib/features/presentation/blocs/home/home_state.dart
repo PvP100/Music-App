@@ -1,6 +1,6 @@
 part of 'home_bloc.dart';
 
-class HomeState extends BaseState<HomeState> {
+class HomeState extends BaseState {
   final String? imageUrl;
 
   HomeState({super.isLoading, super.errorMsg, this.imageUrl});

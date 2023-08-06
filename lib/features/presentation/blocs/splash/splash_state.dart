@@ -1,6 +1,6 @@
 part of 'splash_bloc.dart';
 
-class SplashState extends BaseState<SplashState> {
+class SplashState extends BaseState {
   final bool isNavigateToHome;
 
   SplashState({super.isLoading, super.errorMsg, this.isNavigateToHome = false});

@@ -37,8 +37,8 @@ class _SplashScreenState
           onLoaded: (composition) {
             _animationController
               ..duration = composition.duration
-              ..forward().then((value) =>
-                  Navigator.pushReplacementNamed(context, RouteConstants.home));
+              ..forward().then((value) => Navigator.pushReplacementNamed(
+                  context, RouteConstants.login));
           },
         ),
       );

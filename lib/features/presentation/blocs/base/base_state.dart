@@ -7,9 +7,12 @@ abstract class IBaseState {
   IBaseState({this.isLoading = false, this.errorMsg});
 }
 
-abstract class BaseState<S extends IBaseState> extends IBaseState {
-  BaseState({super.isLoading, super.errorMsg});
+abstract class BaseState {
+  final bool isLoading;
+  final String? errorMsg;
+
+  BaseState({this.isLoading = false, this.errorMsg});
 
   @protected
-  S copyWith({bool isLoading = false, String? errorMsg});
+  BaseState copyWith({bool isLoading = false, String? errorMsg});
 }

@@ -8,5 +8,6 @@ class BlocDi {
     injector.registerLazySingleton(() => AppBloc());
     injector.registerFactory(() => SplashBloc());
     injector.registerFactory(() => HomeBloc(injector()));
+    injector.registerFactory(() => LoginBloc());
   }
 }

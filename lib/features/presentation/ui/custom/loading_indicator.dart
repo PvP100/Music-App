@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:music_app/core/core.dart';
 import 'package:music_app/features/presentation/ui/dialogs/loading_dialog.dart';
 
 class LoadingIndicator {
@@ -17,7 +18,7 @@ class LoadingIndicator {
 
   static dismiss(BuildContext context) {
     if (isShowing) {
-      Navigator.of(context).pop();
+      context.pop();
       isShowing = false;
     }
   }
