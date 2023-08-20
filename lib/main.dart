@@ -16,6 +16,10 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppInjection.configureInjection(BuildMode.dev);
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarIconBrightness: Brightness.light, // For Android (dark icons)
     statusBarBrightness: Brightness.dark, // For iOS (dark icons)
@@ -40,7 +44,7 @@ class MyApp extends StatelessWidget {
         locale: const Locale('vi'),
         supportedLocales: L10n.all,
         navigatorKey: navigatorKey,
-        title: 'Music App',
+        title: 'Hamusic',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.getRoute,
         initialRoute: RouteConstants.splash,

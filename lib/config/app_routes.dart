@@ -1,10 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:music_app/core/core.dart';
 
 class AppRoutes {
   static PageRoute getRoute(RouteSettings settings) {
     Widget widget;
+    TransitionType? transitionType;
+    if (settings.arguments != null) {
+      transitionType = (settings.arguments
+          as Map<String, dynamic>)[ArgumentKey.transitionType];
+    }
     try {
       widget = GetIt.I.get<Widget>(instanceName: settings.name);
     } catch (e) {
@@ -16,32 +24,35 @@ class AppRoutes {
         body: const Center(child: Text('Page not found')),
       );
     }
-    return CupertinoPageRoute(builder: (context) => widget, settings: settings);
-    // return PageRouteBuilder(
-    //     settings: settings,
-    //     pageBuilder: (BuildContext context, Animation<double> animation,
-    //         Animation<double> secondaryAnimation) {
-    //       return widget;
-    //     },
-    //     transitionsBuilder: (
-    //       BuildContext context,
-    //       Animation<double> animation,
-    //       Animation<double> secondaryAnimation,
-    //       Widget child,
-    //     ) {
-    //       return SlideTransition(
-    //         position: Tween(
-    //           begin: const Offset(1, 0),
-    //           end: Offset.zero,
-    //         ).animate(animation),
-    //         child: SlideTransition(
-    //           position: Tween(
-    //             begin: Offset.zero,
-    //             end: const Offset(-1, 0),
-    //           ).animate(secondaryAnimation),
-    //           child: child,
-    //         ),
-    //       );
-    //     });
+    switch (transitionType) {
+      case TransitionType.flip:
+        return PageRouteBuilder(
+            settings: settings,
+            pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) {
+              return widget;
+            },
+            transitionDuration: const Duration(milliseconds: 500),
+            reverseTransitionDuration: const Duration(milliseconds: 500),
+            transitionsBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child,
+            ) {
+              return Transform(
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.0025)
+                  ..rotateY(pi - animation.value * -pi),
+                alignment: FractionalOffset.center,
+                child: animation.value > 0.5 ? child : const SizedBox(),
+              );
+            });
+      default:
+        return CupertinoPageRoute(
+            builder: (context) => widget, settings: settings);
+    }
   }
 }
+
+enum TransitionType { ios, android, flip }

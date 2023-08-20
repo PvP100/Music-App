@@ -29,7 +29,7 @@ class _SplashScreenState
   }
 
   @override
-  Widget get buildContent => Center(
+  Widget buildContent(BuildContext context) => Center(
         child: Lottie.asset(
           LottiePath.hello,
           frameRate: FrameRate(60),
@@ -38,16 +38,8 @@ class _SplashScreenState
             _animationController
               ..duration = composition.duration
               ..forward().then((value) => Navigator.pushReplacementNamed(
-                  context, RouteConstants.login));
+                  context, RouteConstants.loginOrRegister));
           },
         ),
       );
-
-  @override
-  void onStateListener(BuildContext context, SplashState state) {}
-
-  @override
-  Future<bool> willPopCallback() async {
-    return false;
-  }
 }

@@ -9,5 +9,12 @@ class BlocDi {
     injector.registerFactory(() => SplashBloc());
     injector.registerFactory(() => HomeBloc(injector()));
     injector.registerFactory(() => LoginBloc());
+    injector.registerFactory(() => LoginOrRegisterBloc());
+    injector.registerFactory(() => ChangePasswordBloc());
+    injector.registerFactory(() => ForgotPasswordBloc());
+    injector.registerFactory(() => RegisterBloc());
+    injector.registerFactory(() => MainBloc());
+    injector.registerFactory(() => SearchBloc());
+    injector.registerFactory(() => LibraryBloc());
   }
 }

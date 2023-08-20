@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 
 extension StringExtension on String? {
   bool isPhoneNumber() {
-    if (this == null) return false;
-    if (this!.length < 9 || this!.length > 12) {
-      return false;
-    }
-    return true;
+    RegExp regex = RegExp(r'^\+?0[0-9]{9}$');
+
+    return regex.hasMatch(this ?? "");
+  }
+
+  bool isEmail() {
+    final bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(this ?? "");
+    return emailValid;
   }
 
   Widget loadImageUrl({
@@ -29,7 +34,7 @@ extension StringExtension on String? {
         imageUrl: this!,
         errorWidget: (context, url, error) => errorWidget ?? const SizedBox(),
         placeholder: (context, url) =>
-            placeHolder ?? const CircularProgressIndicator(),
+            Center(child: placeHolder ?? const CircularProgressIndicator()),
       );
     } else {
       return const SizedBox();

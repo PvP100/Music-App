@@ -5,7 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 import 'package:music_app/features/presentation/ui/custom/loading_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:music_app/utils/app_utils.dart';
 
+import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 
 abstract class BaseScreenState<V extends StatefulWidget,
@@ -13,10 +16,13 @@ abstract class BaseScreenState<V extends StatefulWidget,
     with RouteAware, WidgetsBindingObserver {
   late B _bloc;
 
+  @protected
+  late AppLocalizations localizations;
+
   B get bloc => _bloc;
 
   @protected
-  Widget get buildContent;
+  Widget buildContent(BuildContext context);
 
   @protected
   Widget? get footer => null;
@@ -34,13 +40,13 @@ abstract class BaseScreenState<V extends StatefulWidget,
   bool get safeAreaRight => true;
 
   @protected
-  Color get backgroundColor => Colors.white;
+  Color get backgroundColor => ColorConstants.primaryBackgroundColor;
 
   bool isFirstInit = true;
 
   @override
   void initState() {
-    debugPrint("initState $runtimeType");
+    flutterDebugPrint("initState $runtimeType");
     WidgetsBinding.instance.addObserver(this);
     _bloc = GetIt.I.get<B>();
     super.initState();
@@ -48,7 +54,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
 
   @override
   void didChangeDependencies() {
-    debugPrint("didChangeDependencies $runtimeType");
+    flutterDebugPrint("didChangeDependencies $runtimeType");
     if (isFirstInit && mounted) {
       final args = ModalRoute.of(context)?.settings.arguments;
       if (args != null) {
@@ -74,32 +80,38 @@ abstract class BaseScreenState<V extends StatefulWidget,
   }
 
   @override
+  void didUpdateWidget(covariant V oldWidget) {
+    flutterDebugPrint("didUpdateWidget $runtimeType");
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void didPush() {
-    debugPrint("didPush $runtimeType");
+    flutterDebugPrint("didPush $runtimeType");
     super.didPush();
   }
 
   @override
   void didPushNext() {
-    debugPrint("didPushNext $runtimeType");
+    flutterDebugPrint("didPushNext $runtimeType");
     super.didPushNext();
   }
 
   @override
   void didPop() {
-    debugPrint("didPop $runtimeType");
+    flutterDebugPrint("didPop $runtimeType");
     super.didPop();
   }
 
   @override
   void didPopNext() {
-    debugPrint("didPopNext $runtimeType");
+    flutterDebugPrint("didPopNext $runtimeType");
     super.didPopNext();
   }
 
   @override
   void dispose() {
-    debugPrint("dispose $runtimeType");
+    flutterDebugPrint("dispose $runtimeType");
     routeObserver.unsubscribe(this);
     _bloc.close();
     super.dispose();
@@ -111,11 +123,16 @@ abstract class BaseScreenState<V extends StatefulWidget,
   }
 
   @override
-  Widget build(BuildContext context) => Platform.isAndroid
-      ? WillPopScope(onWillPop: (willPopCallback), child: _body)
-      : _body;
+  Widget build(BuildContext context) {
+    flutterDebugPrint("build $runtimeType");
+    localizations = AppLocalizations.of(context)!;
+    bloc.localizations = localizations;
+    return Platform.isAndroid
+        ? WillPopScope(onWillPop: (willPopCallback), child: _body(context))
+        : _body(context);
+  }
 
-  Widget get _body => BlocProvider.value(
+  Widget _body(BuildContext context) => BlocProvider.value(
         value: _bloc,
         child: BlocListener<B, S>(
             listener: onStateListener,
@@ -128,7 +145,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
                 right: safeAreaRight,
                 child: Stack(
                   children: [
-                    Positioned.fill(child: buildContent),
+                    Positioned.fill(child: buildContent(context)),
                     if (footer != null) ...{
                       Positioned(bottom: 0, left: 0, right: 0, child: footer!)
                     }
@@ -144,6 +161,9 @@ abstract class BaseScreenState<V extends StatefulWidget,
       LoadingIndicator.show(context);
     } else {
       LoadingIndicator.dismiss(context);
+      if (state.errorMsg != null) {
+        AppUtils.showToast(state.errorMsg);
+      }
     }
   }
 
@@ -152,21 +172,21 @@ abstract class BaseScreenState<V extends StatefulWidget,
 
   @protected
   void onResume() {
-    debugPrint("onResume $runtimeType");
+    flutterDebugPrint("onResume $runtimeType");
   }
 
   @protected
   void onPause() {
-    debugPrint("onPause $runtimeType");
+    flutterDebugPrint("onPause $runtimeType");
   }
 
   @protected
   void onDetach() {
-    debugPrint("onDetach $runtimeType");
+    flutterDebugPrint("onDetach $runtimeType");
   }
 
   @protected
   void onInactive() {
-    debugPrint("onInactive $runtimeType");
+    flutterDebugPrint("onInactive $runtimeType");
   }
 }
