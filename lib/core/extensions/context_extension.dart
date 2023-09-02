@@ -2,22 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/core/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:music_app/core/extensions/date_time_extension.dart';
 
 extension BuildContextExtension on BuildContext {
   void pop<T extends Object?>({bool rootNavigator = false, T? result}) {
     Navigator.of(this, rootNavigator: rootNavigator).pop(result);
   }
 
-  void pushNamed(
+  Future<T?> pushNamed<T extends Object?>(
     String routeName, {
     bool rootNavigator = false,
     Map<String, dynamic>? arguments,
-  }) {
-    Navigator.of(this, rootNavigator: rootNavigator).pushNamed(
-      routeName,
-      arguments: arguments,
-    );
-  }
+  }) =>
+      Navigator.of(this, rootNavigator: rootNavigator).pushNamed(
+        routeName,
+        arguments: arguments,
+      );
 
   void showDatePicker(Function(DateTime date) onDateTimeSelected,
       {DateTime? initialDate, DateTime? maxDate}) {
@@ -36,8 +36,8 @@ extension BuildContextExtension on BuildContext {
                   padding: const EdgeInsets.only(right: 12),
                   child: Text(
                     AppLocalizations.of(this)!.done,
-                    style: TextStyleConstants.bold.copyWith(
-                      color: ColorConstants.primary,
+                    style: AppTextStyles.bold.copyWith(
+                      color: AppColors.primary,
                       fontSize: 18,
                     ),
                   ).onCupertinoClick(() {
@@ -47,14 +47,7 @@ extension BuildContextExtension on BuildContext {
                 ),
                 const Divider(height: 1),
                 CupertinoDatePicker(
-                  initialDateTime: initialDate ??
-                      DateTime.now().copyWith(
-                        hour: 0,
-                        millisecond: 0,
-                        second: 0,
-                        minute: 0,
-                        microsecond: 0,
-                      ),
+                  initialDateTime: initialDate ?? DateTime.now().getOnlyDate,
                   maximumDate: maxDate,
                   mode: CupertinoDatePickerMode.date,
                   onDateTimeChanged: (value) => dateTime = value,

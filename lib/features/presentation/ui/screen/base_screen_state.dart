@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 import 'package:music_app/features/presentation/ui/custom/loading_indicator.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/core.dart';
 
 abstract class BaseScreenState<V extends StatefulWidget,
@@ -14,6 +14,9 @@ abstract class BaseScreenState<V extends StatefulWidget,
   late B _bloc;
 
   B get bloc => _bloc;
+
+  @protected
+  late AppLocalizations localizations;
 
   @protected
   Widget get buildContent;
@@ -118,7 +121,14 @@ abstract class BaseScreenState<V extends StatefulWidget,
   Widget get _body => BlocProvider.value(
         value: _bloc,
         child: BlocListener<B, S>(
-            listener: onStateListener,
+            listener: (context, state) {
+              if (state.isLoading) {
+                LoadingIndicator.show(context);
+              } else {
+                LoadingIndicator.dismiss(context);
+                onStateListener(context, state);
+              }
+            },
             child: Scaffold(
               backgroundColor: backgroundColor,
               body: SafeArea(
@@ -139,13 +149,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
       );
 
   @protected
-  void onStateListener(BuildContext context, S state) {
-    if (state.isLoading) {
-      LoadingIndicator.show(context);
-    } else {
-      LoadingIndicator.dismiss(context);
-    }
-  }
+  void onStateListener(BuildContext context, S state) {}
 
   @protected
   void onReveiveArguments(Map<String, dynamic> arguments) {}

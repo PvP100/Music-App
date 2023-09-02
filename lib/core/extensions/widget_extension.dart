@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-extension BuildContextExtension on Widget {
+extension WidgetExtension on Widget {
   Expanded expanded({int flex = 1}) => Expanded(
         flex: flex,
         child: this,
