@@ -46,7 +46,7 @@ class _SearchScreenState
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.fromLTRB(17, 0, 17, context.bottomBarHeight),
+          padding: EdgeInsets.fromLTRB(15, 0, 15, context.bottomBarHeight),
           sliver: SliverGrid.builder(
               itemCount: 20,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -82,4 +82,7 @@ class _SearchScreenState
       ],
     );
   }
+
+  @override
+  bool get safeAreaBottom => false;
 }

@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         title: 'Hamusic',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.getRoute,
-        initialRoute: RouteConstants.splash,
+        initialRoute: RouteConstants.main,
         navigatorObservers: [routeObserver],
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

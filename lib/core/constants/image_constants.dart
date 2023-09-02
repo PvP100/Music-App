@@ -13,4 +13,5 @@ class ImageConstants {
   static const String iconLibrarySelected = "icon_library_selected";
   static const String iconPlayBlack = "icon_play_black";
   static const String iconSearch = "icon_search";
+  static const String iconAdd = "icon_add";
 }

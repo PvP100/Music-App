@@ -30,5 +30,9 @@
     "rePasswordEmpty": "Re-enter password cannot be empty",
     "goodEvening": "Good evening",
     "goodMorning": "Good morning",
-    "goodAfternoon": "Good afternoon"
+    "goodAfternoon": "Good afternoon",
+    "all": "All",
+    "playlist": "Playlist",
+    "album": "Album",
+    "artist": "Artist"
 } 
