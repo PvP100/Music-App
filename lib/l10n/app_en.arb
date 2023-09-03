@@ -34,5 +34,13 @@
     "all": "All",
     "playlist": "Playlist",
     "album": "Album",
-    "artist": "Artist"
+    "artist": "Artist",
+    "helloWorld": "Hello World!",
+    "done": "Done",
+    "screenNotFound": "Not found screen",
+    "noInternetConnection": "No Internet Connection",
+    "badRequest": "Bad request",
+    "dataNotFound": "The specified URL was not found",
+    "serverError": "Server error",
+    "unauthorized": "Unauthorized"
 } 

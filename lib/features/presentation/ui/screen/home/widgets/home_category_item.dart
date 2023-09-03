@@ -11,7 +11,7 @@ class HomeCategoryItem extends StatelessWidget {
       children: [
         Text(
           "Dành cho bạn",
-          style: TextStyleConstants.bold.copyWith(fontSize: 20),
+          style: AppTextStyles.bold.copyWith(fontSize: 20),
         ).paddingOnly(left: 15, bottom: 8),
         SizedBox(
           height: 221,
@@ -32,13 +32,13 @@ class HomeCategoryItem extends StatelessWidget {
                   "Secret Path",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyleConstants.medium.copyWith(fontSize: 14),
+                  style: AppTextStyles.medium.copyWith(fontSize: 14),
                 ).paddingOnly(top: 8, bottom: 2),
                 Text(
                   "Dontcry, Noflik, Showyou",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyleConstants.regular.copyWith(fontSize: 12),
+                  style: AppTextStyles.regular.copyWith(fontSize: 12),
                 )
               ],
             ),

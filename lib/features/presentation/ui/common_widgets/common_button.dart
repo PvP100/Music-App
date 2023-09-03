@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/core/extensions/widget_extension.dart';
 
 class CommonButton extends StatelessWidget {
   const CommonButton({
     super.key,
     required this.title,
-    this.backgroundColor = ColorConstants.primary,
+    this.backgroundColor = AppColors.primary,
     this.radius = 8,
     this.margin,
     this.titleColor = Colors.white,
@@ -36,8 +35,8 @@ class CommonButton extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: TextStyleConstants.bold
-              .copyWith(height: 17 / 16, color: titleColor),
+          style:
+              AppTextStyles.bold.copyWith(height: 17 / 16, color: titleColor),
         ),
       ).onCupertinoClick(onClick),
     );

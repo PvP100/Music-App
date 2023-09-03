@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/core/extensions/widget_extension.dart';
 
 class AddSongDialog extends StatelessWidget {
   const AddSongDialog(
@@ -16,7 +15,7 @@ class AddSongDialog extends StatelessWidget {
       children: [
         Container(
           decoration: const BoxDecoration(
-              color: ColorConstants.primaryBackgroundColor,
+              color: AppColors.primaryBackgroundColor,
               borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
           padding: const EdgeInsets.only(bottom: 46, left: 15, top: 12),
           child: Column(
@@ -27,7 +26,7 @@ class AddSongDialog extends StatelessWidget {
                   height: 4,
                   width: 30,
                   decoration: const BoxDecoration(
-                    color: ColorConstants.colorD9D9D9,
+                    color: AppColors.colorD9D9D9,
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                   ),
                 ),
@@ -35,9 +34,9 @@ class AddSongDialog extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(top: 29),
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   "Tạo playlist",
-                  style: TextStyleConstants.medium,
+                  style: AppTextStyles.medium,
                 ),
               ).onCupertinoClick(() {
                 context.pop();
@@ -46,9 +45,9 @@ class AddSongDialog extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.symmetric(vertical: 24),
-                child: Text(
+                child: const Text(
                   "Tìm kiếm thêm album, nghệ sĩ",
-                  style: TextStyleConstants.medium,
+                  style: AppTextStyles.medium,
                 ),
               ).onCupertinoClick(() async {
                 context.pop();

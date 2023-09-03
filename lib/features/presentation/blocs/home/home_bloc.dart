@@ -3,6 +3,8 @@ import 'package:music_app/features/domain/usecases/get_product.dart';
 import 'package:music_app/features/domain/usecases/use_case.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 
+import '../../../data/exception/failure.dart';
+
 part 'home_event.dart';
 part 'home_state.dart';
 
@@ -22,7 +24,7 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
     (await _getRandomImageUseCase(None())).fold((data) {
       emitter(state.copyWith(imageUrl: data?.urls?.raw));
     }, (error) {
-      emitter(state.copyWith(errorMsg: error));
+      emitter(state.copyWith(error: error));
     });
   }
 }

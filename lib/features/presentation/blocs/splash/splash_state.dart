@@ -1,20 +1,20 @@
 part of 'splash_bloc.dart';
 
-class SplashState extends BaseState {
+class SplashState extends BaseState<SplashState> {
   final bool isNavigateToHome;
 
   const SplashState(
-      {super.isLoading, super.errorMsg, this.isNavigateToHome = false});
+      {super.isLoading, super.error, this.isNavigateToHome = false});
 
   @override
   SplashState copyWith({
     bool isLoading = false,
-    Exception? errorMsg,
+    Failure? error,
     bool isNavigateToHome = false,
   }) =>
       SplashState(
         isLoading: isLoading,
-        errorMsg: errorMsg,
+        error: error,
         isNavigateToHome: isNavigateToHome,
       );
 }

@@ -20,7 +20,7 @@ class TextStyleConstants {
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700);
   static const TextStyle hintText = TextStyle(
-      color: ColorConstants.color999999,
+      color: AppColors.color999999,
       fontSize: 14,
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500);

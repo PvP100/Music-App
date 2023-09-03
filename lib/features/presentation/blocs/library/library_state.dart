@@ -1,10 +1,10 @@
 part of 'library_bloc.dart';
 
-class LibraryState extends BaseState {
-  LibraryState({super.isLoading, super.errorMsg});
+class LibraryState extends BaseState<LibraryState> {
+  LibraryState({super.isLoading, super.error});
 
   @override
-  LibraryState copyWith({bool isLoading = false, String? errorMsg}) {
-    return LibraryState(isLoading: isLoading, errorMsg: errorMsg);
+  LibraryState copyWith({bool isLoading = false, Failure? error}) {
+    return LibraryState(isLoading: isLoading, error: error);
   }
 }

@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 import 'package:music_app/features/presentation/ui/custom/loading_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:music_app/utils/app_utils.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
@@ -42,7 +41,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
   bool get safeAreaRight => true;
 
   @protected
-  Color get backgroundColor => ColorConstants.primaryBackgroundColor;
+  Color get backgroundColor => AppColors.primaryBackgroundColor;
 
   bool isFirstInit = true;
 
@@ -128,6 +127,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
   Widget build(BuildContext context) {
     flutterDebugPrint("build $runtimeType");
     _localizations = AppLocalizations.of(context)!;
+    bloc.localizations = _localizations;
     return Platform.isAndroid
         ? WillPopScope(onWillPop: (willPopCallback), child: _body(context))
         : _body(context);
@@ -141,8 +141,8 @@ abstract class BaseScreenState<V extends StatefulWidget,
                 LoadingIndicator.show(context);
               } else {
                 LoadingIndicator.dismiss(context);
-                if (state.errorMsg != null) {
-                  context.showError(state.errorMsg);
+                if (state.error != null) {
+                  context.showError(state.error!);
                 }
                 onStateListener(context, state);
               }

@@ -51,9 +51,9 @@ class _MainScreenState
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              ColorConstants.primaryBackgroundColor,
-              ColorConstants.primaryBackgroundColor.withOpacity(0.85),
-              ColorConstants.primaryBackgroundColor.withOpacity(0),
+              AppColors.primaryBackgroundColor,
+              AppColors.primaryBackgroundColor.withOpacity(0.85),
+              AppColors.primaryBackgroundColor.withOpacity(0),
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,

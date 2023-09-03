@@ -1,7 +1,7 @@
 part of 'change_password_bloc.dart';
 
-class ChangePasswordState extends BaseState {
+class ChangePasswordState extends BaseState<ChangePasswordState> {
   @override
-  BaseState copyWith({bool isLoading = false, String? errorMsg}) =>
+  ChangePasswordState copyWith({bool isLoading = false, Exception? error}) =>
       ChangePasswordState();
 }

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/core/extensions/widget_extension.dart';
 
 class HomeNewAlbumCategory extends StatelessWidget {
   const HomeNewAlbumCategory({super.key});
@@ -14,7 +13,7 @@ class HomeNewAlbumCategory extends StatelessWidget {
       children: [
         Text(
           "Album mới nổi bật",
-          style: TextStyleConstants.bold.copyWith(fontSize: 20),
+          style: AppTextStyles.bold.copyWith(fontSize: 20),
         ).paddingOnly(left: 15, bottom: 10),
         SizedBox(
           height: 250,
@@ -28,14 +27,15 @@ class HomeNewAlbumCategory extends StatelessWidget {
                       height: 250,
                       width: 250,
                       foregroundDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
                         gradient: LinearGradient(
                           colors: [Colors.black, Colors.white.withOpacity(0)],
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
                         ),
                       ),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                           image: DecorationImage(
                               fit: BoxFit.cover,
@@ -55,14 +55,14 @@ class HomeNewAlbumCategory extends StatelessWidget {
                               Text(
                                 "Stray Nights",
                                 maxLines: 1,
-                                style: TextStyleConstants.bold
-                                    .copyWith(fontSize: 18),
+                                style:
+                                    AppTextStyles.bold.copyWith(fontSize: 18),
                               ),
                               Text(
                                 "Tom Frane",
                                 maxLines: 1,
-                                style: TextStyleConstants.medium.copyWith(
-                                    color: ColorConstants.colorCACACA),
+                                style: AppTextStyles.medium
+                                    .copyWith(color: AppColors.colorCACACA),
                               )
                             ],
                           ).expanded(),
@@ -70,7 +70,7 @@ class HomeNewAlbumCategory extends StatelessWidget {
                             height: 40,
                             width: 40,
                             alignment: Alignment.center,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
                             ),

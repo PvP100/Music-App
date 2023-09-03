@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:music_app/core/core.dart';
+import 'package:music_app/features/data/exception/failure.dart';
 
 extension StringExtension on String? {
   bool isPhoneNumber() {
@@ -7,6 +9,8 @@ extension StringExtension on String? {
 
     return regex.hasMatch(this ?? "");
   }
+
+  Failure toFailure() => Failure.error(this ?? AppConstants.emptyString);
 
   bool isEmail() {
     final bool emailValid = RegExp(

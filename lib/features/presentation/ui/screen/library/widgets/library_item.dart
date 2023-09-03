@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_app/core/constants/constants.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/core/extensions/widget_extension.dart';
 
 class LibraryItem extends StatelessWidget {
   const LibraryItem({super.key});
@@ -17,8 +15,8 @@ class LibraryItem extends StatelessWidget {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                ColorConstants.colorFF9D9D,
-                ColorConstants.colorFFE1E1,
+                AppColors.colorFF9D9D,
+                AppColors.colorFFE1E1,
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -30,11 +28,11 @@ class LibraryItem extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Bai hat ua thich", style: TextStyleConstants.regular),
+            const Text("Bai hat ua thich", style: AppTextStyles.regular),
             const SizedBox(height: 3),
             Text(
               "87 bai hat",
-              style: TextStyleConstants.regular.copyWith(fontSize: 12),
+              style: AppTextStyles.regular.copyWith(fontSize: 12),
             )
           ],
         ).expanded()

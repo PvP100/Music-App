@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_app/core/extensions/widget_extension.dart';
 import 'package:music_app/features/presentation/blocs/register/register_bloc.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/widgets.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
@@ -63,7 +62,7 @@ class _RegisterScreenState
               padding: const EdgeInsets.only(left: 13),
               alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(
-                color: ColorConstants.color3E3E3E,
+                color: AppColors.color3E3E3E,
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               child: BlocSelector<RegisterBloc, RegisterState, String?>(
@@ -71,10 +70,10 @@ class _RegisterScreenState
                   builder: (context, value) {
                     return Text(
                       value ?? localizations.birthday,
-                      style: TextStyleConstants.medium.copyWith(
+                      style: AppTextStyles.medium.copyWith(
                         color: value != null
                             ? Colors.white
-                            : ColorConstants.color999999,
+                            : AppColors.color999999,
                         fontSize: 14,
                       ),
                     );

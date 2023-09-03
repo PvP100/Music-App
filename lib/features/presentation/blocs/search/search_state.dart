@@ -1,10 +1,10 @@
 part of 'search_bloc.dart';
 
-class SearchState extends BaseState {
-  SearchState({super.isLoading, super.errorMsg});
+class SearchState extends BaseState<SearchState> {
+  SearchState({super.isLoading, super.error});
 
   @override
-  SearchState copyWith({bool isLoading = false, String? errorMsg}) {
-    return SearchState(isLoading: isLoading, errorMsg: errorMsg);
+  SearchState copyWith({bool isLoading = false, Failure? error}) {
+    return SearchState(isLoading: isLoading, error: error);
   }
 }

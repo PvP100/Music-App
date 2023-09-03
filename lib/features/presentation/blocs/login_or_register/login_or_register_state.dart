@@ -1,8 +1,8 @@
 part of 'login_or_register_bloc.dart';
 
-class LoginOrRegisterState extends BaseState {
+class LoginOrRegisterState extends BaseState<LoginOrRegisterState> {
   @override
-  BaseState copyWith({bool isLoading = false, String? errorMsg}) {
+  LoginOrRegisterState copyWith({bool isLoading = false, Exception? error}) {
     return LoginOrRegisterState();
   }
 }

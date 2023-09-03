@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/core/extensions/widget_extension.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/features/presentation/ui/custom/search_widget.dart';
 import 'package:music_app/features/presentation/ui/dialogs/add_song_dialog.dart';
@@ -46,7 +45,7 @@ class _LibraryScreenState
             children: [
               Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 20,
                     foregroundImage: CachedNetworkImageProvider(
                         "https://images.unsplash.com/photo-1692221307059-8819db116d92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"),
@@ -75,13 +74,13 @@ class _LibraryScreenState
                 labelPadding: EdgeInsets.zero,
                 splashFactory: NoSplash.splashFactory,
                 indicator: const BoxDecoration(
-                  color: ColorConstants.primary,
+                  color: AppColors.primary,
                   borderRadius: BorderRadius.all(Radius.circular(14)),
                 ),
                 indicatorSize: TabBarIndicatorSize.tab,
-                labelStyle: TextStyleConstants.medium.copyWith(fontSize: 14),
+                labelStyle: AppTextStyles.medium.copyWith(fontSize: 14),
                 labelColor: Colors.white,
-                unselectedLabelColor: ColorConstants.colorCACACA,
+                unselectedLabelColor: AppColors.colorCACACA,
                 isScrollable: true,
                 tabs: [
                   Text(localizations.all)
@@ -106,11 +105,11 @@ class _LibraryScreenState
           toolbarHeight: 50,
           backgroundColor: Colors.transparent,
           flexibleSpace: Container(
-            color: ColorConstants.primaryBackgroundColor,
+            color: AppColors.primaryBackgroundColor,
             child: Center(
               child: Row(
                 children: [
-                  SearchWidget().expanded(),
+                  const SearchWidget().expanded(),
                 ],
               ),
             ),
@@ -126,7 +125,7 @@ class _LibraryScreenState
           sliver: SliverList.separated(
             separatorBuilder: (context, index) => const SizedBox(height: 20),
             itemCount: 10,
-            itemBuilder: (context, index) => LibraryItem(),
+            itemBuilder: (context, index) => const LibraryItem(),
           ),
         )
       ],

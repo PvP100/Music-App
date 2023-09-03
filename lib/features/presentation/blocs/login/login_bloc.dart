@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 
+import '../../../data/exception/failure.dart';
+
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -16,15 +18,17 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
   _login(OnLoginEvent event, Emitter<LoginState> emitter) async {
     if (event.password.isEmpty || event.username.isEmpty) {
       return emitter(
-        state.copyWith(errorMsg: localizations.usernameAndPasswordError),
+        state.copyWith(
+            error: Failure.error(localizations.usernameAndPasswordError)),
       );
     }
     if (!event.username.isEmail() && !event.username.isPhoneNumber()) {
-      return emitter(state.copyWith(errorMsg: localizations.usernameIncorrect));
+      return emitter(
+          state.copyWith(error: localizations.usernameIncorrect.toFailure()));
     }
     if (event.password.length < AppConstants.passwordLengthValidate) {
       return emitter(
-          state.copyWith(errorMsg: localizations.passwordLengthError));
+          state.copyWith(error: localizations.passwordLengthError.toFailure()));
     }
 
     emitter(state.copyWith(isLoading: true));

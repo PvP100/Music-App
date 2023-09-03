@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/core/extensions/widget_extension.dart';
 
 class HaMusicAppBar extends StatelessWidget {
   const HaMusicAppBar({super.key, required this.title});
@@ -22,7 +21,7 @@ class HaMusicAppBar extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             title,
-            style: TextStyleConstants.medium.copyWith(fontSize: 17),
+            style: AppTextStyles.medium.copyWith(fontSize: 17),
           ),
         )
       ]),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/core/extensions/widget_extension.dart';
 
 class CommonTextField extends StatefulWidget {
   const CommonTextField({
@@ -9,8 +8,8 @@ class CommonTextField extends StatefulWidget {
     this.controller,
     this.hintText = "",
     this.isPassword = false,
-    this.backgroundColor = ColorConstants.color3E3E3E,
-    this.hintTextColor = ColorConstants.color999999,
+    this.backgroundColor = AppColors.color3E3E3E,
+    this.hintTextColor = AppColors.color999999,
     this.margin,
   });
 
@@ -48,13 +47,13 @@ class _CommonTextFieldState extends State<CommonTextField> {
       child: Row(
         children: [
           TextField(
-            cursorColor: ColorConstants.primary,
+            cursorColor: AppColors.primary,
             controller: widget.controller,
             obscureText: isShowPassword,
-            style: TextStyleConstants.hintText.copyWith(color: Colors.white),
+            style: AppTextStyles.hintText.copyWith(color: Colors.white),
             decoration: InputDecoration.collapsed(
                 hintText: widget.hintText,
-                hintStyle: TextStyleConstants.hintText
+                hintStyle: AppTextStyles.hintText
                     .copyWith(height: 17 / 14, color: widget.hintTextColor)),
           ).expanded(),
           if (widget.isPassword) ...{

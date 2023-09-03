@@ -1,7 +1,7 @@
 part of 'forgot_password_bloc.dart';
 
-class ForgotPasswordState extends BaseState {
+class ForgotPasswordState extends BaseState<ForgotPasswordState> {
   @override
-  BaseState copyWith({bool isLoading = false, String? errorMsg}) =>
+  ForgotPasswordState copyWith({bool isLoading = false, Exception? error}) =>
       ForgotPasswordState();
 }

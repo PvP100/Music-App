@@ -67,17 +67,17 @@ android {
     productFlavors {
         production {
             dimension "default"
-            resValue "string", "app_name", "Music App"
+            resValue "string", "app_name", "HaMusic"
             applicationIdSuffix ""
         }
         staging {
             dimension "default"
-            resValue "string", "app_name", "Music App (Stg)"
+            resValue "string", "app_name", "HaMusic (Stg)"
             applicationIdSuffix ".stg"
         }
         development {
             dimension "default"
-            resValue "string", "app_name", "Music App (Dev)"
+            resValue "string", "app_name", "HaMusic (Dev)"
             applicationIdSuffix ".dev"
         }
     }

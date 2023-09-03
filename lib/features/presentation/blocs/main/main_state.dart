@@ -1,22 +1,23 @@
 part of 'main_bloc.dart';
 
-class MainState extends BaseState {
+class MainState extends BaseState<MainState> {
   final TabNavigation currentScreen;
 
   MainState({
     super.isLoading,
-    super.errorMsg,
+    super.error,
     this.currentScreen = TabNavigation.home,
   });
 
   @override
-  MainState copyWith(
-      {bool isLoading = false,
-      String? errorMsg,
-      TabNavigation? currentScreen}) {
+  MainState copyWith({
+    bool isLoading = false,
+    Failure? error,
+    TabNavigation? currentScreen,
+  }) {
     return MainState(
       isLoading: isLoading,
-      errorMsg: errorMsg,
+      error: error,
       currentScreen: currentScreen ?? this.currentScreen,
     );
   }

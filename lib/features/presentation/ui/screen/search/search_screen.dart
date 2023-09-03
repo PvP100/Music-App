@@ -18,7 +18,7 @@ class _SearchScreenState
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          backgroundColor: ColorConstants.primaryBackgroundColor,
+          backgroundColor: AppColors.primaryBackgroundColor,
           elevation: 0,
           automaticallyImplyLeading: false,
           pinned: true,
@@ -37,9 +37,9 @@ class _SearchScreenState
                   .paddingOnly(left: 10, right: 8),
               Text(
                 "Bạn muốn nghe gì",
-                style: TextStyleConstants.medium.copyWith(
+                style: AppTextStyles.medium.copyWith(
                   fontSize: 14,
-                  color: ColorConstants.colorA4A4A4,
+                  color: AppColors.colorA4A4A4,
                 ),
               )
             ]),
@@ -72,7 +72,7 @@ class _SearchScreenState
                       top: 10,
                       child: Text(
                         "EDM",
-                        style: TextStyleConstants.bold.copyWith(fontSize: 18),
+                        style: AppTextStyles.bold.copyWith(fontSize: 18),
                       ),
                     ),
                   ],

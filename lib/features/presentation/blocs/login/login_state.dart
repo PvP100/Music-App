@@ -1,20 +1,20 @@
 part of 'login_bloc.dart';
 
-class LoginState extends BaseState {
+class LoginState extends BaseState<LoginState> {
   final bool isLoginSuccess;
 
-  LoginState({super.errorMsg, super.isLoading, this.isLoginSuccess = false});
+  LoginState({super.error, super.isLoading, this.isLoginSuccess = false});
 
   @override
   LoginState copyWith({
     bool isLoading = false,
-    String? errorMsg,
+    Failure? error,
     bool? canLogin,
     bool isLoginSuccess = false,
   }) =>
       LoginState(
         isLoading: isLoading,
-        errorMsg: errorMsg,
+        error: error,
         isLoginSuccess: isLoginSuccess,
       );
 }
