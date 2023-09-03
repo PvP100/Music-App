@@ -22,4 +22,12 @@ extension DateExtension on DateTime {
         ? "T${weekday + 1}, ${convertToString()}"
         : "CN, ${convertToString()}";
   }
+
+  DateTime get onlyDate => copyWith(
+        hour: 0,
+        millisecond: 0,
+        second: 0,
+        minute: 0,
+        microsecond: 0,
+      );
 }

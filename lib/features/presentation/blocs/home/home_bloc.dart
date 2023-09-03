@@ -7,7 +7,7 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
-  HomeBloc(this._getRandomImageUseCase) : super(HomeState());
+  HomeBloc(this._getRandomImageUseCase) : super(const HomeState());
 
   final GetRandomImage _getRandomImageUseCase;
 
@@ -20,10 +20,9 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   _getRandomImage(GetRandomImageEvent event, Emitter<HomeState> emitter) async {
     emitter(state.copyWith(isLoading: true));
     (await _getRandomImageUseCase(None())).fold((data) {
-      final imageModel = data?.firstOrNull;
-      emitter(state.copyWith(imageUrl: imageModel?.urls?.raw));
+      emitter(state.copyWith(imageUrl: data?.urls?.raw));
     }, (error) {
-      emitter(state.copyWith(errorMsg: error.toString()));
+      emitter(state.copyWith(errorMsg: error));
     });
   }
 }

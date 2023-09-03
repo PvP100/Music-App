@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Development",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor", "development",
+                "--dart-define", "BASE_URL=https://api.unsplash.com/",
+            ]
+        },
+        {
+            "name": "Launch Staging",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor", "staging",
+                "--dart-define", "BASE_URL=http://api.themoviedb.org/3/",
+            ]
+        },
+        {
+            "name": "Launch Production",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor", "production", 
+                "--dart-define", "BASE_URL=http://api.themoviedb.org/3/",
+            ]
+        }
+    ]
+}

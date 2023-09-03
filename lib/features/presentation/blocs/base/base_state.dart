@@ -1,11 +1,10 @@
 part of 'base_bloc.dart';
 
-abstract class BaseState {
+abstract class BaseState<S> {
   final bool isLoading;
-  final String? errorMsg;
-
-  BaseState({this.isLoading = false, this.errorMsg});
+  final Exception? errorMsg;
+  const BaseState({this.isLoading = false, this.errorMsg});
 
   @protected
-  BaseState copyWith({bool isLoading = false, String? errorMsg});
+  S copyWith({bool isLoading = false, Exception? errorMsg});
 }

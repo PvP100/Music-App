@@ -12,6 +12,8 @@ class ImageApiProviderImpl implements ImageApiProvider {
   ImageApiProviderImpl(this._baseDio);
 
   @override
-  Future<Result<ImageModel>> getRandomImage() =>
-      _baseDio.request('photos/random');
+  Future<Result<ImageModel>> getRandomImage() => _baseDio.request(
+        'photos/random',
+        fromJson: (json) => ImageModel.fromJson(json),
+      );
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AppUtils {
-  static showToast(String? msg) {
+  static void showToast(String? msg) {
     if (msg != null) {
       Fluttertoast.showToast(
           msg: msg,

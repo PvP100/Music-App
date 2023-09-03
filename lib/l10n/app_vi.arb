@@ -35,4 +35,12 @@
     "playlist": "Danh sách phát",
     "album": "Album",
     "artist": "Nghệ sĩ"
+    "helloWorld": "Xin chào thế giới!",
+    "done": "Xong",
+    "screenNotFound": "Không tìm thấy màn hình",
+    "noInternetConnection": "Không có kết nối mạng",
+    "badRequest": "Yêu cầu không hợp lệ",
+    "dataNotFound": "Không tìm thấy URL đã chỉ định",
+    "serverError": "Lỗi máy chủ",
+    "unauthorized": "Không được phép"
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -7,7 +9,7 @@ import 'package:music_app/core/core.dart';
 
 class AppRoutes {
   static PageRoute getRoute(RouteSettings settings) {
-    Widget widget;
+    late final Widget widget;
     TransitionType? transitionType;
     if (settings.arguments != null) {
       transitionType = (settings.arguments
@@ -49,8 +51,9 @@ class AppRoutes {
               );
             });
       default:
-        return CupertinoPageRoute(
-            builder: (context) => widget, settings: settings);
+        return Platform.isAndroid
+            ? MaterialPageRoute(builder: (context) => widget, settings: settings)
+            : CupertinoPageRoute(builder: (context) => widget, settings: settings);
     }
   }
 }

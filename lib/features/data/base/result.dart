@@ -1,22 +1,26 @@
-abstract class Result<T> {
-  final List<T>? data;
+sealed class Result<T> {
+  final T? data;
   final Exception? error;
 
   Result({this.data, this.error});
 
-  void fold(Function(List<T>? data) onSuccess,
+  factory Result.success(T? data) = ResultSuccess<T>;
+  factory Result.error(Exception error) = ResultError;
+
+  void fold(Function(T? data) onSuccess,
       [Function(Exception exception)? onFailure]) {
-    if (this is ResultSuccess) {
-      onSuccess(data);
-    } else if (this is ResultError) {
-      onFailure?.call(error!);
+    switch (this) {
+      case ResultSuccess():
+        onSuccess(data);
+      case ResultError():
+        onFailure?.call(error!);
     }
   }
 }
 
 class ResultSuccess<T> extends Result<T> {
-  final List<T>? responseData;
-  ResultSuccess(this.responseData) : super(data: responseData);
+  final T? resultData;
+  ResultSuccess(this.resultData) : super(data: resultData);
 }
 
 class ResultError extends Result<Never> {

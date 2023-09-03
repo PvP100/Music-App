@@ -3,5 +3,5 @@ part 'splash_event.dart';
 part 'splash_state.dart';
 
 class SplashBloc extends BaseBloc<SplashEvent, SplashState> {
-  SplashBloc() : super(SplashState());
+  SplashBloc() : super(const SplashState());
 }

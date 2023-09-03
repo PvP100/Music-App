@@ -16,10 +16,12 @@ abstract class BaseScreenState<V extends StatefulWidget,
     with RouteAware, WidgetsBindingObserver {
   late B _bloc;
 
-  @protected
-  late AppLocalizations localizations;
-
   B get bloc => _bloc;
+
+  @protected
+  late AppLocalizations _localizations;
+
+  AppLocalizations get localizations => _localizations;
 
   @protected
   Widget buildContent(BuildContext context);
@@ -125,8 +127,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
   @override
   Widget build(BuildContext context) {
     flutterDebugPrint("build $runtimeType");
-    localizations = AppLocalizations.of(context)!;
-    bloc.localizations = localizations;
+    _localizations = AppLocalizations.of(context)!;
     return Platform.isAndroid
         ? WillPopScope(onWillPop: (willPopCallback), child: _body(context))
         : _body(context);
@@ -135,7 +136,17 @@ abstract class BaseScreenState<V extends StatefulWidget,
   Widget _body(BuildContext context) => BlocProvider.value(
         value: _bloc,
         child: BlocListener<B, S>(
-            listener: onStateListener,
+            listener: (context, state) {
+              if (state.isLoading) {
+                LoadingIndicator.show(context);
+              } else {
+                LoadingIndicator.dismiss(context);
+                if (state.errorMsg != null) {
+                  context.showError(state.errorMsg);
+                }
+                onStateListener(context, state);
+              }
+            },
             child: Scaffold(
               backgroundColor: backgroundColor,
               body: SafeArea(
@@ -156,16 +167,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
       );
 
   @protected
-  void onStateListener(BuildContext context, S state) {
-    if (state.isLoading) {
-      LoadingIndicator.show(context);
-    } else {
-      LoadingIndicator.dismiss(context);
-      if (state.errorMsg != null) {
-        AppUtils.showToast(state.errorMsg);
-      }
-    }
-  }
+  void onStateListener(BuildContext context, S state) {}
 
   @protected
   void onReveiveArguments(Map<String, dynamic> arguments) {}
