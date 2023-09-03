@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState
     extends BaseScreenState<HomeScreen, HomeBloc, HomeState> {
   @override
-  Widget get buildContent {
+  Widget buildContent(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       return Center(
         child: state.imageUrl.loadImageUrl(),

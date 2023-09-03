@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:music_app/core/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:music_app/core/extensions/date_time_extension.dart';
+import 'package:music_app/features/data/exception/failure.dart';
+import 'package:music_app/utils/app_utils.dart';
 
 extension BuildContextExtension on BuildContext {
   void pop<T extends Object?>({bool rootNavigator = false, T? result}) {
@@ -47,7 +49,7 @@ extension BuildContextExtension on BuildContext {
                 ),
                 const Divider(height: 1),
                 CupertinoDatePicker(
-                  initialDateTime: initialDate ?? DateTime.now().getOnlyDate,
+                  initialDateTime: initialDate ?? DateTime.now().onlyDate,
                   maximumDate: maxDate,
                   mode: CupertinoDatePickerMode.date,
                   onDateTimeChanged: (value) => dateTime = value,
@@ -56,6 +58,24 @@ extension BuildContextExtension on BuildContext {
             ),
           );
         });
+  }
+
+  showError(Exception? exception) {
+    final localizations = AppLocalizations.of(this)!;
+    switch (exception.runtimeType) {
+      case NetWorkConnection:
+        return AppUtils.showToast(localizations.noInternetConnection);
+      case BadRequestError:
+        return AppUtils.showToast(localizations.badRequest);
+      case DataNotFoundError:
+        return AppUtils.showToast(localizations.dataNotFound);
+      case ServerError || InternalServerError:
+        return AppUtils.showToast(localizations.serverError);
+      case UnAuthorizedError:
+        return AppUtils.showToast(localizations.unauthorized);
+      default:
+        return AppUtils.showToast(exception.toString());
+    }
   }
 
   double get width => MediaQuery.sizeOf(this).width;

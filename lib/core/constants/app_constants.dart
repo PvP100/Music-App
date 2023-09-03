@@ -1,5 +1,8 @@
-class AppConstants {}
+class AppConstants {
+  //Network
+  static const connectionTimeOut = 30;
+  static const receiveTimeOut = 30;
 
-class LottiePath {
+  //LottiePath
   static const String hello = "assets/lotties/hello_lottie.json";
 }

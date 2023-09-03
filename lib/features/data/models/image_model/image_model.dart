@@ -13,7 +13,7 @@ class ImageModel implements BaseDataModel {
 
   final UrlsModel? urls;
 
-  ImageModel({this.width, this.height, this.altDescription, this.urls});
+  const ImageModel({this.width, this.height, this.altDescription, this.urls});
 
   factory ImageModel.fromJson(Map<String, dynamic> json) =>
       _$ImageModelFromJson(json);

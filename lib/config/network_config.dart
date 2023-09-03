@@ -1,71 +1,15 @@
-enum BuildMode { dev, staging, prod }
+import 'package:music_app/config/config.dart';
+import 'package:music_app/core/core.dart';
 
-abstract class NetWorkMode {
+class NetWorkConfig {
   final String baseUrl;
-  String apiKey;
-  String localDBName;
+  String? apiKey;
   int connectTimeout;
   int receiveTimeout;
-  NetWorkMode.internal(
-      {required this.baseUrl,
-      required this.apiKey,
-      required this.localDBName,
-      required this.connectTimeout,
-      required this.receiveTimeout});
-
-  factory NetWorkMode({required BuildMode mode}) {
-    switch (mode) {
-      case BuildMode.prod:
-        return ProductionMode();
-      case BuildMode.staging:
-        return StagingMode();
-      case BuildMode.dev:
-        return DevelopmentMode();
-    }
-  }
-}
-
-class ProductionMode extends NetWorkMode {
-  ProductionMode(
-      {String localDBName = 'local.db',
-      String baseUrl = 'http://api.themoviedb.org/3/',
-      String apiKey = 'ff957763c54c44d8b00e5e082bc76cb0',
-      int connectTimeout = 30000,
-      int receiveTimeout = 30000})
-      : super.internal(
-            baseUrl: baseUrl,
-            apiKey: apiKey,
-            localDBName: localDBName,
-            connectTimeout: connectTimeout,
-            receiveTimeout: receiveTimeout);
-}
-
-class StagingMode extends NetWorkMode {
-  StagingMode(
-      {String localDBName = 'local.db',
-      String baseUrl = 'http://api.themoviedb.org/3/',
-      String apiKey = 'ff957763c54c44d8b00e5e082bc76cb0',
-      int connectTimeout = 30000,
-      int receiveTimeout = 30000})
-      : super.internal(
-            baseUrl: baseUrl,
-            apiKey: apiKey,
-            localDBName: localDBName,
-            connectTimeout: connectTimeout,
-            receiveTimeout: receiveTimeout);
-}
-
-class DevelopmentMode extends NetWorkMode {
-  DevelopmentMode(
-      {String localDBName = 'local.db',
-      String baseUrl = 'https://api.unsplash.com/',
-      String apiKey = 'ff957763c54c44d8b00e5e082bc76cb0',
-      int connectTimeout = 30000,
-      int receiveTimeout = 30000})
-      : super.internal(
-            baseUrl: baseUrl,
-            apiKey: apiKey,
-            localDBName: localDBName,
-            connectTimeout: connectTimeout,
-            receiveTimeout: receiveTimeout);
+  NetWorkConfig({
+    this.baseUrl = EnvConfig.baseUrl,
+    this.apiKey,
+    this.connectTimeout = AppConstants.connectionTimeOut,
+    this.receiveTimeout = AppConstants.connectionTimeOut,
+  });
 }

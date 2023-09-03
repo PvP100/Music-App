@@ -23,7 +23,7 @@ extension DateExtension on DateTime {
         : "CN, ${convertToString()}";
   }
 
-  DateTime get getOnlyDate => copyWith(
+  DateTime get onlyDate => copyWith(
         hour: 0,
         millisecond: 0,
         second: 0,

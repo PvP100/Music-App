@@ -29,9 +29,9 @@ class _SplashScreenState
   }
 
   @override
-  Widget get buildContent => Center(
+  Widget buildContent(BuildContext context) => Center(
         child: Lottie.asset(
-          LottiePath.hello,
+          AppConstants.hello,
           frameRate: FrameRate(60),
           controller: _animationController,
           onLoaded: (composition) {
@@ -42,9 +42,6 @@ class _SplashScreenState
           },
         ),
       );
-
-  @override
-  void onStateListener(BuildContext context, SplashState state) {}
 
   @override
   Future<bool> willPopCallback() async {

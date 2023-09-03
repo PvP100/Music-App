@@ -16,10 +16,12 @@ abstract class BaseScreenState<V extends StatefulWidget,
   B get bloc => _bloc;
 
   @protected
-  late AppLocalizations localizations;
+  late AppLocalizations _localizations;
+
+  AppLocalizations get localizations => _localizations;
 
   @protected
-  Widget get buildContent;
+  Widget buildContent(BuildContext context);
 
   @protected
   Widget? get footer => null;
@@ -114,11 +116,14 @@ abstract class BaseScreenState<V extends StatefulWidget,
   }
 
   @override
-  Widget build(BuildContext context) => Platform.isAndroid
-      ? WillPopScope(onWillPop: (willPopCallback), child: _body)
-      : _body;
+  Widget build(BuildContext context) {
+    _localizations = AppLocalizations.of(context)!;
+    return Platform.isAndroid
+        ? WillPopScope(onWillPop: (willPopCallback), child: _body(context))
+        : _body(context);
+  }
 
-  Widget get _body => BlocProvider.value(
+  Widget _body(BuildContext context) => BlocProvider.value(
         value: _bloc,
         child: BlocListener<B, S>(
             listener: (context, state) {
@@ -126,6 +131,9 @@ abstract class BaseScreenState<V extends StatefulWidget,
                 LoadingIndicator.show(context);
               } else {
                 LoadingIndicator.dismiss(context);
+                if (state.errorMsg != null) {
+                  context.showError(state.errorMsg);
+                }
                 onStateListener(context, state);
               }
             },
@@ -138,7 +146,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
                 right: safeAreaRight,
                 child: Stack(
                   children: [
-                    Positioned.fill(child: buildContent),
+                    Positioned.fill(child: buildContent(context)),
                     if (footer != null) ...{
                       Positioned(bottom: 0, left: 0, right: 0, child: footer!)
                     }
