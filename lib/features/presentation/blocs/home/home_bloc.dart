@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_app/features/data/exception/failure.dart';
 import 'package:music_app/features/domain/usecases/get_product.dart';
 import 'package:music_app/features/domain/usecases/use_case.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
@@ -22,7 +23,7 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
     (await _getRandomImageUseCase(None())).fold((data) {
       emitter(state.copyWith(imageUrl: data?.urls?.raw));
     }, (error) {
-      emitter(state.copyWith(errorMsg: error));
+      emitter(state.copyWith(error: error));
     });
   }
 }

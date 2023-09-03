@@ -3,14 +3,14 @@ part of 'home_bloc.dart';
 class HomeState extends BaseState<HomeState> {
   final String? imageUrl;
 
-  const HomeState({super.isLoading, super.errorMsg, this.imageUrl});
+  const HomeState({super.isLoading, super.error, this.imageUrl});
 
   @override
   HomeState copyWith(
-      {bool isLoading = false, Exception? errorMsg, String? imageUrl}) {
+      {bool isLoading = false, Failure? error, String? imageUrl}) {
     return HomeState(
       isLoading: isLoading,
-      errorMsg: errorMsg,
+      error: error,
       imageUrl: imageUrl ?? this.imageUrl,
     );
   }

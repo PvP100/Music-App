@@ -60,21 +60,21 @@ extension BuildContextExtension on BuildContext {
         });
   }
 
-  showError(Exception? exception) {
+  showError(Failure exception) {
     final localizations = AppLocalizations.of(this)!;
-    switch (exception.runtimeType) {
-      case NetWorkConnection:
+    switch (exception) {
+      case NetWorkConnection():
         return AppUtils.showToast(localizations.noInternetConnection);
-      case BadRequestError:
+      case BadRequestError():
         return AppUtils.showToast(localizations.badRequest);
-      case DataNotFoundError:
+      case DataNotFoundError():
         return AppUtils.showToast(localizations.dataNotFound);
-      case ServerError || InternalServerError:
+      case ServerError() || InternalServerError():
         return AppUtils.showToast(localizations.serverError);
-      case UnAuthorizedError:
+      case UnAuthorizedError():
         return AppUtils.showToast(localizations.unauthorized);
-      default:
-        return AppUtils.showToast(exception.toString());
+      case AppError():
+        return AppUtils.showToast(exception.message);
     }
   }
 

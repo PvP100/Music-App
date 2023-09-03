@@ -1,14 +1,16 @@
+import 'package:music_app/features/data/exception/failure.dart';
+
 sealed class Result<T> {
   final T? data;
-  final Exception? error;
+  final Failure? error;
 
   Result({this.data, this.error});
 
   factory Result.success(T? data) = ResultSuccess<T>;
-  factory Result.error(Exception error) = ResultError;
+  factory Result.error(Failure error) = ResultError;
 
   void fold(Function(T? data) onSuccess,
-      [Function(Exception exception)? onFailure]) {
+      [Function(Failure exception)? onFailure]) {
     switch (this) {
       case ResultSuccess():
         onSuccess(data);
@@ -24,6 +26,6 @@ class ResultSuccess<T> extends Result<T> {
 }
 
 class ResultError extends Result<Never> {
-  final Exception resultError;
+  final Failure resultError;
   ResultError(this.resultError) : super(error: resultError);
 }

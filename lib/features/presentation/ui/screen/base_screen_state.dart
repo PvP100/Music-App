@@ -118,6 +118,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
   @override
   Widget build(BuildContext context) {
     _localizations = AppLocalizations.of(context)!;
+    bloc.localizations = _localizations;
     return Platform.isAndroid
         ? WillPopScope(onWillPop: (willPopCallback), child: _body(context))
         : _body(context);
@@ -131,8 +132,8 @@ abstract class BaseScreenState<V extends StatefulWidget,
                 LoadingIndicator.show(context);
               } else {
                 LoadingIndicator.dismiss(context);
-                if (state.errorMsg != null) {
-                  context.showError(state.errorMsg);
+                if (state.error != null) {
+                  context.showError(state.error!);
                 }
                 onStateListener(context, state);
               }
