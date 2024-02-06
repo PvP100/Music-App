@@ -16,5 +16,7 @@ class BlocDi {
     injector.registerFactory(() => MainBloc());
     injector.registerFactory(() => SearchBloc());
     injector.registerFactory(() => LibraryBloc());
+    injector.registerFactory(() => ProfileBloc());
+    injector.registerFactory(() => CategoryBloc());
   }
 }

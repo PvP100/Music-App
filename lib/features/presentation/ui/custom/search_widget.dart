@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
 
-class SearchWidget extends StatefulWidget {
-  const SearchWidget({super.key});
+class SearchWidget extends StatelessWidget {
+  const SearchWidget({super.key, this.focusNode, required this.controller});
 
-  @override
-  State<SearchWidget> createState() => _SearchWidgetState();
-}
+  final FocusNode? focusNode;
+  final TextEditingController controller;
 
-class _SearchWidgetState extends State<SearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +21,9 @@ class _SearchWidgetState extends State<SearchWidget> {
             .loadImageAsset(height: 14, width: 14)
             .paddingOnly(left: 5),
         TextField(
+          focusNode: focusNode,
+          controller: controller,
+          textInputAction: TextInputAction.search,
           cursorColor: AppColors.primary,
           style: AppTextStyles.medium.copyWith(fontSize: 12, height: 14 / 12),
           decoration: InputDecoration(
@@ -32,14 +33,26 @@ class _SearchWidgetState extends State<SearchWidget> {
               vertical: 6,
             ),
             isDense: true,
-            hintText: "Nghệ sĩ, Bài hát, Album, v.v.",
+            hintText: context.localizations().searchHint,
             hintStyle: AppTextStyles.medium.copyWith(
               fontSize: 12,
               color: AppColors.colorA4A4A4,
               height: 14 / 12,
             ),
           ),
-        ).expanded()
+        ).expanded(),
+        ValueListenableBuilder(
+            valueListenable: controller,
+            child: const Icon(
+              Icons.close,
+              color: Colors.white,
+            ).onCupertinoClick(() {
+              controller.clear();
+            }, hideKeyboard: false),
+            builder: (context, value, child) {
+              return Visibility(
+                  visible: value.text.trim().isNotEmpty, child: child!);
+            })
       ]),
     );
   }

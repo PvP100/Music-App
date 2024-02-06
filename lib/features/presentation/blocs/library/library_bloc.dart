@@ -5,6 +5,6 @@ import '../../../data/exception/failure.dart';
 part 'library_event.dart';
 part 'library_state.dart';
 
-class LibraryBloc extends BaseBloc<LibraryEvent, LibraryState> {
+class LibraryBloc extends BaseBloc<LibraryState> {
   LibraryBloc() : super(LibraryState());
 }

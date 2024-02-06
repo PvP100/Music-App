@@ -42,5 +42,12 @@
     "badRequest": "Bad request",
     "dataNotFound": "The specified URL was not found",
     "serverError": "Server error",
-    "unauthorized": "Unauthorized"
+    "unauthorized": "Unauthorized",
+    "favoriteSong": "Favorite song",
+    "recentlyPlayedSongs": "Recently played songs",
+    "cancel": "Cancel",
+    "searchHint": "Artist, Song, Album, v.v.",
+    "recentlySearched": "Recently searched",
+    "topResult": "Top Result",
+    "song": "Song"
 } 

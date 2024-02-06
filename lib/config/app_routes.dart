@@ -27,6 +27,13 @@ class AppRoutes {
       );
     }
     switch (transitionType) {
+      case TransitionType.fade:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => widget,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        );
       case TransitionType.flip:
         return PageRouteBuilder(
             settings: settings,
@@ -52,10 +59,12 @@ class AppRoutes {
             });
       default:
         return Platform.isAndroid
-            ? MaterialPageRoute(builder: (context) => widget, settings: settings)
-            : CupertinoPageRoute(builder: (context) => widget, settings: settings);
+            ? MaterialPageRoute(
+                builder: (context) => widget, settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => widget, settings: settings);
     }
   }
 }
 
-enum TransitionType { ios, android, flip }
+enum TransitionType { ios, android, flip, fade }

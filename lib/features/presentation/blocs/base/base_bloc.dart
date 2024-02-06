@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:music_app/features/data/exception/failure.dart';
 part 'base_state.dart';
 
-abstract class BaseBloc<E, S extends BaseState> extends Bloc<E, S> {
+abstract class BaseBloc<S extends BaseState> extends Cubit<S> {
   late AppLocalizations localizations;
 
   BaseBloc(super.initialState) {

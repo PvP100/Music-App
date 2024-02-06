@@ -10,8 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 
-abstract class BaseScreenState<V extends StatefulWidget,
-        B extends BaseBloc<Object, S>, S extends BaseState> extends State<V>
+abstract class BaseScreenState<V extends StatefulWidget, B extends BaseBloc<S>,
+        S extends BaseState> extends State<V>
     with RouteAware, WidgetsBindingObserver {
   late B _bloc;
 
@@ -44,6 +44,9 @@ abstract class BaseScreenState<V extends StatefulWidget,
   Color get backgroundColor => AppColors.primaryBackgroundColor;
 
   bool isFirstInit = true;
+
+  @protected
+  bool get resizeToAvoidBottomInset => true;
 
   @override
   void initState() {
@@ -148,6 +151,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
               }
             },
             child: Scaffold(
+              resizeToAvoidBottomInset: resizeToAvoidBottomInset,
               backgroundColor: backgroundColor,
               body: SafeArea(
                 top: safeAreaTop,

@@ -23,9 +23,13 @@ class ScreenDi {
         instanceName: RouteConstants.register);
     injector.registerFactory<Widget>(() => const MainScreen(),
         instanceName: RouteConstants.main);
+    injector.registerFactory<Widget>(() => const CategoryScreen(),
+        instanceName: RouteConstants.category);
     injector.registerFactory<Widget>(() => const SearchScreen(),
         instanceName: RouteConstants.search);
     injector.registerFactory<Widget>(() => const LibraryScreen(),
         instanceName: RouteConstants.library);
+    injector.registerFactory<Widget>(() => const ProfileScreen(),
+        instanceName: RouteConstants.profile);
   }
 }

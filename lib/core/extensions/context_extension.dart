@@ -27,6 +27,42 @@ extension BuildContextExtension on BuildContext {
     );
   }
 
+  Future<T?> pushReplacementNamed<T extends Object?>(String routeName,
+      {bool rootNavigator = false,
+      Map<String, dynamic>? arguments,
+      TransitionType transitionType = TransitionType.ios}) {
+    final pushArguments = <String, dynamic>{
+      'transition_type': transitionType,
+    };
+    if (arguments != null) {
+      pushArguments.addAll(arguments);
+    }
+    return Navigator.of(this, rootNavigator: rootNavigator)
+        .pushReplacementNamed(
+      routeName,
+      arguments: pushArguments,
+    );
+  }
+
+  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(
+      String routeName, bool Function(Route<dynamic>) predicate,
+      {bool rootNavigator = false,
+      Map<String, dynamic>? arguments,
+      TransitionType transitionType = TransitionType.ios}) {
+    final pushArguments = <String, dynamic>{
+      'transition_type': transitionType,
+    };
+    if (arguments != null) {
+      pushArguments.addAll(arguments);
+    }
+    return Navigator.of(this, rootNavigator: rootNavigator)
+        .pushNamedAndRemoveUntil(
+      routeName,
+      predicate,
+      arguments: pushArguments,
+    );
+  }
+
   void showDatePicker(Function(DateTime date) onDateTimeSelected,
       {DateTime? initialDate, DateTime? maxDate}) {
     showCupertinoModalPopup(
@@ -83,6 +119,8 @@ extension BuildContextExtension on BuildContext {
         return AppUtils.showToast(exception.message);
     }
   }
+
+  AppLocalizations localizations() => AppLocalizations.of(this)!;
 
   double get width => MediaQuery.sizeOf(this).width;
 
