@@ -6,7 +6,8 @@ import 'package:get_it/get_it.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 import 'package:music_app/features/presentation/ui/custom/loading_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../../core/core.dart';
+
+import '../../../../../core/core.dart';
 
 abstract class BaseScreenState<V extends StatefulWidget,
         B extends BaseBloc<Object, S>, S extends BaseState> extends State<V>

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_app/features/presentation/blocs/splash/splash_bloc.dart';
-import 'package:music_app/features/presentation/ui/screen/base_screen.dart';
 import '../../../../../core/core.dart';
+import '../base/base_screen.dart';
 
 class SplashScreen
     extends BaseScreenWithSingleTickerProvider<SplashBloc, SplashState> {
@@ -33,8 +33,9 @@ class SplashScreen
         onLoaded: (composition) {
           _animationController
             ..duration = composition.duration
-            ..forward().then((value) =>
-                Navigator.pushReplacementNamed(context, RouteConstants.home));
+            ..forward().then((value) => Navigator.pushReplacementNamed(
+                context, RouteConstants.home,
+                arguments: {"helo": "23847298432984"}));
         },
       ),
     );

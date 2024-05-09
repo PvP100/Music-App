@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:music_app/core/constants/route_constants.dart';
-import 'package:music_app/features/presentation/ui/screen/base_screen.dart';
 
+import '../features/presentation/ui/screen/base/base_screen.dart';
 import '../features/presentation/ui/screen/screens.dart';
 
 class ScreenDi {
@@ -13,7 +13,7 @@ class ScreenDi {
       instanceName: RouteConstants.splash,
     );
     injector.registerFactoryParam<BaseScreen, Map<String, dynamic>?, void>(
-      (p1, _) => HomeScreen(),
+      (p1, _) => HomeScreen(arguments: p1),
       instanceName: RouteConstants.home,
     );
   }
