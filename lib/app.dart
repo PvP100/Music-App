@@ -30,7 +30,7 @@ class App extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.getRoute,
-        initialRoute: RouteConstants.main,
+        initialRoute: RouteConstants.login,
         navigatorObservers: [routeObserver],
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

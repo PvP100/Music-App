@@ -5,6 +5,7 @@ import 'package:music_app/core/core.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/widgets.dart';
 import 'package:music_app/features/presentation/ui/custom/search_widget.dart';
+import 'package:music_app/features/presentation/ui/dialogs/add_play_list_dialog.dart';
 import 'package:music_app/features/presentation/ui/dialogs/add_song_dialog.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
 import 'package:music_app/features/presentation/ui/screen/screens.dart';
@@ -24,14 +25,21 @@ class _LibraryScreenState
   late final TabController _tabController;
   final TextEditingController _controller = TextEditingController();
 
+  late final AnimationController _animationController;
+
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: 400.milliseconds,
+    );
     _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
   @override
   void dispose() {
+    _animationController.dispose();
     _controller.dispose();
     _tabController.dispose();
     super.dispose();
@@ -57,7 +65,7 @@ class _LibraryScreenState
                       isScrollControlled: false,
                       context: context,
                       builder: (dialogContext) => AddSongDialog(
-                        onCreatePlaylist: () {},
+                        onCreatePlaylist: _onCreatePlaylist,
                         onSearch: () {
                           context
                               .read<MainBloc>()
@@ -119,4 +127,18 @@ class _LibraryScreenState
 
   @override
   bool get safeAreaBottom => false;
+
+  _onCreatePlaylist() {
+    showModalBottomSheet(
+      transitionAnimationController: _animationController,
+      useRootNavigator: true,
+      isScrollControlled: true,
+      context: context,
+      clipBehavior: Clip.hardEdge,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: AppDimens.dimen15.radius),
+      ),
+      builder: (dialogContext) => const AddPlaylistDialog(),
+    );
+  }
 }

@@ -15,4 +15,6 @@ class ImageConstants {
   static const String iconSearch = "icon_search";
   static const String iconAdd = "icon_add";
   static const String iconSetting = "icon_setting";
+  static const String iconCloseWhite = "icon_close_white";
+  static const String iconRightArrow = "icon_right_arrow";
 }

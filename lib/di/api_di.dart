@@ -5,7 +5,7 @@ class ApiDi {
   ApiDi._();
 
   static Future<void> init(GetIt injector) async {
-    injector.registerLazySingleton<ImageApiProvider>(
-        () => ImageApiProviderImpl(injector()));
+    injector.registerLazySingleton<HaMusicApiProvider>(
+        () => HaMusicApiProviderImpl(injector()));
   }
 }

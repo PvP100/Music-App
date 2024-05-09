@@ -64,7 +64,7 @@ class _MainScreenState
             stops: const [0.1, 0.5, 1],
           ),
         ),
-        height: context.bottomBarHeight + AppConstants.musicPlayHeight,
+        height: context.bottomBarHeight + AppConstants.musicPlayHeight / 2,
         child: Theme(
           data: ThemeData(
             splashColor: Colors.transparent,

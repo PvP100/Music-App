@@ -31,5 +31,7 @@ class ScreenDi {
         instanceName: RouteConstants.library);
     injector.registerFactory<Widget>(() => const ProfileScreen(),
         instanceName: RouteConstants.profile);
+    injector.registerFactory<Widget>(() => const SettingScreen(),
+        instanceName: RouteConstants.setting);
   }
 }

@@ -7,8 +7,8 @@ class BlocDi {
   static Future<void> init(GetIt injector) async {
     injector.registerLazySingleton(() => AppBloc());
     injector.registerFactory(() => SplashBloc());
-    injector.registerFactory(() => HomeBloc(injector()));
-    injector.registerFactory(() => LoginBloc());
+    injector.registerFactory(() => HomeBloc());
+    injector.registerFactory(() => LoginBloc(injector()));
     injector.registerFactory(() => LoginOrRegisterBloc());
     injector.registerFactory(() => ChangePasswordBloc());
     injector.registerFactory(() => ForgotPasswordBloc());
@@ -18,5 +18,6 @@ class BlocDi {
     injector.registerFactory(() => LibraryBloc());
     injector.registerFactory(() => ProfileBloc());
     injector.registerFactory(() => CategoryBloc());
+    injector.registerFactory(() => SettingBloc());
   }
 }

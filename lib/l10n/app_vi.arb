@@ -49,5 +49,13 @@
     "searchHint": "Nghệ sĩ, Bài hát, Album, v.v.",
     "recentlySearched": "Đã tìm kiếm gần đây",
     "topResult": "Top Kết Quả",
-    "song": "Bài hát"
+    "song": "Bài hát",
+    "addNameForYourPlaylist": "Đặt tên cho danh sách của bạn",
+    "createStr": "Tạo",
+    "settingStr": "Cài đặt",
+    "accountStr": "Tài khoản",
+    "otherStr": "Khác",
+    "personalInformation": "Thông tin cá nhân",
+    "appInformation": "Thông tin ứng dụng",
+    "logout": "Đăng xuất"
 }

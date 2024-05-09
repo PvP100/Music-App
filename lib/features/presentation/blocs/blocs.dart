@@ -11,3 +11,4 @@ export 'search/search_bloc.dart';
 export 'library/library_bloc.dart';
 export 'profile/profile_bloc.dart';
 export 'category/category_bloc.dart';
+export 'setting/setting_bloc.dart';

@@ -49,5 +49,13 @@
     "searchHint": "Artist, Song, Album, v.v.",
     "recentlySearched": "Recently searched",
     "topResult": "Top Result",
-    "song": "Song"
+    "song": "Song",
+    "addNameForYourPlaylist": "Name your playlist",
+    "createStr": "Create",
+    "settingStr": "Setting",
+    "accountStr": "Account",
+    "otherStr": "Other",
+    "personalInformation": "Personal information",
+    "appInformation": "App information",
+    "logout": "Logout"
 } 

@@ -3,8 +3,8 @@ class AppConstants {
   static const emptyString = "";
 
   //Network
-  static const connectionTimeOut = 30;
-  static const receiveTimeOut = 30;
+  static const connectionTimeOut = 10;
+  static const receiveTimeOut = 10;
 
   //AppBar
   static const appBarHeight = 50;

@@ -127,5 +127,7 @@ extension BuildContextExtension on BuildContext {
   double get height => MediaQuery.sizeOf(this).height;
 
   double get bottomBarHeight =>
-      kBottomNavigationBarHeight + MediaQuery.viewPaddingOf(this).bottom;
+      kBottomNavigationBarHeight +
+      MediaQuery.viewPaddingOf(this).bottom +
+      AppConstants.musicPlayHeight / 2;
 }

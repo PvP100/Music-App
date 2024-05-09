@@ -59,7 +59,7 @@ class _HomeScreenState
             },
           ),
           SliverPadding(
-              padding: EdgeInsets.only(bottom: context.bottomBarHeight + 10))
+              padding: EdgeInsets.only(bottom: context.bottomBarHeight))
         ],
       ),
     );

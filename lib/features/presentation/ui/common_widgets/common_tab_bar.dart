@@ -17,6 +17,7 @@ class CommonTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBar(
+      tabAlignment: TabAlignment.start,
       padding: padding,
       dividerColor: Colors.transparent,
       labelPadding: EdgeInsets.zero,

@@ -22,7 +22,7 @@ class _ProfileScreenState
     return Column(
       children: [
         HaMusicAppBar(
-          onRightClick: () {},
+          onRightClick: _goToSettingScreen,
           rightIcon: ImageConstants.iconSetting.loadImageAsset(
             height: 30,
             width: 30,
@@ -75,5 +75,9 @@ class _ProfileScreenState
         ).expanded()
       ],
     );
+  }
+
+  _goToSettingScreen() {
+    context.pushNamed(RouteConstants.setting);
   }
 }

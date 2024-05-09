@@ -11,4 +11,5 @@ class RouteConstants {
   static const String library = "library";
   static const String profile = "/profile";
   static const String category = "/category";
+  static const String setting = "/setting";
 }
