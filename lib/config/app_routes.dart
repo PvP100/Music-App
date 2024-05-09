@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:music_app/features/presentation/ui/screen/base_screen.dart';
 
 class AppRoutes {
   static PageRoute getRoute(RouteSettings settings) {
     late final Widget widget;
     try {
-      widget = GetIt.I.get<Widget>(instanceName: settings.name);
+      BaseScreen screen = GetIt.I.get<BaseScreen>(instanceName: settings.name);
+      widget = screen.buildParent();
     } catch (e) {
       widget = Scaffold(
         backgroundColor: Colors.white,
