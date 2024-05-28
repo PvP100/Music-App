@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/config/app_routes.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/features/presentation/blocs/search/search_bloc.dart';
+import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -13,8 +14,14 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState
-    extends BaseScreenState<CategoryScreen, SearchBloc, SearchState>
+    extends BaseScreenState<CategoryScreen, CategoryBloc, CategoryState>
     with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+    bloc.getCategories();
+  }
+
   @override
   Widget buildContent(BuildContext context) {
     return CustomScrollView(
@@ -54,37 +61,41 @@ class _CategoryScreenState
         ),
         SliverPadding(
           padding: EdgeInsets.fromLTRB(15, 0, 15, context.bottomBarHeight),
-          sliver: SliverGrid.builder(
-              itemCount: 20,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                childAspectRatio: 16 / 10,
-              ),
-              itemBuilder: (context, index) {
-                return Stack(
-                  children: [
-                    Positioned.fill(
-                      child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(7)),
-                        child:
-                            "https://cdn.tgdd.vn/Files/2021/09/27/1386105/11-ban-nhac-edm-giup-tao-dong-luc-manh-me-cho-viec-tap-luyen-tai-nha-202109280002110993.jpg"
-                                .loadImageUrl(),
-                      ),
-                    ),
-                    Positioned(
-                      left: 10,
-                      top: 10,
-                      child: Text(
-                        "EDM",
-                        style: AppTextStyles.bold.copyWith(fontSize: 18),
-                      ),
-                    ),
-                  ],
-                );
-              }),
+          sliver: BlocBuilder<CategoryBloc, CategoryState>(
+            builder: (context, state) {
+              return SliverGrid.builder(
+                  itemCount: 20,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15,
+                    childAspectRatio: 16 / 10,
+                  ),
+                  itemBuilder: (context, index) {
+                    final model = state.categories?[index];
+                    return Stack(
+                      children: [
+                        Positioned.fill(
+                          child: ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(7)),
+                            child: model?.icons?.firstOrNull?.url
+                                .loadImageUrl(fit: BoxFit.fill),
+                          ),
+                        ),
+                        Positioned(
+                          left: 10,
+                          top: 10,
+                          child: Text(
+                            model?.name ?? "",
+                            style: AppTextStyles.bold.copyWith(fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
         )
       ],
     );

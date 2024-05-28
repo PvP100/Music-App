@@ -111,7 +111,7 @@ class SearchItemWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Name",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

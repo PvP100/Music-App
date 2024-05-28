@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:music_app/core/constants/shared_preferences_constants.dart';
 import 'package:music_app/core/core.dart';
+import 'package:music_app/features/data/preference/ha_music_shared_preference.dart';
 import '../../config/config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:music_app/features/data/exception/failure.dart';
@@ -102,7 +105,7 @@ extension BuildContextExtension on BuildContext {
         });
   }
 
-  showError(Failure exception) {
+  handleError(Failure exception) {
     final localizations = AppLocalizations.of(this)!;
     switch (exception) {
       case NetWorkConnection():
@@ -114,7 +117,14 @@ extension BuildContextExtension on BuildContext {
       case ServerError() || InternalServerError():
         return AppUtils.showToast(localizations.serverError);
       case UnAuthorizedError():
-        return AppUtils.showToast(localizations.unauthorized);
+        {
+          HaMusicSharedPreference mPrefs =
+              GetIt.I.get<HaMusicSharedPreference>();
+          mPrefs.removeKey(SharedPreferencesConstants.appToken);
+          pushNamedAndRemoveUntil(RouteConstants.loginOrRegister, (p0) => false,
+              rootNavigator: true);
+          return AppUtils.showToast(exception.message);
+        }
       case AppError():
         return AppUtils.showToast(exception.message);
     }

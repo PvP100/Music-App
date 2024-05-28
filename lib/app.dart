@@ -8,6 +8,8 @@ import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'features/presentation/ui/common_widgets/loading/custom_loading.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
 class App extends StatelessWidget {
@@ -26,11 +28,14 @@ class App extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        builder: (context, child) {
+          return CustomLoading.init()(context, child);
+        },
         locale: const Locale('vi'),
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.getRoute,
-        initialRoute: RouteConstants.login,
+        initialRoute: RouteConstants.splash,
         navigatorObservers: [routeObserver],
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
