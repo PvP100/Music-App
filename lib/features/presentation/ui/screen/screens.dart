@@ -11,3 +11,4 @@ export 'library/library_screen.dart';
 export 'profile/profile_screen.dart';
 export 'search/search_screen.dart';
 export 'setting/setting_screen.dart';
+export 'track/track_screen.dart';

@@ -76,17 +76,21 @@ class HomeNewAlbumCategory extends StatelessWidget {
                             ),
                             child: ImageConstants.iconPlayBlack
                                 .loadImageAsset(width: 20, height: 20),
-                          ).onCupertinoClick(() {})
+                          )
                         ],
                       ),
                     )
                   ],
-                );
+                ).onCupertinoClick(() => _navigateToTrack(context));
               },
               separatorBuilder: ((context, index) => const SizedBox(width: 15)),
               itemCount: 10),
         )
       ],
     );
+  }
+
+  _navigateToTrack(BuildContext context) {
+    context.pushNamed(RouteConstants.track, rootNavigator: true);
   }
 }

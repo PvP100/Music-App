@@ -17,4 +17,13 @@ class ImageConstants {
   static const String iconSetting = "icon_setting";
   static const String iconCloseWhite = "icon_close_white";
   static const String iconRightArrow = "icon_right_arrow";
+  static const String iconThreeDot = "icon_three_dot";
+  static const String iconListTrack = "icon_list_track";
+  static const String iconVolumeUp = "icon_volume_up";
+  static const String iconVolumeDown = "icon_volume_down";
+  static const String iconShuffle = "icon_shuffle";
+  static const String iconPrevious = "icon_previous";
+  static const String iconPlay = "icon_play";
+  static const String iconNext = "icon_next";
+  static const String iconRepeat = "icon_repeat";
 }

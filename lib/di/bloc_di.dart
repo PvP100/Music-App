@@ -19,5 +19,6 @@ class BlocDi {
     injector.registerFactory(() => LibraryBloc());
     injector.registerFactory(() => ProfileBloc());
     injector.registerFactory(() => SettingBloc());
+    injector.registerFactory(() => TrackBloc(injector()));
   }
 }
