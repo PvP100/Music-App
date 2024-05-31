@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
@@ -35,65 +37,74 @@ class PlayWidget extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(24, 30, 24, 0),
             child: SliderWidget(),
           ),
-          Container(
-            padding: EdgeInsets.fromLTRB(
-                24, 16, 24, context.safeAreaBottomHeight + 15),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 15.0,
+                sigmaY: 15.0,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(color: Color(0x03000000)),
+                padding: EdgeInsets.fromLTRB(
+                    24, 16, 24, context.safeAreaBottomHeight + 15),
+                child: Column(
                   children: [
-                    Text(
-                      "0:00",
-                      style: AppTextStyles.medium.copyWith(fontSize: 14),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "0:00",
+                          style: AppTextStyles.medium.copyWith(fontSize: 14),
+                        ),
+                        Text(
+                          "0:00",
+                          style: AppTextStyles.medium.copyWith(fontSize: 14),
+                        )
+                      ],
                     ),
-                    Text(
-                      "0:00",
-                      style: AppTextStyles.medium.copyWith(fontSize: 14),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ImageConstants.iconShuffle
+                            .loadImageAsset(height: 32, width: 32),
+                        ImageConstants.iconPrevious
+                            .loadImageAsset(height: 32, width: 46),
+                        ImageConstants.iconPlay
+                            .loadImageAsset(height: 56, width: 56),
+                        ImageConstants.iconNext
+                            .loadImageAsset(height: 32, width: 46),
+                        ImageConstants.iconRepeat
+                            .loadImageAsset(height: 32, width: 32),
+                      ],
+                    ).paddingOnly(top: 27),
+                    Row(
+                      children: [
+                        ImageConstants.iconVolumeDown
+                            .loadImageAsset(height: 18, width: 18),
+                        const SliderWidget()
+                            .paddingSymmetric(horizontal: 15)
+                            .expanded(),
+                        ImageConstants.iconVolumeUp
+                            .loadImageAsset(height: 18, width: 18),
+                      ],
+                    ).paddingOnly(bottom: 24, top: 50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ImageConstants.iconListTrack
+                            .loadImageAsset(height: 24, width: 24),
+                        ImageConstants.iconListTrack
+                            .loadImageAsset(height: 24, width: 24),
+                        ImageConstants.iconListTrack
+                            .loadImageAsset(height: 24, width: 24),
+                      ],
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ImageConstants.iconShuffle
-                        .loadImageAsset(height: 32, width: 32),
-                    ImageConstants.iconPrevious
-                        .loadImageAsset(height: 32, width: 46),
-                    ImageConstants.iconPlay
-                        .loadImageAsset(height: 56, width: 56),
-                    ImageConstants.iconNext
-                        .loadImageAsset(height: 32, width: 46),
-                    ImageConstants.iconRepeat
-                        .loadImageAsset(height: 32, width: 32),
-                  ],
-                ).paddingOnly(top: 27),
-                Row(
-                  children: [
-                    ImageConstants.iconVolumeDown
-                        .loadImageAsset(height: 18, width: 18),
-                    const SliderWidget()
-                        .paddingSymmetric(horizontal: 15)
-                        .expanded(),
-                    ImageConstants.iconVolumeUp
-                        .loadImageAsset(height: 18, width: 18),
-                  ],
-                ).paddingOnly(bottom: 24, top: 50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ImageConstants.iconListTrack
-                        .loadImageAsset(height: 24, width: 24),
-                    ImageConstants.iconListTrack
-                        .loadImageAsset(height: 24, width: 24),
-                    ImageConstants.iconListTrack
-                        .loadImageAsset(height: 24, width: 24),
-                  ],
-                )
-              ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
