@@ -1,4 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/data/exception/failure.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
@@ -6,50 +5,51 @@ import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 part 'register_event.dart';
 part 'register_state.dart';
 
-class RegisterBloc extends BaseBloc<RegisterEvent, RegisterState> {
+class RegisterBloc extends BaseBloc<RegisterState> {
   RegisterBloc() : super(RegisterState());
 
-  @override
-  void init() {
-    on<OnBirthdaySelectedEvent>((event, emit) => emit(state.copyWith(
-          birthday: event.birthday,
-        )));
-    on<OnRegisterEvent>(_register);
+  selectBirthday(DateTime birthday) {
+    emit(state.copyWith(birthday: birthday));
   }
 
-  _register(OnRegisterEvent event, Emitter<RegisterState> emitter) {
-    if (event.username.isEmpty) {
-      return emitter(
+  register({
+    required String username,
+    required String password,
+    required String rePassword,
+    required String fullName,
+  }) {
+    if (username.isEmpty) {
+      return emit(
           state.copyWith(error: localizations.usernameEmpty.toFailure()));
     }
 
-    if (event.password.isEmpty) {
-      return emitter(
+    if (password.isEmpty) {
+      return emit(
           state.copyWith(error: localizations.passwordEmpty.toFailure()));
     }
 
-    if (event.rePassword.isEmpty) {
-      return emitter(
+    if (rePassword.isEmpty) {
+      return emit(
           state.copyWith(error: localizations.rePasswordEmpty.toFailure()));
     }
 
-    if (event.fullName.isEmpty) {
-      return emitter(
+    if (fullName.isEmpty) {
+      return emit(
           state.copyWith(error: localizations.fullNameEmpty.toFailure()));
     }
 
     if (state.birthday == null) {
-      return emitter(state.copyWith(
+      return emit(state.copyWith(
           error: localizations.dateOfBirthCannotBeEmpty.toFailure()));
     }
 
-    if (!event.username.isEmail() && !event.username.isPhoneNumber()) {
-      return emitter(
+    if (!username.isEmail() && !username.isPhoneNumber()) {
+      return emit(
           state.copyWith(error: localizations.usernameIncorrect.toFailure()));
     }
 
-    if (event.password != event.rePassword) {
-      return emitter(
+    if (password != rePassword) {
+      return emit(
           state.copyWith(error: localizations.passwordNotMatch.toFailure()));
     }
   }

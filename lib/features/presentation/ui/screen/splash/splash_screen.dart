@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:music_app/core/constants/shared_preferences_constants.dart';
 import 'package:music_app/features/presentation/blocs/splash/splash_bloc.dart';
 import '../base_screen_state.dart';
 import '../../../../../core/core.dart';
@@ -37,9 +38,17 @@ class _SplashScreenState
           onLoaded: (composition) {
             _animationController
               ..duration = composition.duration
-              ..forward().then((value) => Navigator.pushReplacementNamed(
-                  context, RouteConstants.loginOrRegister));
+              ..forward().then((value) => _navigate());
           },
         ),
       );
+
+  _navigate() {
+    if (bloc.preferences.get<String>(SharedPreferencesConstants.appToken) !=
+        null) {
+      Navigator.pushReplacementNamed(context, RouteConstants.main);
+    } else {
+      Navigator.pushReplacementNamed(context, RouteConstants.loginOrRegister);
+    }
+  }
 }

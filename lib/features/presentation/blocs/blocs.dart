@@ -9,3 +9,7 @@ export 'register/register_bloc.dart';
 export 'main/main_bloc.dart';
 export 'search/search_bloc.dart';
 export 'library/library_bloc.dart';
+export 'profile/profile_bloc.dart';
+export 'category/category_bloc.dart';
+export 'setting/setting_bloc.dart';
+export 'track/track_bloc.dart';

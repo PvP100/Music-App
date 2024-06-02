@@ -14,11 +14,10 @@ class NetworkDi {
     GetIt.instance.registerSingleton<Dio>(Dio(BaseOptions(
       baseUrl: injector<NetWorkConfig>().baseUrl,
       headers: {
-        Headers.contentTypeHeader: Headers.jsonContentType,
-        'Authorization': 'Client-ID CZlv3UujPt65aSoYC11eYKg1njSEclZFPTFRqlqJZP4'
+        Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
       },
-      connectTimeout: 30.seconds,
-      receiveTimeout: 30.seconds,
+      connectTimeout: 10.seconds,
+      receiveTimeout: 10.seconds,
     ))
       ..interceptors.add(injector<CustomInterceptors>()));
     GetIt.instance.registerSingleton<IBaseDio>(BaseDio(injector()));

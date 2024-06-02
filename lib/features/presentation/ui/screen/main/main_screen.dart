@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
+import 'package:music_app/features/presentation/ui/common_widgets/tab_navigator.dart';
 import 'package:music_app/features/presentation/ui/custom/keep_alive_screen.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
-import 'package:music_app/features/presentation/ui/screen/screens.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,9 +17,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState
     extends BaseScreenState<MainScreen, MainBloc, MainState> {
   final pages = [
-    const KeepAliveScreen(child: HomeScreen()),
-    const KeepAliveScreen(child: SearchScreen()),
-    const KeepAliveScreen(child: LibraryScreen()),
+    const KeepAliveScreen(
+        child: TabNavigator(initialRoute: RouteConstants.home)),
+    const KeepAliveScreen(
+        child: TabNavigator(initialRoute: RouteConstants.category)),
+    const KeepAliveScreen(
+        child: TabNavigator(initialRoute: RouteConstants.library)),
   ];
 
   final PageController _pageController = PageController();
@@ -28,6 +31,7 @@ class _MainScreenState
 
   @override
   void dispose() {
+    pages.clear();
     _pageController.dispose();
     super.dispose();
   }
@@ -60,7 +64,7 @@ class _MainScreenState
             stops: const [0.1, 0.5, 1],
           ),
         ),
-        height: context.bottomBarHeight + 70,
+        height: context.bottomBarHeight + AppConstants.musicPlayHeight / 2,
         child: Theme(
           data: ThemeData(
             splashColor: Colors.transparent,
@@ -70,9 +74,8 @@ class _MainScreenState
               selector: (state) => state.currentScreen,
               builder: (context, value) {
                 return BottomNavigationBar(
-                  onTap: (index) => bloc.add(
-                    OnTabClickEvent(TabNavigation.values[index]),
-                  ),
+                  onTap: (index) =>
+                      bloc.changScreen(TabNavigation.values[index]),
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   currentIndex: value.screenIndex,
@@ -118,6 +121,9 @@ class _MainScreenState
 
   @override
   bool get safeAreaBottom => false;
+
+  @override
+  bool get resizeToAvoidBottomInset => false;
 }
 
 enum TabNavigation {

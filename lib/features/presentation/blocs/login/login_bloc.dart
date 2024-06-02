@@ -1,5 +1,8 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_app/core/constants/shared_preferences_constants.dart';
 import 'package:music_app/core/core.dart';
+import 'package:music_app/features/data/preference/ha_music_shared_preference.dart';
+import 'package:music_app/features/domain/entities/request/login_request.dart';
+import 'package:music_app/features/domain/usecases/login_use_case.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 
 import '../../../data/exception/failure.dart';
@@ -7,32 +10,37 @@ import '../../../data/exception/failure.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
-class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginState());
+class LoginBloc extends BaseBloc<LoginState> {
+  final LoginUseCase _loginUseCase;
+  final HaMusicSharedPreference _mPrefs;
 
-  @override
-  void init() {
-    on<OnLoginEvent>(_login);
-  }
+  LoginBloc(this._loginUseCase, this._mPrefs) : super(LoginState());
 
-  _login(OnLoginEvent event, Emitter<LoginState> emitter) async {
-    if (event.password.isEmpty || event.username.isEmpty) {
-      return emitter(
+  login({required String password, required String username}) async {
+    if (password.isEmpty || username.isEmpty) {
+      return emit(
         state.copyWith(
             error: Failure.error(localizations.usernameAndPasswordError)),
       );
     }
-    if (!event.username.isEmail() && !event.username.isPhoneNumber()) {
-      return emitter(
+    if (!username.isEmail() && !username.isPhoneNumber()) {
+      return emit(
           state.copyWith(error: localizations.usernameIncorrect.toFailure()));
     }
-    if (event.password.length < AppConstants.passwordLengthValidate) {
-      return emitter(
+    if (password.length < AppConstants.passwordLengthValidate) {
+      return emit(
           state.copyWith(error: localizations.passwordLengthError.toFailure()));
     }
 
-    emitter(state.copyWith(isLoading: true));
-    await Future.delayed(2.seconds);
-    emitter(state.copyWith(isLoginSuccess: true));
+    emit(state.copyWith(isLoading: true));
+    final useCase = await _loginUseCase(LoginRequest(
+      grantType: "client_credentials",
+      clientId: "816997b654de499faa6f277bcefdf196",
+      clientSecret: "2a5f8e38511a4ee8b11503b3dfe7533d",
+    ));
+    useCase.fold((data) async {
+      await _mPrefs.put(SharedPreferencesConstants.appToken, data?.accessToken);
+      emit(state.copyWith(isLoginSuccess: true));
+    }, (e) => emit(state.copyWith(error: e)));
   }
 }

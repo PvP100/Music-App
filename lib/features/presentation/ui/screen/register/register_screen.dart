@@ -80,19 +80,19 @@ class _RegisterScreenState
                   }),
             ).onCupertinoClick(() {
               context.showDatePicker((date) {
-                bloc.add(OnBirthdaySelectedEvent(date));
+                bloc.selectBirthday(date);
               }, initialDate: bloc.state.birthday, maxDate: DateTime.now());
             }),
             CommonButton(
                 margin: const EdgeInsets.only(top: 50),
                 title: localizations.register,
                 onClick: () {
-                  bloc.add(OnRegisterEvent(
+                  bloc.register(
                     username: _usernameController.text.trim(),
                     password: _passwordController.text.trim(),
                     rePassword: _rePasswordController.text.trim(),
                     fullName: _fullNameController.text.trim(),
-                  ));
+                  );
                 })
           ]),
         ).expanded()

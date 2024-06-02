@@ -42,7 +42,8 @@ class BaseDio implements IBaseDio {
         final statusCode = e.response?.statusCode ?? -1;
         return switch (statusCode) {
           400 => Result.error(Failure.badRequestError()),
-          401 => Result.error(Failure.unAuthorizedError()),
+          401 => Result.error(Failure.unAuthorizedError(
+              (e.response?.data as Map<String, dynamic>)['error']['message'])),
           404 => Result.error(Failure.dataNotFoundError()),
           500 => Result.error(Failure.internalServerError()),
           _ => Result.error(Failure.serverError()),

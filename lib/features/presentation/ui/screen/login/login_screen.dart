@@ -76,16 +76,16 @@ class _LoginScreenState
                 .onCupertinoClick(() {
                   context.pushNamed(RouteConstants.forgotPassword);
                 })
-                .align(Alignment.centerRight)
+                .align(alignment: Alignment.centerRight)
                 .paddingOnly(right: 30),
             CommonButton(
               title: localizations.login,
               margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               onClick: () {
-                bloc.add(OnLoginEvent(
+                bloc.login(
                   username: _usernameController.text.trim(),
                   password: _passwordController.text.trim(),
-                ));
+                );
               },
             )
           ]),
@@ -104,7 +104,7 @@ class _LoginScreenState
   void onStateListener(BuildContext context, LoginState state) {
     super.onStateListener(context, state);
     if (state.isLoginSuccess) {
-      context.pushNamed(RouteConstants.main);
+      context.pushNamedAndRemoveUntil(RouteConstants.main, (route) => false);
     }
   }
 

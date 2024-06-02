@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
+import 'package:music_app/features/presentation/ui/common_widgets/loading/custom_loading.dart';
 import 'package:music_app/features/presentation/ui/custom/loading_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../config/config.dart';
 import '../../../../core/core.dart';
 
-abstract class BaseScreenState<V extends StatefulWidget,
-        B extends BaseBloc<Object, S>, S extends BaseState> extends State<V>
+abstract class BaseScreenState<V extends StatefulWidget, B extends BaseBloc<S>,
+        S extends BaseState> extends State<V>
     with RouteAware, WidgetsBindingObserver {
   late B _bloc;
 
@@ -45,11 +46,14 @@ abstract class BaseScreenState<V extends StatefulWidget,
 
   bool isFirstInit = true;
 
+  @protected
+  bool get resizeToAvoidBottomInset => true;
+
   @override
   void initState() {
+    _bloc = GetIt.I.get<B>();
     flutterDebugPrint("initState $runtimeType");
     WidgetsBinding.instance.addObserver(this);
-    _bloc = GetIt.I.get<B>();
     super.initState();
   }
 
@@ -138,16 +142,17 @@ abstract class BaseScreenState<V extends StatefulWidget,
         child: BlocListener<B, S>(
             listener: (context, state) {
               if (state.isLoading) {
-                LoadingIndicator.show(context);
+                CustomLoading.show();
               } else {
-                LoadingIndicator.dismiss(context);
+                CustomLoading.dismiss();
                 if (state.error != null) {
-                  context.showError(state.error!);
+                  context.handleError(state.error!);
                 }
                 onStateListener(context, state);
               }
             },
             child: Scaffold(
+              resizeToAvoidBottomInset: resizeToAvoidBottomInset,
               backgroundColor: backgroundColor,
               body: SafeArea(
                 top: safeAreaTop,

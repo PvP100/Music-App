@@ -12,8 +12,8 @@ class LibraryItem extends StatelessWidget {
         Container(
           height: 50,
           width: 50,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
               colors: [
                 AppColors.colorFF9D9D,
                 AppColors.colorFFE1E1,
@@ -21,7 +21,7 @@ class LibraryItem extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(7)),
+            borderRadius: BorderRadius.all(7.radius),
           ),
         ),
         const SizedBox(width: 12),

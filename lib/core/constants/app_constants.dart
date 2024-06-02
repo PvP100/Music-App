@@ -1,11 +1,15 @@
 class AppConstants {
-
   static const passwordLengthValidate = 8;
   static const emptyString = "";
 
   //Network
-  static const connectionTimeOut = 30;
-  static const receiveTimeOut = 30;
+  static const connectionTimeOut = 10;
+  static const receiveTimeOut = 10;
+
+  //AppBar
+  static const appBarHeight = 50;
+
+  static const musicPlayHeight = 70;
 }
 
 class LottiePath {

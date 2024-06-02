@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:music_app/core/constants/shared_preferences_constants.dart';
 import 'package:music_app/core/core.dart';
+import 'package:music_app/features/data/preference/ha_music_shared_preference.dart';
 import '../../config/config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:music_app/features/data/exception/failure.dart';
@@ -23,6 +26,42 @@ extension BuildContextExtension on BuildContext {
     }
     return Navigator.of(this, rootNavigator: rootNavigator).pushNamed(
       routeName,
+      arguments: pushArguments,
+    );
+  }
+
+  Future<T?> pushReplacementNamed<T extends Object?>(String routeName,
+      {bool rootNavigator = false,
+      Map<String, dynamic>? arguments,
+      TransitionType transitionType = TransitionType.ios}) {
+    final pushArguments = <String, dynamic>{
+      'transition_type': transitionType,
+    };
+    if (arguments != null) {
+      pushArguments.addAll(arguments);
+    }
+    return Navigator.of(this, rootNavigator: rootNavigator)
+        .pushReplacementNamed(
+      routeName,
+      arguments: pushArguments,
+    );
+  }
+
+  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(
+      String routeName, bool Function(Route<dynamic>) predicate,
+      {bool rootNavigator = false,
+      Map<String, dynamic>? arguments,
+      TransitionType transitionType = TransitionType.ios}) {
+    final pushArguments = <String, dynamic>{
+      'transition_type': transitionType,
+    };
+    if (arguments != null) {
+      pushArguments.addAll(arguments);
+    }
+    return Navigator.of(this, rootNavigator: rootNavigator)
+        .pushNamedAndRemoveUntil(
+      routeName,
+      predicate,
       arguments: pushArguments,
     );
   }
@@ -66,7 +105,7 @@ extension BuildContextExtension on BuildContext {
         });
   }
 
-  showError(Failure exception) {
+  handleError(Failure exception) {
     final localizations = AppLocalizations.of(this)!;
     switch (exception) {
       case NetWorkConnection():
@@ -78,16 +117,29 @@ extension BuildContextExtension on BuildContext {
       case ServerError() || InternalServerError():
         return AppUtils.showToast(localizations.serverError);
       case UnAuthorizedError():
-        return AppUtils.showToast(localizations.unauthorized);
+        {
+          HaMusicSharedPreference mPrefs =
+              GetIt.I.get<HaMusicSharedPreference>();
+          mPrefs.removeKey(SharedPreferencesConstants.appToken);
+          pushNamedAndRemoveUntil(RouteConstants.loginOrRegister, (p0) => false,
+              rootNavigator: true);
+          return AppUtils.showToast(exception.message);
+        }
       case AppError():
         return AppUtils.showToast(exception.message);
     }
   }
 
+  AppLocalizations localizations() => AppLocalizations.of(this)!;
+
   double get width => MediaQuery.sizeOf(this).width;
 
   double get height => MediaQuery.sizeOf(this).height;
 
+  double get safeAreaBottomHeight => MediaQuery.viewPaddingOf(this).bottom;
+
   double get bottomBarHeight =>
-      kBottomNavigationBarHeight + MediaQuery.viewPaddingOf(this).bottom;
+      kBottomNavigationBarHeight +
+      safeAreaBottomHeight +
+      AppConstants.musicPlayHeight / 2;
 }

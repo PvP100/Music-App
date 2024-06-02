@@ -1,10 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
+import 'package:music_app/features/presentation/ui/common_widgets/widgets.dart';
 import 'package:music_app/features/presentation/ui/custom/search_widget.dart';
+import 'package:music_app/features/presentation/ui/dialogs/add_play_list_dialog.dart';
 import 'package:music_app/features/presentation/ui/dialogs/add_song_dialog.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
 import 'package:music_app/features/presentation/ui/screen/screens.dart';
@@ -22,15 +23,24 @@ class _LibraryScreenState
     extends BaseScreenState<LibraryScreen, LibraryBloc, LibraryState>
     with TickerProviderStateMixin {
   late final TabController _tabController;
+  final TextEditingController _controller = TextEditingController();
+
+  late final AnimationController _animationController;
 
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: 400.milliseconds,
+    );
     _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
   @override
   void dispose() {
+    _animationController.dispose();
+    _controller.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -45,54 +55,35 @@ class _LibraryScreenState
             children: [
               Row(
                 children: [
-                  const CircleAvatar(
-                    radius: 20,
-                    foregroundImage: CachedNetworkImageProvider(
-                        "https://images.unsplash.com/photo-1692221307059-8819db116d92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"),
-                  ),
+                  const AppCircleAvatar(),
                   const Spacer(),
                   ImageConstants.iconAdd
                       .loadImageAsset(height: 24, width: 24)
                       .onCupertinoClick(() {
                     showModalBottomSheet(
+                      useRootNavigator: true,
                       isScrollControlled: false,
                       context: context,
                       builder: (dialogContext) => AddSongDialog(
-                        onCreatePlaylist: () {},
+                        onCreatePlaylist: _onCreatePlaylist,
                         onSearch: () {
                           context
                               .read<MainBloc>()
-                              .add(OnTabClickEvent(TabNavigation.search));
+                              .changScreen(TabNavigation.search);
                         },
                       ),
                     );
                   })
                 ],
               ).paddingSymmetric(horizontal: 15, vertical: 5),
-              TabBar(
-                dividerColor: Colors.transparent,
-                labelPadding: EdgeInsets.zero,
-                splashFactory: NoSplash.splashFactory,
-                indicator: const BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
-                ),
-                indicatorSize: TabBarIndicatorSize.tab,
-                labelStyle: AppTextStyles.medium.copyWith(fontSize: 14),
-                labelColor: Colors.white,
-                unselectedLabelColor: AppColors.colorCACACA,
-                isScrollable: true,
-                tabs: [
-                  Text(localizations.all)
-                      .paddingSymmetric(vertical: 5.5, horizontal: 16),
-                  Text(localizations.playlist)
-                      .paddingSymmetric(vertical: 5.5, horizontal: 16),
-                  Text(localizations.album)
-                      .paddingSymmetric(vertical: 5.5, horizontal: 16),
-                  Text(localizations.artist)
-                      .paddingSymmetric(vertical: 5.5, horizontal: 16),
+              CommonTabBar(
+                listTitle: [
+                  context.localizations().all,
+                  context.localizations().playlist,
+                  context.localizations().album,
+                  context.localizations().artist
                 ],
-                controller: _tabController,
+                tabController: _tabController,
               ).paddingOnly(left: 15, top: 8)
             ],
           ),
@@ -109,7 +100,9 @@ class _LibraryScreenState
             child: Center(
               child: Row(
                 children: [
-                  const SearchWidget().expanded(),
+                  SearchWidget(
+                    controller: _controller,
+                  ).expanded(),
                 ],
               ),
             ),
@@ -134,4 +127,18 @@ class _LibraryScreenState
 
   @override
   bool get safeAreaBottom => false;
+
+  _onCreatePlaylist() {
+    showModalBottomSheet(
+      transitionAnimationController: _animationController,
+      useRootNavigator: true,
+      isScrollControlled: true,
+      context: context,
+      clipBehavior: Clip.hardEdge,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: AppDimens.dimen15.radius),
+      ),
+      builder: (dialogContext) => const AddPlaylistDialog(),
+    );
+  }
 }

@@ -42,5 +42,20 @@
     "badRequest": "Yêu cầu không hợp lệ",
     "dataNotFound": "Không tìm thấy URL đã chỉ định",
     "serverError": "Lỗi máy chủ",
-    "unauthorized": "Không được phép"
+    "unauthorized": "Không được phép",
+    "favoriteSong": "Bài hát yêu thích",
+    "recentlyPlayedSongs": "Bài hát nghe gần đây",
+    "cancel": "Hủy",
+    "searchHint": "Nghệ sĩ, Bài hát, Album, v.v.",
+    "recentlySearched": "Đã tìm kiếm gần đây",
+    "topResult": "Top Kết Quả",
+    "song": "Bài hát",
+    "addNameForYourPlaylist": "Đặt tên cho danh sách của bạn",
+    "createStr": "Tạo",
+    "settingStr": "Cài đặt",
+    "accountStr": "Tài khoản",
+    "otherStr": "Khác",
+    "personalInformation": "Thông tin cá nhân",
+    "appInformation": "Thông tin ứng dụng",
+    "logout": "Đăng xuất"
 }

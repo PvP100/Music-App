@@ -6,8 +6,11 @@ extension WidgetExtension on Widget {
         child: this,
       );
 
-  Align align(AlignmentGeometry alignment,
-          {double? widthFactor, double? heightFactor}) =>
+  Align align({
+    AlignmentGeometry alignment = Alignment.center,
+    double? widthFactor,
+    double? heightFactor,
+  }) =>
       Align(
         alignment: alignment,
         widthFactor: widthFactor,

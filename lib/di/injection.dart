@@ -5,6 +5,7 @@ class AppInjection {
   static final getIt = GetIt.instance;
 
   static Future<void> configureInjection() async {
+    await SharedPreferencesDi.init(getIt);
     await ApiDi.init(getIt);
     await NetworkDi.init(getIt);
     await RepositoryDi.init(getIt);

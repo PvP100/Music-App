@@ -1,6 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_app/features/domain/usecases/get_product.dart';
-import 'package:music_app/features/domain/usecases/use_case.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 
 import '../../../data/exception/failure.dart';
@@ -8,23 +5,9 @@ import '../../../data/exception/failure.dart';
 part 'home_event.dart';
 part 'home_state.dart';
 
-class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
-  HomeBloc(this._getRandomImageUseCase) : super(const HomeState());
-
-  final GetRandomImage _getRandomImageUseCase;
+class HomeBloc extends BaseBloc<HomeState> {
+  HomeBloc() : super(const HomeState());
 
   @override
-  void init() {
-    on<GetRandomImageEvent>(_getRandomImage);
-    add(GetRandomImageEvent());
-  }
-
-  _getRandomImage(GetRandomImageEvent event, Emitter<HomeState> emitter) async {
-    emitter(state.copyWith(isLoading: true));
-    (await _getRandomImageUseCase(None())).fold((data) {
-      emitter(state.copyWith(imageUrl: data?.urls?.raw));
-    }, (error) {
-      emitter(state.copyWith(error: error));
-    });
-  }
+  void init() {}
 }
