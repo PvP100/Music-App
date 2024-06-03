@@ -10,4 +10,11 @@ extension NumExtension on num {
   Duration get hours => Duration(hours: toInt());
 
   Radius get radius => Radius.circular(toDouble());
+
+  String convertToMinuteAndSecond() {
+    int totalSecond = this ~/ 1000;
+    int minute = totalSecond ~/ 60;
+    int second = totalSecond % 60;
+    return "$minute:${second.toString().padLeft(2, "0")}";
+  }
 }

@@ -54,6 +54,19 @@ class _TrackScreenState
                 );
               }),
         ),
+        Positioned.fill(
+            child: IgnorePointer(
+          child: Container(
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0x00000000),
+              Color(0xFF000000),
+            ],
+          ))),
+        )),
         Positioned(
           bottom: 0,
           left: 0,
