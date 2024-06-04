@@ -6,6 +6,7 @@ import 'package:music_app/features/domain/entities/object_list_entity.dart';
 import 'package:music_app/features/presentation/blocs/track/track_bloc.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
 import 'package:music_app/features/presentation/ui/screen/track/widget/play_widget.dart';
+import 'package:real_volume/real_volume.dart';
 
 class TrackScreen extends StatefulWidget {
   const TrackScreen({super.key});
@@ -24,14 +25,24 @@ class _TrackScreenState
 
   late final PageController _controller;
 
+  final ValueNotifier<double> _volumeLevelNotifier = ValueNotifier(0);
+
+  final ValueNotifier<double> _trackNotifier = ValueNotifier(0);
+
   @override
   void initState() {
     super.initState();
     _controller = PageController();
+    RealVolume.onVolumeChanged.listen((event) async {
+      print(await RealVolume.getCurrentVol(StreamType.MUSIC));
+      // _volumeLevelNotifier.value = ;
+    });
   }
 
   @override
   void dispose() {
+    _volumeLevelNotifier.dispose();
+    _trackNotifier.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -77,11 +88,20 @@ class _TrackScreenState
               builder: (context, state) {
                 TrackModel? model =
                     state.track?.models[state.currentIndex ?? 0];
-                return PlayWidget(track: model);
+                return PlayWidget(
+                  track: model,
+                  trackNotifier: _trackNotifier,
+                  volumeNotifier: _volumeLevelNotifier,
+                  volumeChanged: _volumeChanged,
+                );
               }),
         )
       ],
     );
+  }
+
+  _volumeChanged(double value) {
+    RealVolume.setVolume(value);
   }
 
   _onPageChanged(int index) {

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SliderWidget extends StatefulWidget {
-  const SliderWidget({super.key});
+class SliderWidget extends StatelessWidget {
+  const SliderWidget(
+      {super.key, required this.sliderValue, required this.onChanged});
 
-  @override
-  State<SliderWidget> createState() => _SliderWidgetState();
-}
+  final ValueNotifier<double> sliderValue;
 
-class _SliderWidgetState extends State<SliderWidget> {
-  final ValueNotifier<double> _sliderValue = ValueNotifier(0);
+  final ValueChanged<double> onChanged;
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: _sliderValue,
+        valueListenable: sliderValue,
         builder: (context, v, child) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(4),
@@ -34,9 +32,5 @@ class _SliderWidgetState extends State<SliderWidget> {
             ),
           );
         });
-  }
-
-  onChanged(double value) {
-    _sliderValue.value = value;
   }
 }

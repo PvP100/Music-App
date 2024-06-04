@@ -10,9 +10,21 @@ import 'track_information.dart';
 import 'track_time_widget.dart';
 
 class PlayWidget extends StatelessWidget {
-  const PlayWidget({super.key, this.track});
+  const PlayWidget({
+    super.key,
+    this.track,
+    required this.trackNotifier,
+    required this.volumeNotifier,
+    required this.volumeChanged,
+  });
 
   final TrackModel? track;
+
+  final ValueNotifier<double> trackNotifier;
+
+  final ValueNotifier<double> volumeNotifier;
+
+  final ValueChanged<double> volumeChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +36,12 @@ class PlayWidget extends StatelessWidget {
           trackName: track?.album?.name ?? "",
           trackArtists: artists,
         ).paddingSymmetric(horizontal: 24),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(24, 30, 24, 0),
-          child: SliderWidget(),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 30, 24, 0),
+          child: SliderWidget(
+            sliderValue: trackNotifier,
+            onChanged: (v) {},
+          ),
         ),
         ClipRect(
           child: BackdropFilter(
@@ -63,9 +78,10 @@ class PlayWidget extends StatelessWidget {
                     children: [
                       ImageConstants.iconVolumeDown
                           .loadImageAsset(height: 18, width: 18),
-                      const SliderWidget()
-                          .paddingSymmetric(horizontal: 15)
-                          .expanded(),
+                      SliderWidget(
+                        sliderValue: volumeNotifier,
+                        onChanged: volumeChanged,
+                      ).paddingSymmetric(horizontal: 15).expanded(),
                       ImageConstants.iconVolumeUp
                           .loadImageAsset(height: 18, width: 18),
                     ],

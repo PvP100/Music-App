@@ -52,6 +52,7 @@ dependencies:
     sdk: flutter
   freezed_annotation: ^2.4.1
   just_audio: ^0.9.38
+  real_volume: ^1.0.8
 
 dev_dependencies:
   flutter_test:
