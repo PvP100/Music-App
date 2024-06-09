@@ -23,18 +23,19 @@ class TrackBloc extends BaseBloc<TrackState> {
     getTrack(ids.join(","));
   }
 
-  getTrack(String trackId) async {
+  void getTrack(String trackId) async {
     emitLoading();
     final useCase = await _getTrackUseCase(trackId);
     useCase.fold((data) {
       emit(state.copyWith(
         track: ObjectListEntity(data?.tracks ?? []),
         currentIndex: 0,
+        isRefresh: true,
       ));
     }, emitError);
   }
 
-  changeTrack(int index) {
+  void changeTrack(int index) {
     emit(state.copyWith(currentIndex: index));
   }
 }

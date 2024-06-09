@@ -22,8 +22,12 @@ class ImageConstants {
   static const String iconVolumeUp = "icon_volume_up";
   static const String iconVolumeDown = "icon_volume_down";
   static const String iconShuffle = "icon_shuffle";
+  static const String iconShuffleOn = "icon_shuffle_on";
   static const String iconPrevious = "icon_previous";
   static const String iconPlay = "icon_play";
+  static const String iconPause = "icon_pause";
   static const String iconNext = "icon_next";
   static const String iconRepeat = "icon_repeat";
+  static const String iconLoopAll = "icon_loop_all";
+  static const String iconLoopOne = "icon_loop_one";
 }

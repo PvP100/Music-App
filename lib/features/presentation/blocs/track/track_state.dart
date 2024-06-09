@@ -6,9 +6,12 @@ class TrackState extends BaseState<TrackState> {
     super.error,
     this.track,
     this.currentIndex,
+    this.isRefresh = false,
   });
 
   final ObjectListEntity<TrackModel>? track;
+
+  final bool isRefresh;
 
   final int? currentIndex;
 
@@ -18,11 +21,13 @@ class TrackState extends BaseState<TrackState> {
     Failure? error,
     ObjectListEntity<TrackModel>? track,
     int? currentIndex,
+    bool isRefresh = false,
   }) =>
       TrackState(
         isLoading: isLoading,
         error: error,
         track: track ?? this.track,
+        isRefresh: isRefresh,
         currentIndex: currentIndex ?? this.currentIndex,
       );
 }
