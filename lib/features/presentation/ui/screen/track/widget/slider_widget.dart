@@ -6,6 +6,7 @@ class SliderWidget extends StatelessWidget {
     required this.sliderValue,
     required this.onChanged,
     required this.onChangedEnd,
+    this.height = 6,
   });
 
   final double sliderValue;
@@ -14,16 +15,20 @@ class SliderWidget extends StatelessWidget {
 
   final ValueChanged<double> onChangedEnd;
 
+  final double height;
+
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(4),
+    return Container(
+      height: height,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
       child: SliderTheme(
-        data: const SliderThemeData(
-            trackHeight: 6,
-            trackShape: RectangularSliderTrackShape(),
-            overlayShape: RoundSliderOverlayShape(overlayRadius: 0),
-            thumbShape: RoundSliderThumbShape(
+        data: SliderThemeData(
+            trackHeight: height,
+            trackShape: const RectangularSliderTrackShape(),
+            overlayShape: const RoundSliderOverlayShape(overlayRadius: 0),
+            thumbShape: const RoundSliderThumbShape(
               enabledThumbRadius: 0,
             )),
         child: Slider(

@@ -42,8 +42,10 @@ class HaMusicPlayer {
       switch (event.processingState) {
         case ProcessingState.completed:
           {
-            await _audioPlayer.seek(0.milliseconds, index: 0);
-            _audioPlayer.pause();
+            if (event.playing) {
+              await _audioPlayer.seek(0.milliseconds);
+              _audioPlayer.pause();
+            }
             break;
           }
         default:
@@ -124,9 +126,6 @@ class HaMusicPlayer {
   Duration get currentPosition => _audioPlayer.position;
 
   Stream<int?> get currentIndexChanged => _audioPlayer.currentIndexStream;
-
-  bool get isCompleted =>
-      _audioPlayer.processingState == ProcessingState.completed;
 
   bool get isPlaying => _audioPlayer.playing;
 }

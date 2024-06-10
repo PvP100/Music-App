@@ -7,6 +7,8 @@ import 'package:music_app/features/data/models/track/track_model.dart';
 import 'package:music_app/features/domain/entities/object_list_entity.dart';
 import 'package:music_app/features/presentation/blocs/track/track_bloc.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
+import 'package:music_app/features/presentation/ui/screen/main/widget/bottom_bar_widget.dart';
+import 'package:music_app/features/presentation/ui/screen/track/widget/mini_play_widget.dart';
 import 'package:music_app/features/presentation/ui/screen/track/widget/play_widget.dart';
 import 'package:music_app/service/audio_player/ha_music_player.dart';
 import 'package:real_volume/real_volume.dart';
@@ -14,9 +16,12 @@ import 'package:real_volume/real_volume.dart';
 import 'widget/track_image_widget.dart';
 
 class TrackScreen extends StatefulWidget {
-  const TrackScreen({super.key, required this.onClose});
+  const TrackScreen(
+      {super.key, required this.onClose, required this.animationController});
 
   final VoidCallback onClose;
+
+  final AnimationController animationController;
 
   @override
   State<TrackScreen> createState() => _TrackScreenState();
@@ -46,15 +51,11 @@ class _TrackScreenState
     RealVolume.onVolumeChanged.listen((event) async {});
     _player.currentIndexChanged.listen((event) {
       if (event != null) {
-        if (_player.isCompleted) {
-          _controller.jumpToPage(event);
-        } else {
-          _controller.animateToPage(
-            event,
-            duration: pageDuration,
-            curve: Curves.decelerate,
-          );
-        }
+        _controller.animateToPage(
+          event,
+          duration: pageDuration,
+          curve: Curves.decelerate,
+        );
       }
     });
   }
@@ -86,24 +87,35 @@ class _TrackScreenState
   }
 
   @override
+  Color get backgroundColor => Colors.transparent;
+
+  @override
   Widget buildContent(BuildContext context) {
     return Stack(
       children: [
-        Positioned.fill(
-          child: BlocSelector<TrackBloc, TrackState,
-                  ObjectListEntity<TrackModel>?>(
-              selector: (state) => state.track,
-              builder: (context, track) {
-                return PageView.builder(
-                  controller: _controller,
-                  onPageChanged: _onPageChanged,
-                  itemBuilder: (context, index) => TrackImageWidget(
-                    model: track?.models[index],
-                  ),
-                  itemCount: track?.models.length ?? 0,
-                );
-              }),
-        ),
+        AnimatedBuilder(
+            animation: widget.animationController,
+            child: BlocSelector<TrackBloc, TrackState,
+                    ObjectListEntity<TrackModel>?>(
+                selector: (state) => state.track,
+                builder: (context, track) {
+                  return PageView.builder(
+                    controller: _controller,
+                    onPageChanged: _onPageChanged,
+                    itemBuilder: (context, index) => TrackImageWidget(
+                      model: track?.models[index],
+                    ),
+                    itemCount: track?.models.length ?? 0,
+                  );
+                }),
+            builder: (context, child) {
+              return Positioned.fill(
+                child: Opacity(
+                  opacity: widget.animationController.value,
+                  child: child,
+                ),
+              );
+            }),
         Positioned.fill(
             child: IgnorePointer(
           child: Container(
@@ -153,7 +165,26 @@ class _TrackScreenState
               alignment: Alignment.center,
               child: ImageConstants.iconArrowDown
                   .loadImageAsset(height: 26, width: 26),
-            ).onCupertinoClick(widget.onClose))
+            ).onCupertinoClick(widget.onClose)),
+        AnimatedBuilder(
+            animation: widget.animationController,
+            child: const BottomBarWidget(),
+            builder: (context, child) {
+              return Positioned(
+                top: (context.bottomBarHeight +
+                        AppConstants.musicPlayHeight / 2 +
+                        context.height) *
+                    widget.animationController.value,
+                left: 0,
+                right: 0,
+                child: child!,
+              );
+            }),
+        Positioned(
+            child: MiniPlayWidget(
+          controller: _controller,
+          trackModel: bloc.state.track?.models[0],
+        )),
       ],
     );
   }
