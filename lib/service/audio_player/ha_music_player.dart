@@ -47,7 +47,9 @@ class HaMusicPlayer {
             break;
           }
         default:
-          {}
+          {
+            break;
+          }
       }
       _playController.add(event.playing);
     });

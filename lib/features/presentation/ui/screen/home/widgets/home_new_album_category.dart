@@ -91,6 +91,6 @@ class HomeNewAlbumCategory extends StatelessWidget {
   }
 
   _navigateToTrack(BuildContext context) {
-    context.pushNamed(RouteConstants.track, rootNavigator: true);
+    // context.pushNamed(RouteConstants.track, rootNavigator: true);
   }
 }

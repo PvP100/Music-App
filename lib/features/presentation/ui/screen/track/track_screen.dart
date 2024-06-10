@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/data/models/track/track_model.dart';
 import 'package:music_app/features/domain/entities/object_list_entity.dart';
@@ -13,7 +14,9 @@ import 'package:real_volume/real_volume.dart';
 import 'widget/track_image_widget.dart';
 
 class TrackScreen extends StatefulWidget {
-  const TrackScreen({super.key});
+  const TrackScreen({super.key, required this.onClose});
+
+  final VoidCallback onClose;
 
   @override
   State<TrackScreen> createState() => _TrackScreenState();
@@ -40,9 +43,7 @@ class _TrackScreenState
     super.initState();
     pageDuration = 500.milliseconds;
     _controller = PageController();
-    RealVolume.onVolumeChanged.listen((event) async {
-      // _volumeLevelNotifier.value = ;
-    });
+    RealVolume.onVolumeChanged.listen((event) async {});
     _player.currentIndexChanged.listen((event) {
       if (event != null) {
         if (_player.isCompleted) {
@@ -138,7 +139,21 @@ class _TrackScreenState
                   onLoopChange: _loop,
                 );
               }),
-        )
+        ),
+        Positioned(
+            top: 15 + context.statusBarHeight,
+            right: 19,
+            child: Container(
+              height: 36,
+              width: 36,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.colorBlackWith25,
+              ),
+              alignment: Alignment.center,
+              child: ImageConstants.iconArrowDown
+                  .loadImageAsset(height: 26, width: 26),
+            ).onCupertinoClick(widget.onClose))
       ],
     );
   }
