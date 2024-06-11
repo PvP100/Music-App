@@ -13,65 +13,74 @@ class BottomBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: context.bottomBarHeight + AppConstants.musicPlayHeight / 2,
-        alignment: Alignment.bottomCenter,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColors.primaryBackgroundColor,
-              AppColors.primaryBackgroundColor.withOpacity(0.85),
-              AppColors.primaryBackgroundColor.withOpacity(0),
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            stops: const [0.1, 0.5, 1],
-          ),
-        ),
-        child: Theme(
-          data: ThemeData(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-          ),
-          child: BlocSelector<MainBloc, MainState, TabNavigation>(
-              selector: (state) => state.currentScreen,
-              builder: (context, value) {
-                return BottomNavigationBar(
-                  onTap: (index) => _onTabChanged(index, context),
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  currentIndex: value.screenIndex,
-                  type: BottomNavigationBarType.fixed,
-                  selectedFontSize: 0,
-                  unselectedFontSize: 0,
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  items: [
-                    BottomNavigationBarItem(
-                      label: AppConstants.emptyString,
-                      icon: ImageConstants.iconHomeUnselected
-                          .loadImageAsset(height: iconSize),
-                      activeIcon: ImageConstants.iconHomeSelected
-                          .loadImageAsset(height: iconSize),
-                    ),
-                    BottomNavigationBarItem(
-                      label: AppConstants.emptyString,
-                      icon: ImageConstants.iconSearchUnselected
-                          .loadImageAsset(height: iconSize, width: iconSize),
-                      activeIcon: ImageConstants.iconSearchSelected
-                          .loadImageAsset(height: iconSize, width: iconSize),
-                    ),
-                    BottomNavigationBarItem(
-                      label: AppConstants.emptyString,
-                      icon: ImageConstants.iconLibraryUnselected
-                          .loadImageAsset(height: iconSize, width: iconSize),
-                      activeIcon: ImageConstants.iconLibrarySelected
-                          .loadImageAsset(height: iconSize, width: iconSize),
-                    ),
-                  ],
-                );
-              }),
-        ));
+    return BlocSelector<AppBloc, AppState, bool>(
+      selector: (state) => state.playState?.showMiniPlayer ?? false,
+      builder: (context, state) {
+        return Container(
+            height: context.bottomBarHeight +
+                (state ? AppConstants.musicPlayHeight : 0),
+            alignment: Alignment.bottomCenter,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.primaryBackgroundColor,
+                  AppColors.primaryBackgroundColor.withOpacity(0),
+                ],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                stops: const [0.2, 1],
+              ),
+            ),
+            child: Theme(
+              data: ThemeData(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: BlocSelector<MainBloc, MainState, TabNavigation>(
+                  selector: (state) => state.currentScreen,
+                  builder: (context, value) {
+                    return BottomNavigationBar(
+                      onTap: (index) => _onTabChanged(index, context),
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      currentIndex: value.screenIndex,
+                      type: BottomNavigationBarType.fixed,
+                      selectedFontSize: 0,
+                      unselectedFontSize: 0,
+                      showSelectedLabels: false,
+                      showUnselectedLabels: false,
+                      items: [
+                        BottomNavigationBarItem(
+                          label: AppConstants.emptyString,
+                          icon: ImageConstants.iconHomeUnselected
+                              .loadImageAsset(height: iconSize),
+                          activeIcon: ImageConstants.iconHomeSelected
+                              .loadImageAsset(height: iconSize),
+                        ),
+                        BottomNavigationBarItem(
+                          label: AppConstants.emptyString,
+                          icon: ImageConstants.iconSearchUnselected
+                              .loadImageAsset(
+                                  height: iconSize, width: iconSize),
+                          activeIcon: ImageConstants.iconSearchSelected
+                              .loadImageAsset(
+                                  height: iconSize, width: iconSize),
+                        ),
+                        BottomNavigationBarItem(
+                          label: AppConstants.emptyString,
+                          icon: ImageConstants.iconLibraryUnselected
+                              .loadImageAsset(
+                                  height: iconSize, width: iconSize),
+                          activeIcon: ImageConstants.iconLibrarySelected
+                              .loadImageAsset(
+                                  height: iconSize, width: iconSize),
+                        ),
+                      ],
+                    );
+                  }),
+            ));
+      },
+    );
   }
 
   _onTabChanged(int index, BuildContext context) {

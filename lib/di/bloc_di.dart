@@ -13,12 +13,11 @@ class BlocDi {
     injector.registerFactory(() => ChangePasswordBloc());
     injector.registerFactory(() => ForgotPasswordBloc());
     injector.registerFactory(() => RegisterBloc());
-    injector.registerFactory(() => MainBloc());
+    injector.registerFactory(() => MainBloc(injector()));
     injector.registerFactory(() => CategoryBloc(injector()));
     injector.registerFactory(() => SearchBloc());
     injector.registerFactory(() => LibraryBloc());
     injector.registerFactory(() => ProfileBloc());
     injector.registerFactory(() => SettingBloc());
-    injector.registerFactory(() => TrackBloc(injector()));
   }
 }

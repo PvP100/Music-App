@@ -1,3 +1,4 @@
+import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:music_app/app.dart';
@@ -6,6 +7,8 @@ import 'package:music_app/service/audio_player/ha_music_player.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final session = await AudioSession.instance;
+  await session.configure(const AudioSessionConfiguration.music());
   await AppInjection.configureInjection();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -17,5 +20,6 @@ Future<void> main() async {
     statusBarBrightness: Brightness.dark, // For iOS (dark icons)
   ));
   await HaMusicPlayer.instance.initAudio();
+
   runApp(const App());
 }

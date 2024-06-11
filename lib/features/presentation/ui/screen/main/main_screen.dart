@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/tab_navigator.dart';
@@ -6,6 +7,7 @@ import 'package:music_app/features/presentation/ui/custom/keep_alive_screen.dart
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
 import 'package:music_app/features/presentation/ui/screen/track/track_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -46,6 +48,13 @@ class _MainScreenState extends BaseScreenState<MainScreen, MainBloc, MainState>
   }
 
   @override
+  void onAppStateListener(BuildContext context, AppState state) {
+    if (state.playState?.isPlay == true) {
+      bloc.getTrack(bloc.ids.join(","));
+    }
+  }
+
+  @override
   Widget buildContent(BuildContext context) {
     return Stack(
       children: [
@@ -55,18 +64,26 @@ class _MainScreenState extends BaseScreenState<MainScreen, MainBloc, MainState>
           itemCount: pages.length,
           itemBuilder: (context, index) => pages[index],
         ),
-        SlidingUpPanel(
-          onPanelSlide: (position) {
-            _animationController.value = position;
+        BlocSelector<AppBloc, AppState, bool>(
+          selector: (state) => state.playState?.showMiniPlayer ?? false,
+          builder: (context, v) {
+            return SlidingUpPanel(
+              onPanelSlide: (position) {
+                _animationController.value = position;
+              },
+              controller: _panelController,
+              isDraggable: v,
+              minHeight: context.bottomBarHeight +
+                  (v ? AppConstants.musicPlayHeight : 0),
+              boxShadow: const [],
+              maxHeight: context.height,
+              color: Colors.transparent,
+              panel: TrackScreen(
+                onClose: _panelController.close,
+                animationController: _animationController,
+              ),
+            );
           },
-          controller: _panelController,
-          minHeight: context.bottomBarHeight + AppConstants.musicPlayHeight / 2,
-          maxHeight: context.height,
-          color: Colors.transparent,
-          panel: TrackScreen(
-            onClose: _panelController.close,
-            animationController: _animationController,
-          ),
         ),
       ],
     );

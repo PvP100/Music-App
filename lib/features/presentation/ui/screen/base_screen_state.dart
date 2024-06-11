@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:music_app/features/presentation/blocs/app/app_bloc.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/loading/custom_loading.dart';
 import 'package:music_app/features/presentation/ui/custom/loading_indicator.dart';
@@ -28,6 +29,9 @@ abstract class BaseScreenState<V extends StatefulWidget, B extends BaseBloc<S>,
 
   @protected
   Widget? get footer => null;
+
+  @protected
+  bool get isUseScaffold => true;
 
   @protected
   bool get safeAreaTop => true;
@@ -137,42 +141,67 @@ abstract class BaseScreenState<V extends StatefulWidget, B extends BaseBloc<S>,
         : _body(context);
   }
 
-  Widget _body(BuildContext context) => BlocProvider.value(
-        value: _bloc,
-        child: BlocListener<B, S>(
-            listener: (context, state) {
-              if (state.isLoading) {
-                CustomLoading.show();
-              } else {
-                CustomLoading.dismiss();
-                if (state.error != null) {
-                  context.handleError(state.error!);
-                }
-                onStateListener(context, state);
-              }
-            },
-            child: Scaffold(
-              resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-              backgroundColor: backgroundColor,
-              body: SafeArea(
-                top: safeAreaTop,
-                bottom: safeAreaBottom,
-                left: safeAreaLeft,
-                right: safeAreaRight,
-                child: Stack(
-                  children: [
-                    Positioned.fill(child: buildContent(context)),
-                    if (footer != null) ...{
-                      Positioned(bottom: 0, left: 0, right: 0, child: footer!)
+  Widget _body(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: GetIt.I.get<AppBloc>()),
+          BlocProvider.value(value: _bloc),
+        ],
+        child: MultiBlocListener(
+            listeners: [
+              BlocListener<AppBloc, AppState>(listener: onAppStateListener),
+              BlocListener<B, S>(
+                listener: (context, state) {
+                  if (state.isLoading) {
+                    CustomLoading.show();
+                  } else {
+                    CustomLoading.dismiss();
+                    if (state.error != null) {
+                      context.handleError(state.error!);
                     }
-                  ],
-                ),
-              ),
-            )),
+                    onStateListener(context, state);
+                  }
+                },
+              )
+            ],
+            child: isUseScaffold
+                ? Scaffold(
+                    resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+                    backgroundColor: backgroundColor,
+                    body: SafeArea(
+                      top: safeAreaTop,
+                      bottom: safeAreaBottom,
+                      left: safeAreaLeft,
+                      right: safeAreaRight,
+                      child: Stack(
+                        children: [
+                          Positioned.fill(child: buildContent(context)),
+                          if (footer != null) ...{
+                            Positioned(
+                                bottom: 0, left: 0, right: 0, child: footer!)
+                          }
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(
+                    color: backgroundColor,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(child: buildContent(context)),
+                        if (footer != null) ...{
+                          Positioned(
+                              bottom: 0, left: 0, right: 0, child: footer!)
+                        }
+                      ],
+                    ),
+                  )),
       );
 
   @protected
   void onStateListener(BuildContext context, S state) {}
+
+  @protected
+  void onAppStateListener(BuildContext context, AppState state) {}
 
   @protected
   void onReveiveArguments(Map<String, dynamic> arguments) {}

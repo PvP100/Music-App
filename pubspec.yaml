@@ -55,6 +55,7 @@ dependencies:
   real_volume: ^1.0.8
   collection: ^1.18.0
   sliding_up_panel: ^2.0.0+1
+  audio_session: ^0.1.19
 
 dev_dependencies:
   flutter_test:

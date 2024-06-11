@@ -54,12 +54,17 @@ class _HomeScreenState
             itemCount: 10,
             itemBuilder: (context, index) {
               return index == 0
-                  ? const HomeNewAlbumCategory()
-                  : const HomeCategoryItem();
+                  ? HomeNewAlbumCategory(key: PageStorageKey<String>("$index"))
+                  : HomeCategoryItem(key: PageStorageKey<String>("$index"));
             },
           ),
-          SliverPadding(
-              padding: EdgeInsets.only(bottom: context.bottomBarHeight))
+          BlocSelector<AppBloc, AppState, bool>(
+            selector: (state) => state.playState?.isPlay ?? false,
+            builder: (context, v) => SliverPadding(
+                padding: EdgeInsets.only(
+                    bottom: context.bottomBarHeight +
+                        (v ? AppConstants.musicPlayHeight : 0))),
+          )
         ],
       ),
     );

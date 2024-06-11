@@ -31,4 +31,7 @@ class ImageConstants {
   static const String iconLoopAll = "icon_loop_all";
   static const String iconLoopOne = "icon_loop_one";
   static const String iconArrowDown = "icon_arrow_down";
+  static const String iconAudioOutput = "icon_audio_output";
+  static const String iconLyric = "icon_lyric";
+  static const String musicPlaceholder = "music_placeholder";
 }

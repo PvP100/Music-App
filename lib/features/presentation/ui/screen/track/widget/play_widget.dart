@@ -150,9 +150,9 @@ class PlayWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ImageConstants.iconListTrack
+                        ImageConstants.iconLyric
                             .loadImageAsset(height: 24, width: 24),
-                        ImageConstants.iconListTrack
+                        ImageConstants.iconAudioOutput
                             .loadImageAsset(height: 24, width: 24),
                         ImageConstants.iconListTrack
                             .loadImageAsset(height: 24, width: 24),
