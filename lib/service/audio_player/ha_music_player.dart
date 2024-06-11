@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:audio_service/audio_service.dart';
+import 'package:get_it/get_it.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_app/core/core.dart';
+import 'package:music_app/service/audio_service/app_audio_services.dart';
 
 class HaMusicPlayer {
   late final AudioPlayer _audioPlayer;
+
+  late final AppAudioServices _audioService;
 
   late final StreamController<double> _positionController;
 
@@ -23,6 +28,7 @@ class HaMusicPlayer {
   static HaMusicPlayer get instance => _instance;
 
   Future<void> initAudio() async {
+    _audioService = GetIt.I.get<AppAudioServices>();
     _audioPlayer = AudioPlayer();
     _positionController = StreamController<double>.broadcast();
 
@@ -73,6 +79,8 @@ class HaMusicPlayer {
       children: audioSource,
       shuffleOrder: DefaultShuffleOrder(),
     );
+    _audioService.queue
+        .add(songs.map((e) => MediaItem(id: e.url, title: e.name)).toList());
     await _audioPlayer.setAudioSource(
       playlist,
       initialIndex: 0,
@@ -81,6 +89,7 @@ class HaMusicPlayer {
   }
 
   Future<void> play() async {
+    await _audioService.play();
     await _audioPlayer.play();
   }
 
@@ -88,8 +97,8 @@ class HaMusicPlayer {
     await _audioPlayer.pause();
   }
 
-  Future<void> seek(Duration duration) async {
-    await _audioPlayer.seek(duration);
+  Future<void> seek(Duration duration, {int? index}) async {
+    await _audioPlayer.seek(duration, index: index);
   }
 
   Future<void> seekToNext() async {
@@ -133,7 +142,13 @@ class HaMusicPlayer {
 class Song {
   final String id;
   final String url;
+  final String name;
   final int duration;
 
-  Song({required this.url, required this.duration, required this.id});
+  Song({
+    required this.url,
+    required this.name,
+    required this.duration,
+    required this.id,
+  });
 }

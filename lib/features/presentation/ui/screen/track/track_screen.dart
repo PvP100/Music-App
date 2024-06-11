@@ -79,6 +79,7 @@ class _TrackScreenState extends State<TrackScreen> {
         tracks
             .map(
               (e) => Song(
+                name: e.album?.name ?? "",
                 url: e.previewUrl ?? "",
                 duration: e.durationMs ?? 0,
                 id: "",
