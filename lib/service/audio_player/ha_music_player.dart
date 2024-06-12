@@ -1,15 +1,11 @@
 import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:get_it/get_it.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_app/core/core.dart';
-import 'package:music_app/service/audio_service/app_audio_services.dart';
 
 class HaMusicPlayer {
   late final AudioPlayer _audioPlayer;
-
-  late final AppAudioServices _audioService;
 
   late final StreamController<double> _positionController;
 
@@ -28,7 +24,6 @@ class HaMusicPlayer {
   static HaMusicPlayer get instance => _instance;
 
   Future<void> initAudio() async {
-    _audioService = GetIt.I.get<AppAudioServices>();
     _audioPlayer = AudioPlayer();
     _positionController = StreamController<double>.broadcast();
 
@@ -79,8 +74,6 @@ class HaMusicPlayer {
       children: audioSource,
       shuffleOrder: DefaultShuffleOrder(),
     );
-    _audioService.queue
-        .add(songs.map((e) => MediaItem(id: e.url, title: e.name)).toList());
     await _audioPlayer.setAudioSource(
       playlist,
       initialIndex: 0,
@@ -89,12 +82,15 @@ class HaMusicPlayer {
   }
 
   Future<void> play() async {
-    await _audioService.play();
     await _audioPlayer.play();
   }
 
   Future<void> pause() async {
     await _audioPlayer.pause();
+  }
+
+  Future<void> stop() async {
+    await _audioPlayer.stop();
   }
 
   Future<void> seek(Duration duration, {int? index}) async {
@@ -136,7 +132,46 @@ class HaMusicPlayer {
 
   Stream<int?> get currentIndexChanged => _audioPlayer.currentIndexStream;
 
+  Stream<PlaybackEvent> get playbackEventStream =>
+      _audioPlayer.playbackEventStream;
+
   bool get isPlaying => _audioPlayer.playing;
+
+  AudioPlayer get audioPlayer => _audioPlayer;
+
+  /// Transform a just_audio event into an audio_service state.
+  ///
+  /// This method is used from the constructor. Every event received from the
+  /// just_audio player will be transformed into an audio_service state so that
+  /// it can be broadcast to audio_service clients.
+  PlaybackState transformEvent(PlaybackEvent event) {
+    return PlaybackState(
+      controls: [
+        MediaControl.skipToPrevious,
+        MediaControl.skipToNext,
+        MediaControl.rewind,
+        if (_audioPlayer.playing) MediaControl.pause else MediaControl.play,
+      ],
+      systemActions: const {
+        MediaAction.seek,
+        MediaAction.seekForward,
+        MediaAction.seekBackward,
+      },
+      androidCompactActionIndices: const [0, 1, 3],
+      processingState: const {
+        ProcessingState.idle: AudioProcessingState.idle,
+        ProcessingState.loading: AudioProcessingState.loading,
+        ProcessingState.buffering: AudioProcessingState.buffering,
+        ProcessingState.ready: AudioProcessingState.ready,
+        ProcessingState.completed: AudioProcessingState.completed,
+      }[_audioPlayer.processingState]!,
+      playing: _audioPlayer.playing,
+      updatePosition: _audioPlayer.position,
+      bufferedPosition: _audioPlayer.bufferedPosition,
+      speed: _audioPlayer.speed,
+      queueIndex: event.currentIndex,
+    );
+  }
 }
 
 class Song {

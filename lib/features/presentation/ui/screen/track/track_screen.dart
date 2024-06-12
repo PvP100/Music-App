@@ -1,5 +1,7 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
@@ -10,6 +12,7 @@ import 'package:music_app/features/presentation/ui/screen/main/widget/bottom_bar
 import 'package:music_app/features/presentation/ui/screen/track/widget/mini_play_widget.dart';
 import 'package:music_app/features/presentation/ui/screen/track/widget/play_widget.dart';
 import 'package:music_app/service/audio_player/ha_music_player.dart';
+import 'package:music_app/service/audio_service/app_audio_services.dart';
 import 'package:real_volume/real_volume.dart';
 
 import 'widget/track_image_widget.dart';
@@ -35,7 +38,9 @@ class _TrackScreenState extends State<TrackScreen> {
 
   final ValueNotifier<double> _volumeLevelNotifier = ValueNotifier(0);
 
-  final HaMusicPlayer _player = HaMusicPlayer.instance;
+  final AppAudioServices _audioService = GetIt.I.get<AppAudioServices>();
+
+  late final HaMusicPlayer _player;
 
   late final Duration pageDuration;
 
@@ -49,6 +54,7 @@ class _TrackScreenState extends State<TrackScreen> {
   void initState() {
     super.initState();
     bloc = context.read<MainBloc>();
+    _player = _audioService.player;
     pageDuration = 500.milliseconds;
     _controller = PageController();
     _miniController = PageController();
@@ -75,19 +81,16 @@ class _TrackScreenState extends State<TrackScreen> {
   _stateListener(BuildContext context, MainState state) {
     if (state.trackState?.isRefresh == true) {
       List<TrackModel> tracks = (state.trackState?.track?.models ?? []);
-      _player.setPlaylist(
-        tracks
-            .map(
-              (e) => Song(
-                name: e.album?.name ?? "",
-                url: e.previewUrl ?? "",
-                duration: e.durationMs ?? 0,
-                id: "",
-              ),
-            )
-            .toList(),
-      );
-      _player.play();
+      _audioService.addQueueItems(tracks
+          .map((e) => MediaItem(
+                id: e.previewUrl ?? "",
+                title: e.album?.name ?? "",
+                duration: (e.durationMs ?? 0).milliseconds,
+                artist: e.album?.artists?.map((e) => e.name).join(", "),
+                artUri: Uri.parse(e.album?.images?.firstOrNull?.url ?? ""),
+              ))
+          .toList());
+      _audioService.play();
     }
   }
 
@@ -126,9 +129,11 @@ class _TrackScreenState extends State<TrackScreen> {
                     }),
               ),
               builder: (context, child) {
+                double offset = widget.animationController.value;
+                double newOffset = offset > 0.05 ? 0 : 1 - offset * 20;
                 return Positioned.fill(
                   child: Opacity(
-                    opacity: widget.animationController.value,
+                    opacity: 1 - newOffset,
                     child: child,
                   ),
                 );
