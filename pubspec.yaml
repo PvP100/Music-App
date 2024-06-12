@@ -52,7 +52,6 @@ dependencies:
     sdk: flutter
   freezed_annotation: ^2.4.1
   just_audio: ^0.9.38
-  real_volume: ^1.0.8
   collection: ^1.18.0
   sliding_up_panel: ^2.0.0+1
   audio_session: ^0.1.19

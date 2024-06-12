@@ -13,7 +13,6 @@ import 'package:music_app/features/presentation/ui/screen/track/widget/mini_play
 import 'package:music_app/features/presentation/ui/screen/track/widget/play_widget.dart';
 import 'package:music_app/service/audio_player/ha_music_player.dart';
 import 'package:music_app/service/audio_service/app_audio_services.dart';
-import 'package:real_volume/real_volume.dart';
 
 import 'widget/track_image_widget.dart';
 
@@ -58,7 +57,6 @@ class _TrackScreenState extends State<TrackScreen> {
     pageDuration = 500.milliseconds;
     _controller = PageController();
     _miniController = PageController();
-    RealVolume.onVolumeChanged.listen((event) async {});
     _player.currentIndexChanged.listen((event) {
       if (event != null && _controller.hasClients) {
         _controller.animateToPage(
@@ -247,29 +245,11 @@ class _TrackScreenState extends State<TrackScreen> {
   }
 
   _onNext() {
-    int page = (_controller.page?.toInt() ?? 0) + 1;
-    if (page < (bloc.state.trackState?.track?.models.length ?? 0)) {
-      _controller.animateToPage(
-        page,
-        duration: pageDuration,
-        curve: Curves.decelerate,
-      );
-    }
+    _player.seekToNext();
   }
 
   _onPrevious() {
-    if (_player.currentPosition.inSeconds >= 3) {
-      _player.seek(0.milliseconds);
-    } else {
-      int page = (_controller.page?.toInt() ?? 0) - 1;
-      if (page >= 0) {
-        _controller.animateToPage(
-          page,
-          duration: pageDuration,
-          curve: Curves.decelerate,
-        );
-      }
-    }
+    _player.seekToPrevious();
   }
 
   _durationChanged(Duration duration) {
@@ -280,9 +260,7 @@ class _TrackScreenState extends State<TrackScreen> {
     _player.isPlaying ? _player.pause() : _player.play();
   }
 
-  _volumeChanged(double value) {
-    RealVolume.setVolume(value);
-  }
+  _volumeChanged(double value) {}
 
   _onPageChanged(int index) async {
     int oldIndex = bloc.state.trackState?.currentIndex ?? 0;
@@ -290,7 +268,7 @@ class _TrackScreenState extends State<TrackScreen> {
     if (oldIndex < index) {
       await _player.seekToNext();
     } else {
-      await _player.seekToPrevious();
+      await _player.seekToPrevious(false);
     }
     if (!_player.isPlaying) {
       _player.play();

@@ -108,8 +108,20 @@ class HaMusicPlayer {
     await _audioPlayer.seekToNext();
   }
 
-  Future<void> seekToPrevious() async {
-    await _audioPlayer.seekToPrevious();
+  Future<void> seekToPrevious([bool isCheckCurrentDuration = true]) async {
+    if (isCheckCurrentDuration) {
+      if (_audioPlayer.position.inMilliseconds > 3000) {
+        _audioPlayer.seek(0.milliseconds);
+      } else {
+        if ((_audioPlayer.currentIndex ?? 0) < 1) {
+          _audioPlayer.seek(0.milliseconds);
+        } else {
+          _audioPlayer.seekToPrevious();
+        }
+      }
+    } else {
+      _audioPlayer.seekToPrevious();
+    }
   }
 
   Future<void> dispose() async {
@@ -156,7 +168,6 @@ class HaMusicPlayer {
       controls: [
         MediaControl.skipToPrevious,
         MediaControl.skipToNext,
-        MediaControl.rewind,
         if (_audioPlayer.playing) MediaControl.pause else MediaControl.play,
       ],
       systemActions: const {

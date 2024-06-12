@@ -51,7 +51,7 @@ class AppAudioServices extends BaseAudioHandler {
   Future<void> skipToNext() => _player.seekToNext();
 
   @override
-  Future<void> skipToPrevious() => _player.seekToPrevious();
+  Future<void> skipToPrevious() => _player.seekToPrevious(true);
 
   @override
   Future<void> addQueueItems(List<MediaItem> mediaItems) async {
