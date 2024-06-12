@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
+import 'package:music_app/features/presentation/blocs/app/app_bloc.dart';
 
 class HomeNewAlbumCategory extends StatelessWidget {
   const HomeNewAlbumCategory({super.key});
@@ -76,12 +78,12 @@ class HomeNewAlbumCategory extends StatelessWidget {
                             ),
                             child: ImageConstants.iconPlayBlack
                                 .loadImageAsset(width: 20, height: 20),
-                          )
+                          ).onCupertinoClick(() => _navigateToTrack(context))
                         ],
                       ),
                     )
                   ],
-                ).onCupertinoClick(() => _navigateToTrack(context));
+                );
               },
               separatorBuilder: ((context, index) => const SizedBox(width: 15)),
               itemCount: 10),
@@ -91,6 +93,6 @@ class HomeNewAlbumCategory extends StatelessWidget {
   }
 
   _navigateToTrack(BuildContext context) {
-    context.pushNamed(RouteConstants.track, rootNavigator: true);
+    context.read<AppBloc>().playMusic();
   }
 }

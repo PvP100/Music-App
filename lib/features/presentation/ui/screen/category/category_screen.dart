@@ -60,7 +60,7 @@ class _CategoryScreenState
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.fromLTRB(15, 0, 15, context.bottomBarHeight),
+          padding: EdgeInsets.fromLTRB(15, 0, 15, context.bottomBarHeight + 15),
           sliver: BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
               return SliverGrid.builder(

@@ -111,7 +111,7 @@ class _LibraryScreenState
         SliverPadding(
           padding: EdgeInsets.only(
             top: 3,
-            bottom: context.bottomBarHeight,
+            bottom: context.bottomBarHeight + 15,
             left: 15,
             right: 15,
           ),

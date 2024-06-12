@@ -138,8 +138,8 @@ extension BuildContextExtension on BuildContext {
 
   double get safeAreaBottomHeight => MediaQuery.viewPaddingOf(this).bottom;
 
+  double get statusBarHeight => MediaQuery.viewPaddingOf(this).top;
+
   double get bottomBarHeight =>
-      kBottomNavigationBarHeight +
-      safeAreaBottomHeight +
-      AppConstants.musicPlayHeight / 2;
+      kBottomNavigationBarHeight + safeAreaBottomHeight;
 }

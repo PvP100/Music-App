@@ -11,12 +11,15 @@ class TrackModel extends BaseDataModel {
 
   final AlbumModel? album;
 
+  @JsonKey(name: "duration_ms")
+  final int? durationMs;
+
   factory TrackModel.fromJson(Map<String, dynamic> json) =>
       _$TrackModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrackModelToJson(this);
 
-  TrackModel({this.previewUrl, this.album});
+  TrackModel({this.previewUrl, this.album, this.durationMs});
 
   @override
   T fromJson<T extends BaseDataModel>(Map<String, dynamic> json) =>

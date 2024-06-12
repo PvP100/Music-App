@@ -5,3 +5,4 @@ export 'use_case_di.dart';
 export 'network_di.dart';
 export 'api_di.dart';
 export 'shared_preferences_di.dart';
+export 'audio_di.dart';

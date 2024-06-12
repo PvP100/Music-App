@@ -15,5 +15,6 @@ Future<void> main() async {
     statusBarIconBrightness: Brightness.light, // For Android (dark icons)
     statusBarBrightness: Brightness.dark, // For iOS (dark icons)
   ));
+
   runApp(const App());
 }
