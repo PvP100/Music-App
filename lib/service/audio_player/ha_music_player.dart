@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_app/core/core.dart';
 
@@ -23,8 +24,12 @@ class HaMusicPlayer {
 
   static HaMusicPlayer get instance => _instance;
 
+  late final AudioSession _audioSession;
+
   Future<void> initAudio() async {
     _audioPlayer = AudioPlayer();
+    _audioSession = await AudioSession.instance;
+    await _audioSession.configure(const AudioSessionConfiguration.music());
     _positionController = StreamController<double>.broadcast();
 
     _playController = StreamController<bool>.broadcast();
@@ -82,7 +87,9 @@ class HaMusicPlayer {
   }
 
   Future<void> play() async {
-    await _audioPlayer.play();
+    if (await _audioSession.setActive(true)) {
+      await _audioPlayer.play();
+    } else {}
   }
 
   Future<void> pause() async {
