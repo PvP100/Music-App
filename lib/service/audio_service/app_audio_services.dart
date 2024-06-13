@@ -68,5 +68,9 @@ class AppAudioServices extends BaseAudioHandler {
         .toList());
   }
 
+  void dispose() {
+    _player.dispose();
+  }
+
   HaMusicPlayer get player => _player;
 }
