@@ -13,6 +13,7 @@ import 'package:music_app/features/presentation/ui/screen/track/widget/mini_play
 import 'package:music_app/features/presentation/ui/screen/track/widget/play_widget.dart';
 import 'package:music_app/service/audio_player/ha_music_player.dart';
 import 'package:music_app/service/audio_service/app_audio_services.dart';
+import 'package:volume_controller/volume_controller.dart';
 
 import 'widget/track_image_widget.dart';
 
@@ -66,6 +67,8 @@ class _TrackScreenState extends State<TrackScreen> {
         );
       }
     });
+    VolumeController().showSystemUI = false;
+    VolumeController().listener((p0) => _volumeLevelNotifier.value = p0);
   }
 
   @override
@@ -260,7 +263,9 @@ class _TrackScreenState extends State<TrackScreen> {
     _player.isPlaying ? _player.pause() : _player.play();
   }
 
-  _volumeChanged(double value) {}
+  _volumeChanged(double value) {
+    VolumeController().setVolume(value);
+  }
 
   _onPageChanged(int index) async {
     int oldIndex = bloc.state.trackState?.currentIndex ?? 0;

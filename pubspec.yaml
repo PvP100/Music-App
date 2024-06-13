@@ -56,6 +56,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   audio_session: ^0.1.19
   audio_service: ^0.18.13
+  volume_controller: ^2.0.7
 
 dev_dependencies:
   flutter_test:
