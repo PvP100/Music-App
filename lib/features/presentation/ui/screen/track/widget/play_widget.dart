@@ -138,11 +138,14 @@ class PlayWidget extends StatelessWidget {
                       children: [
                         ImageConstants.iconVolumeDown
                             .loadImageAsset(height: 18, width: 18),
-                        SliderWidget(
-                          sliderValue: 0.5,
-                          onChanged: volumeChanged,
-                          onChangedEnd: (_) {},
-                        ).paddingSymmetric(horizontal: 15).expanded(),
+                        ValueListenableBuilder(
+                          valueListenable: volumeNotifier,
+                          builder: (context, v, child) => SliderWidget(
+                            sliderValue: v,
+                            onChanged: volumeChanged,
+                            onChangedEnd: (_) {},
+                          ).paddingSymmetric(horizontal: 15).expanded(),
+                        ),
                         ImageConstants.iconVolumeUp
                             .loadImageAsset(height: 18, width: 18),
                       ],
