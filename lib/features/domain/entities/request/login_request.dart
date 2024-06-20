@@ -1,17 +1,14 @@
 class LoginRequest {
-  final String grantType;
-  final String clientId;
-  final String clientSecret;
+  final String email;
+  final String password;
 
   LoginRequest({
-    required this.grantType,
-    required this.clientId,
-    required this.clientSecret,
+    required this.email,
+    required this.password,
   });
 
   Map<String, dynamic> toMap() => {
-        "grant_type": grantType,
-        "client_id": clientId,
-        "client_secret": clientSecret,
+        "email": email,
+        "password": password,
       };
 }

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_app/features/presentation/blocs/app/app_bloc.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
+import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/loading/custom_loading.dart';
 import 'package:music_app/features/presentation/ui/custom/loading_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -156,7 +157,7 @@ abstract class BaseScreenState<V extends StatefulWidget, B extends BaseBloc<S>,
                   } else {
                     CustomLoading.dismiss();
                     if (state.error != null) {
-                      context.handleError(state.error!);
+                      context.handleError(state.error!, state is! LoginState);
                     }
                     onStateListener(context, state);
                   }

@@ -3,8 +3,10 @@ import 'package:music_app/features/data/models/list_track/list_track_model.dart'
 import 'package:music_app/features/data/models/models.dart';
 import 'package:music_app/features/domain/entities/request/login_request.dart';
 
+import '../../data/base/base_response.dart';
+
 abstract class HamusicRepository {
-  Future<Result<LoginModel>> login(LoginRequest request);
+  Future<Result<BaseObjectResponse<LoginModel>>> login(LoginRequest request);
 
   Future<Result<CategoriesModel>> getCategories();
 

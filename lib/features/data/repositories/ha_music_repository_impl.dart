@@ -1,3 +1,4 @@
+import 'package:music_app/features/data/base/base_response.dart';
 import 'package:music_app/features/data/base/result.dart';
 import 'package:music_app/features/data/models/category/category_model.dart';
 import 'package:music_app/features/data/models/list_track/list_track_model.dart';
@@ -14,7 +15,7 @@ class HaMusicRepositoryImpl implements HamusicRepository {
   HaMusicRepositoryImpl(this._haMusicApiProvider);
 
   @override
-  Future<Result<LoginModel>> login(LoginRequest request) =>
+  Future<Result<BaseObjectResponse<LoginModel>>> login(LoginRequest request) =>
       _haMusicApiProvider.login(request);
 
   @override

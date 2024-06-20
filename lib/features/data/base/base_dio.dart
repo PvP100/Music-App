@@ -9,7 +9,7 @@ abstract class IBaseDio {
     required T Function(Map<String, dynamic> json) fromJson,
     ApiMethod method = ApiMethod.get,
     Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? part,
+    Object? part,
   });
 }
 
@@ -24,7 +24,7 @@ class BaseDio implements IBaseDio {
     required T Function(Map<String, dynamic> json) fromJson,
     ApiMethod method = ApiMethod.get,
     Map<String, dynamic>? queryParameters,
-    Map<String, dynamic>? part,
+    Object? part,
   }) async {
     if (await NetworkConnectivity.status) {
       try {
@@ -42,8 +42,9 @@ class BaseDio implements IBaseDio {
         final statusCode = e.response?.statusCode ?? -1;
         return switch (statusCode) {
           400 => Result.error(Failure.badRequestError()),
-          401 => Result.error(Failure.unAuthorizedError(
-              (e.response?.data as Map<String, dynamic>)['error']['message'])),
+          401 => Result.error(Failure.unAuthorizedError((((e.response?.data
+                  as Map<String, dynamic>)['errors'] as List<dynamic>)
+              .firstOrNull as Map<String, dynamic>)['message'])),
           404 => Result.error(Failure.dataNotFoundError()),
           500 => Result.error(Failure.internalServerError()),
           _ => Result.error(Failure.serverError()),

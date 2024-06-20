@@ -105,7 +105,7 @@ extension BuildContextExtension on BuildContext {
         });
   }
 
-  handleError(Failure exception) {
+  handleError(Failure exception, bool isBackToLoginOrRegister) {
     final localizations = AppLocalizations.of(this)!;
     switch (exception) {
       case NetWorkConnection():
@@ -118,11 +118,14 @@ extension BuildContextExtension on BuildContext {
         return AppUtils.showToast(localizations.serverError);
       case UnAuthorizedError():
         {
-          HaMusicSharedPreference mPrefs =
-              GetIt.I.get<HaMusicSharedPreference>();
-          mPrefs.removeKey(SharedPreferencesConstants.appToken);
-          pushNamedAndRemoveUntil(RouteConstants.loginOrRegister, (p0) => false,
-              rootNavigator: true);
+          if (isBackToLoginOrRegister) {
+            HaMusicSharedPreference mPrefs =
+                GetIt.I.get<HaMusicSharedPreference>();
+            mPrefs.removeKey(SharedPreferencesConstants.appToken);
+            pushNamedAndRemoveUntil(
+                RouteConstants.loginOrRegister, (p0) => false,
+                rootNavigator: true);
+          }
           return AppUtils.showToast(exception.message);
         }
       case AppError():

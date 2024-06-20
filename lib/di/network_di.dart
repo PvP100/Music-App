@@ -14,7 +14,7 @@ class NetworkDi {
     GetIt.instance.registerSingleton<Dio>(Dio(BaseOptions(
       baseUrl: injector<NetWorkConfig>().baseUrl,
       headers: {
-        Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
+        Headers.contentTypeHeader: Headers.jsonContentType,
       },
       connectTimeout: 10.seconds,
       receiveTimeout: 10.seconds,
