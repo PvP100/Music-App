@@ -83,7 +83,7 @@ class HomeNewAlbumCategory extends StatelessWidget {
                       ),
                     )
                   ],
-                );
+                ).onCupertinoClick(() => _navigateToDetail(context));
               },
               separatorBuilder: ((context, index) => const SizedBox(width: 15)),
               itemCount: 10),
@@ -94,5 +94,9 @@ class HomeNewAlbumCategory extends StatelessWidget {
 
   _navigateToTrack(BuildContext context) {
     context.read<AppBloc>().playMusic();
+  }
+
+  _navigateToDetail(BuildContext context) {
+    context.pushNamed(RouteConstants.album);
   }
 }

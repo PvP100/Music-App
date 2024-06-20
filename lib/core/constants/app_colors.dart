@@ -21,4 +21,5 @@ class AppColors {
   static const Color colorBlackWith25 = Color(0x40000000);
   static const Color primary75 = Color(0xBF00803D);
   static const Color colorA3A3A3 = Color(0xffA3A3A3);
+  static const Color color444444 = Color(0xff444444);
 }
