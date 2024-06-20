@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:music_app/features/data/models/track_of_album/track_of_album_model.dart';
 
 part 'album_model.g.dart';
 
@@ -15,7 +16,16 @@ class AlbumModel {
 
   final List<AlbumImageModel>? images;
 
-  AlbumModel({this.albumType, this.images, this.name, this.artists});
+  @JsonKey(name: "tracks")
+  final TrackOfAlbumModel? tracks;
+
+  AlbumModel({
+    this.albumType,
+    this.images,
+    this.name,
+    this.artists,
+    this.tracks,
+  });
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) =>
       _$AlbumModelFromJson(json);

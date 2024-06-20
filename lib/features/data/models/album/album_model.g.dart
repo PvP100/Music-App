@@ -15,6 +15,7 @@ AlbumModel _$AlbumModelFromJson(Map<String, dynamic> json) => AlbumModel(
       artists: (json['artists'] as List<dynamic>?)
           ?.map((e) => ArtistsModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      tracks: TrackOfAlbumModel.fromJson(json['tracks']),
     );
 
 Map<String, dynamic> _$AlbumModelToJson(AlbumModel instance) =>
