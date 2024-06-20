@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:music_app/core/constants/api_path_constants.dart';
 import 'package:music_app/features/data/base/base_dio.dart';
+import 'package:music_app/features/data/base/base_response.dart';
 import 'package:music_app/features/data/base/result.dart';
 import 'package:music_app/features/data/models/image_model/image_model.dart';
 import 'package:music_app/features/data/models/list_track/list_track_model.dart';
@@ -9,7 +12,7 @@ import '../../models/models.dart';
 
 abstract class HaMusicApiProvider {
   Future<Result<ImageModel>> getRandomImage();
-  Future<Result<LoginModel>> login(LoginRequest request);
+  Future<Result<BaseObjectResponse<LoginModel>>> login(LoginRequest request);
   Future<Result<CategoriesModel>> getCategories();
   Future<Result<ListTrackModel>> getTrack(String trackId);
 }
@@ -26,11 +29,12 @@ class HaMusicApiProviderImpl implements HaMusicApiProvider {
       );
 
   @override
-  Future<Result<LoginModel>> login(LoginRequest request) => _baseDio.request(
+  Future<Result<BaseObjectResponse<LoginModel>>> login(LoginRequest request) =>
+      _baseDio.request(
         ApiPathConstants.login,
-        fromJson: LoginModel.fromJson,
+        fromJson: (json) => BaseObjectResponse.fromJson(json, LoginModel()),
         method: ApiMethod.post,
-        queryParameters: request.toMap(),
+        part: jsonEncode(request.toMap()),
       );
 
   @override

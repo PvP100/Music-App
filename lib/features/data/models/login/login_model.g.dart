@@ -7,14 +7,14 @@ part of 'login_model.dart';
 // **************************************************************************
 
 LoginModel _$LoginModelFromJson(Map<String, dynamic> json) => LoginModel(
-      name: json['token_type'] as String? ?? "",
+      refreshToken: json['refresh_token'] as String? ?? "",
       accessToken: json['access_token'] as String? ?? "",
-      expiresIn: json['expires_in'] as int? ?? 0,
+      expiresIn: json['expires'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$LoginModelToJson(LoginModel instance) =>
     <String, dynamic>{
-      'token_type': instance.name,
+      'refresh_token': instance.refreshToken,
       'access_token': instance.accessToken,
       'expires_in': instance.expiresIn,
     };

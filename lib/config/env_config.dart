@@ -1,3 +1,3 @@
 class EnvConfig {
-  static const baseUrl = "https://api.spotify.com/v1/";
+  static const baseUrl = "https://hanhmusicapp.xyz/";
 }

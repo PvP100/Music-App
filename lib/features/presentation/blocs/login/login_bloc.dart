@@ -31,16 +31,15 @@ class LoginBloc extends BaseBloc<LoginState> {
       return emit(
           state.copyWith(error: localizations.passwordLengthError.toFailure()));
     }
-
-    emit(state.copyWith(isLoading: true));
+    emitLoading();
     final useCase = await _loginUseCase(LoginRequest(
-      grantType: "client_credentials",
-      clientId: "816997b654de499faa6f277bcefdf196",
-      clientSecret: "2a5f8e38511a4ee8b11503b3dfe7533d",
+      email: username,
+      password: password,
     ));
     useCase.fold((data) async {
-      await _mPrefs.put(SharedPreferencesConstants.appToken, data?.accessToken);
+      await _mPrefs.put(
+          SharedPreferencesConstants.appToken, data?.data?.accessToken);
       emit(state.copyWith(isLoginSuccess: true));
-    }, (e) => emit(state.copyWith(error: e)));
+    }, emitError);
   }
 }
