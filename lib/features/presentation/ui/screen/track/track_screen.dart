@@ -18,12 +18,18 @@ import 'package:volume_controller/volume_controller.dart';
 import 'widget/track_image_widget.dart';
 
 class TrackScreen extends StatefulWidget {
-  const TrackScreen(
-      {super.key, required this.onClose, required this.animationController});
+  const TrackScreen({
+    super.key,
+    required this.onClose,
+    required this.animationController,
+    required this.onOpen,
+  });
 
   final VoidCallback onClose;
 
   final AnimationController animationController;
+
+  final VoidCallback onOpen;
 
   @override
   State<TrackScreen> createState() => _TrackScreenState();
@@ -87,7 +93,7 @@ class _TrackScreenState extends State<TrackScreen> {
                 id: e.previewUrl ?? "",
                 title: e.album?.name ?? "",
                 duration: (e.durationMs ?? 0).milliseconds,
-                artist: e.album?.artists?.map((e) => e.name).join(", "),
+                artist: e.singers?.map((e) => e.data?.name ?? "").join(", "),
                 artUri: Uri.parse(e.album?.images?.firstOrNull?.url ?? ""),
               ))
           .toList());
@@ -122,7 +128,9 @@ class _TrackScreenState extends State<TrackScreen> {
                           controller: _controller,
                           onPageChanged: _onPageChanged,
                           itemBuilder: (context, index) => TrackImageWidget(
-                            model: track?.models[index],
+                            model: track?.models.isNotEmpty == true
+                                ? track?.models[index]
+                                : null,
                           ),
                           itemCount: track?.models.length ?? 0,
                         ),
@@ -161,8 +169,12 @@ class _TrackScreenState extends State<TrackScreen> {
                     previous.trackState?.currentIndex !=
                     current.trackState?.currentIndex,
                 builder: (context, state) {
-                  TrackModel? model = state.trackState?.track
-                      ?.models[state.trackState?.currentIndex ?? 0];
+                  int currentIndex = state.trackState?.currentIndex ?? 0;
+                  List<TrackModel> tracks =
+                      state.trackState?.track?.models ?? [];
+                  TrackModel? model = tracks.isEmpty
+                      ? null
+                      : state.trackState?.track?.models[currentIndex];
                   return PlayWidget(
                     track: model,
                     onPlay: _onPlay,
@@ -211,12 +223,12 @@ class _TrackScreenState extends State<TrackScreen> {
                 );
               }),
           BlocBuilder<MainBloc, MainState>(
-            buildWhen: (previous, current) =>
-                previous.trackState?.currentIndex !=
-                current.trackState?.currentIndex,
             builder: (context, state) {
-              TrackModel? model = state.trackState?.track
-                  ?.models[state.trackState?.currentIndex ?? 0];
+              int currentIndex = state.trackState?.currentIndex ?? 0;
+              List<TrackModel> tracks = state.trackState?.track?.models ?? [];
+              TrackModel? model = tracks.isEmpty
+                  ? null
+                  : state.trackState?.track?.models[currentIndex];
               return AnimatedBuilder(
                   animation: widget.animationController,
                   child: NotificationListener(
@@ -230,7 +242,7 @@ class _TrackScreenState extends State<TrackScreen> {
                     child: MiniPlayWidget(
                       controller: _miniController,
                       trackModel: model,
-                    ),
+                    ).onCupertinoClick(widget.onOpen),
                   ),
                   builder: (context, child) {
                     double offset = widget.animationController.value;

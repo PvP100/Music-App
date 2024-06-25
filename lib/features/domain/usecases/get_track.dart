@@ -1,22 +1,31 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
-import 'package:music_app/core/core.dart';
 import 'package:music_app/features/data/base/result.dart';
-import 'package:music_app/features/data/models/list_track/list_track_model.dart';
 import 'package:music_app/features/domain/repositories/hamusic_repository.dart';
 import 'package:music_app/features/domain/usecases/use_case.dart';
 
-class GetTrack extends UseCase<ListTrackModel, String> {
+import '../../data/base/base_response.dart';
+import '../../data/models/track/track_model.dart';
+
+class GetTrack extends UseCase<BaseListResponse<TrackModel>, String?> {
   final HamusicRepository _hamusicRepository;
 
   GetTrack(this._hamusicRepository);
 
   @override
-  Future<Result<ListTrackModel>> run(String params) async {
-    String data = await rootBundle.loadString("assets/json/track.json");
-    await Future.delayed(0.milliseconds);
-    return Result.success(ListTrackModel.fromJson(jsonDecode(data)));
-    // return _hamusicRepository.getTrack(params);
+  Future<Result<BaseListResponse<TrackModel>>> run(String? params) async {
+    final api = await _hamusicRepository.getTrack();
+    return api.convert((data) {
+      final newList = data?.data;
+      if ((newList ?? []).any((element) => element.id == params)) {
+        final currentSong =
+            newList?.firstWhere((element) => element.id == params);
+        if (currentSong != null) {
+          newList?.remove(currentSong);
+          newList?.insert(0, currentSong);
+        }
+        return Result.success(BaseListResponse(data: newList));
+      }
+
+      return Result.success(data);
+    });
   }
 }

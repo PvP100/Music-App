@@ -48,13 +48,13 @@ class MiniPlayWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: (trackModel?.album?.images?.firstOrNull?.url)
-                            ?.loadImageUrl(
-                          placeHolder:
-                              ImageConstants.musicPlaceholder.loadImageAsset(),
-                          errorWidget:
-                              ImageConstants.musicPlaceholder.loadImageAsset(),
-                        ),
+                        child:
+                            trackModel?.thumbnailId.filePathUrl().loadImageUrl(
+                                  placeHolder: ImageConstants.musicPlaceholder
+                                      .loadImageAsset(),
+                                  errorWidget: ImageConstants.musicPlaceholder
+                                      .loadImageAsset(),
+                                ),
                       ),
                       BlocSelector<MainBloc, MainState,
                           ObjectListEntity<TrackModel>?>(
@@ -70,15 +70,15 @@ class MiniPlayWidget extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      track?.album?.name ?? "",
+                                      track?.name ?? "",
                                       style: AppTextStyles.medium
                                           .copyWith(fontSize: 13),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
-                                      (track?.album?.artists ?? [])
-                                          .map((e) => e.name)
+                                      (track?.singers ?? [])
+                                          .map((e) => e.data?.name ?? "")
                                           .join(", "),
                                       style: AppTextStyles.medium.copyWith(
                                         fontSize: 12,

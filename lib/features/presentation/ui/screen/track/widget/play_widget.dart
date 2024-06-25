@@ -53,14 +53,13 @@ class PlayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final artists =
-        (track?.album?.artists?.map((e) => e.name) ?? []).join(", ");
+    final artists = (track?.singers?.map((e) => e.data?.name) ?? []).join(", ");
     return Container(
       color: Colors.transparent,
       child: Column(
         children: [
           TrackInformation(
-            trackName: track?.album?.name ?? "",
+            trackName: track?.name ?? "",
             trackArtists: artists,
           ).paddingSymmetric(horizontal: 24),
           Padding(
@@ -68,13 +67,16 @@ class PlayWidget extends StatelessWidget {
             child: StreamBuilder<double>(
                 stream: HaMusicPlayer.instance.percentChanged,
                 builder: (context, snapshot) {
-                  return SliderWidget(
-                    sliderValue: snapshot.data ?? 0,
-                    onChanged: (v) {
-                      HaMusicPlayer.instance.isSeeking = true;
-                      HaMusicPlayer.instance.percentChangedController.add(v);
-                    },
-                    onChangedEnd: _onChanged,
+                  return IgnorePointer(
+                    ignoring: track == null,
+                    child: SliderWidget(
+                      sliderValue: snapshot.data ?? 0,
+                      onChanged: (v) {
+                        HaMusicPlayer.instance.isSeeking = true;
+                        HaMusicPlayer.instance.percentChangedController.add(v);
+                      },
+                      onChangedEnd: _onChanged,
+                    ),
                   );
                 }),
           ),
@@ -150,17 +152,17 @@ class PlayWidget extends StatelessWidget {
                             .loadImageAsset(height: 18, width: 18),
                       ],
                     ).paddingOnly(bottom: 24, top: 50),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ImageConstants.iconLyric
-                            .loadImageAsset(height: 24, width: 24),
-                        ImageConstants.iconAudioOutput
-                            .loadImageAsset(height: 24, width: 24),
-                        ImageConstants.iconListTrack
-                            .loadImageAsset(height: 24, width: 24),
-                      ],
-                    )
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     ImageConstants.iconLyric
+                    //         .loadImageAsset(height: 24, width: 24),
+                    //     ImageConstants.iconAudioOutput
+                    //         .loadImageAsset(height: 24, width: 24),
+                    //     ImageConstants.iconListTrack
+                    //         .loadImageAsset(height: 24, width: 24),
+                    //   ],
+                    // )
                   ],
                 ),
               ),

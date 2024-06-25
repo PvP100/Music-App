@@ -18,13 +18,13 @@ class TrackImageWidget extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 2 / 3,
-            child: (model?.album?.images?.firstOrNull?.url)?.loadImageUrl(),
+            child: model?.thumbnailId.filePathUrl().loadImageUrl(),
           ),
           AspectRatio(
             aspectRatio: 2 / 3,
             child: Transform.flip(
               flipY: true,
-              child: (model?.album?.images?.firstOrNull?.url)?.loadImageUrl(),
+              child: model?.thumbnailId.filePathUrl().loadImageUrl(),
             ),
           )
         ],

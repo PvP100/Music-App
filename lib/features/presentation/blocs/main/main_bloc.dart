@@ -22,15 +22,18 @@ class MainBloc extends BaseBloc<MainState> {
   MainBloc(this._getTrackUseCase) : super(MainState());
 
   changScreen(TabNavigation tabNavigation) {
-    emit(state.copyWith(currentScreen: tabNavigation));
+    emit(state.copyWith(
+      currentScreen: tabNavigation,
+      trackState: state.trackState?.copyWith(isRefresh: false),
+    ));
   }
 
-  void getTrack(String trackId) async {
+  void getTrack(String? trackId) async {
     final useCase = await _getTrackUseCase(trackId);
     useCase.fold((data) {
       emit(state.copyWith(
           trackState: TrackState(
-        track: ObjectListEntity(data?.tracks ?? []),
+        track: ObjectListEntity(data?.data ?? []),
         currentIndex: 0,
         isRefresh: true,
       )));
