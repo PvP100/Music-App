@@ -69,15 +69,15 @@ class _LoginScreenState
               margin: const EdgeInsets.fromLTRB(30, 23, 30, 12),
               hintText: localizations.password,
             ),
-            Text(
-              localizations.forgotPasswordWithQuestionMark,
-              style: AppTextStyles.medium.copyWith(fontSize: 14),
-            )
-                .onCupertinoClick(() {
-                  context.pushNamed(RouteConstants.forgotPassword);
-                })
-                .align(alignment: Alignment.centerRight)
-                .paddingOnly(right: 30),
+            // Text(
+            //   localizations.forgotPasswordWithQuestionMark,
+            //   style: AppTextStyles.medium.copyWith(fontSize: 14),
+            // )
+            //     .onCupertinoClick(() {
+            //       context.pushNamed(RouteConstants.forgotPassword);
+            //     })
+            //     .align(alignment: Alignment.centerRight)
+            //     .paddingOnly(right: 30),
             CommonButton(
               title: localizations.login,
               margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),

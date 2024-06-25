@@ -18,6 +18,15 @@ sealed class Result<T> {
         onFailure?.call(error!);
     }
   }
+
+  Result<E> convert<E>(Result<E> Function(T? data) onSuccess) {
+    switch (this) {
+      case ResultSuccess():
+        return onSuccess(data);
+      case ResultError():
+        return Result.error(error!);
+    }
+  }
 }
 
 class ResultSuccess<T> extends Result<T> {

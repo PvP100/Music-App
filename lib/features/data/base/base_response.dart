@@ -37,8 +37,8 @@ class BaseListResponse<R extends BaseDataModel> extends BaseResponse {
 
   factory BaseListResponse.fromJson(Map<String, dynamic> json, R model) {
     List<R>? listData;
-    if (json['items'] != null) {
-      listData = (json['items'] as List<dynamic>)
+    if (json['data'] != null) {
+      listData = (json['data'] as List<dynamic>)
           .map((e) => model.fromJson<R>(e))
           .toList();
     }

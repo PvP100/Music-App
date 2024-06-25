@@ -9,5 +9,7 @@ class UseCaseDi {
     injector.registerLazySingleton(() => LoginUseCase(injector()));
     injector.registerLazySingleton(() => GetCategories(injector()));
     injector.registerLazySingleton(() => GetTrack(injector()));
+    injector.registerLazySingleton(() => GetProfile(injector()));
+    injector.registerLazySingleton(() => GetHomeMenu(injector()));
   }
 }

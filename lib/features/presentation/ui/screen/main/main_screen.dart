@@ -8,7 +8,6 @@ import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart
 import 'package:music_app/features/presentation/ui/screen/track/track_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -50,7 +49,8 @@ class _MainScreenState extends BaseScreenState<MainScreen, MainBloc, MainState>
   @override
   void onAppStateListener(BuildContext context, AppState state) {
     if (state.playState?.isPlay == true) {
-      bloc.getTrack(bloc.ids.join(","));
+      print("32424234 ${state.playState?.songId}");
+      bloc.getTrack(state.playState?.songId);
     }
   }
 
@@ -79,6 +79,7 @@ class _MainScreenState extends BaseScreenState<MainScreen, MainBloc, MainState>
               maxHeight: context.height,
               color: Colors.transparent,
               panel: TrackScreen(
+                onOpen: _panelController.open,
                 onClose: _panelController.close,
                 animationController: _animationController,
               ),

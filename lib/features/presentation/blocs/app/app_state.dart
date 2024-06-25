@@ -14,10 +14,18 @@ class PlayState {
 
   final bool showMiniPlayer;
 
-  PlayState({this.isPlay = false, this.showMiniPlayer = false});
+  final String? songId;
 
-  PlayState copyWith({bool? isPlay, bool? showMiniPlayer}) => PlayState(
+  PlayState({
+    this.isPlay = false,
+    this.showMiniPlayer = false,
+    this.songId,
+  });
+
+  PlayState copyWith({bool? isPlay, bool? showMiniPlayer, String? songId}) =>
+      PlayState(
         isPlay: isPlay ?? this.isPlay,
         showMiniPlayer: showMiniPlayer ?? this.showMiniPlayer,
+        songId: songId ?? this.songId,
       );
 }

@@ -4,9 +4,13 @@ part 'app_state.dart';
 class AppBloc extends Cubit<AppState> {
   AppBloc() : super(AppState());
 
-  playMusic() {
+  playMusic(String id) {
     emit(state.copyWith(
-        playState: PlayState(isPlay: true, showMiniPlayer: true)));
+        playState: PlayState(
+      isPlay: true,
+      songId: id,
+      showMiniPlayer: true,
+    )));
   }
 
   pauseMusic() {

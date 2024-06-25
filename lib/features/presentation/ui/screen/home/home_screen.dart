@@ -4,6 +4,7 @@ import 'package:music_app/core/core.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/widgets.dart';
 import 'package:music_app/features/presentation/ui/screen/main/main_screen.dart';
+import '../../../../domain/entities/home_menu_entity.dart';
 import '../base_screen_state.dart';
 import 'widgets/widgets.dart';
 
@@ -48,16 +49,27 @@ class _HomeScreenState
               const AppCircleAvatar()
             ]).paddingSymmetric(horizontal: 15, vertical: 20),
           ),
-          SliverList.separated(
-            separatorBuilder: (context, index) =>
-                SizedBox(height: index == 0 ? 15 : 8),
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return index == 0
-                  ? HomeNewAlbumCategory(key: PageStorageKey<String>("$index"))
-                  : HomeCategoryItem(key: PageStorageKey<String>("$index"));
-            },
-          ),
+          BlocSelector<HomeBloc, HomeState, List<HomeMenuEntity>?>(
+              selector: (state) => state.entities,
+              builder: (context, v) {
+                return SliverList.separated(
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 8),
+                  itemCount: v?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final model = v?[index];
+                    return (model?.isSong ?? false)
+                        ? HomeNewAlbumCategory(
+                            entity: model,
+                            key: PageStorageKey<String>("$index"),
+                          )
+                        : HomeCategoryItem(
+                            entity: model,
+                            key: PageStorageKey<String>("$index"),
+                          );
+                  },
+                );
+              }),
           BlocSelector<AppBloc, AppState, bool>(
             selector: (state) => state.playState?.isPlay ?? false,
             builder: (context, v) => SliverPadding(

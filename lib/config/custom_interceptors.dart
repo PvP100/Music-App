@@ -19,7 +19,7 @@ class CustomInterceptors extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     logi.d(
-        'RESPONSE[${response.statusCode}] => PATH: ${response.realUri.path}');
+        'RESPONSE[${response.statusCode}] => PATH: ${response.realUri.path} \n Response => ${response.data}');
     return super.onResponse(response, handler);
   }
 

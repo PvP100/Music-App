@@ -5,8 +5,12 @@ import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/presentation/blocs/app/app_bloc.dart';
 
+import '../../../../../domain/entities/home_menu_entity.dart';
+
 class HomeNewAlbumCategory extends StatelessWidget {
-  const HomeNewAlbumCategory({super.key});
+  const HomeNewAlbumCategory({super.key, this.entity});
+
+  final HomeMenuEntity? entity;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,7 @@ class HomeNewAlbumCategory extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Album mới nổi bật",
+          entity?.title ?? "",
           style: AppTextStyles.bold.copyWith(fontSize: 20),
         ).paddingOnly(left: 15, bottom: 10),
         SizedBox(
@@ -23,6 +27,7 @@ class HomeNewAlbumCategory extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
+                final model = entity?.data?[index];
                 return Stack(
                   children: [
                     Container(
@@ -37,12 +42,15 @@ class HomeNewAlbumCategory extends StatelessWidget {
                           end: Alignment.topCenter,
                         ),
                       ),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: CachedNetworkImageProvider(
-                                  "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80"))),
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(
+                              model?.thumbnail ?? ""),
+                        ),
+                      ),
                     ),
                     Positioned(
                       left: 13,
@@ -55,13 +63,13 @@ class HomeNewAlbumCategory extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Stray Nights",
+                                model?.name ?? "",
                                 maxLines: 1,
                                 style:
                                     AppTextStyles.bold.copyWith(fontSize: 18),
                               ),
                               Text(
-                                "Tom Frane",
+                                model?.artists ?? "",
                                 maxLines: 1,
                                 style: AppTextStyles.medium
                                     .copyWith(color: AppColors.colorCACACA),
@@ -78,7 +86,10 @@ class HomeNewAlbumCategory extends StatelessWidget {
                             ),
                             child: ImageConstants.iconPlayBlack
                                 .loadImageAsset(width: 20, height: 20),
-                          ).onCupertinoClick(() => _navigateToTrack(context))
+                          ).onCupertinoClick(() => _navigateToTrack(
+                                context,
+                                model?.id ?? "",
+                              ))
                         ],
                       ),
                     )
@@ -86,13 +97,13 @@ class HomeNewAlbumCategory extends StatelessWidget {
                 );
               },
               separatorBuilder: ((context, index) => const SizedBox(width: 15)),
-              itemCount: 10),
+              itemCount: entity?.data?.length ?? 0),
         )
       ],
     );
   }
 
-  _navigateToTrack(BuildContext context) {
-    context.read<AppBloc>().playMusic();
+  _navigateToTrack(BuildContext context, String songId) {
+    context.read<AppBloc>().playMusic(songId);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:music_app/config/env_config.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/data/exception/failure.dart';
 
@@ -28,6 +29,7 @@ extension StringExtension on String? {
     int? memCacheWidth,
     int? memCacheHeight,
   }) {
+    print(this);
     if (this != null && this?.isNotEmpty == true) {
       return CachedNetworkImage(
         memCacheHeight: memCacheHeight,
@@ -41,7 +43,7 @@ extension StringExtension on String? {
             Center(child: placeHolder ?? const CircularProgressIndicator()),
       );
     } else {
-      return const SizedBox();
+      return "music_placeholder".loadImageAsset();
     }
   }
 
@@ -61,4 +63,6 @@ extension StringExtension on String? {
       width: width,
     );
   }
+
+  String filePathUrl() => "${EnvConfig.baseUrl}assets/$this";
 }
