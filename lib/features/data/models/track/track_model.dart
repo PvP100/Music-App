@@ -13,8 +13,8 @@ class TrackModel extends BaseDataModel {
 
   final AlbumModel? album;
 
-  @JsonKey(name: "duration_ms")
-  final int? durationMs;
+  @JsonKey(name: "duration")
+  final double? durationMs;
 
   @JsonKey(name: "name")
   final String? name;

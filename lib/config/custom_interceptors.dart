@@ -9,7 +9,8 @@ class CustomInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     logi.d('REQUEST[${options.method}] => PATH: ${options.path}');
-    if (options.path != ApiPathConstants.login) {
+    if (options.path != ApiPathConstants.login &&
+        options.path != ApiPathConstants.register) {
       options.headers['Authorization'] =
           "Bearer ${GetIt.I.get<HaMusicSharedPreference>().get<String>(SharedPreferencesConstants.appToken)}";
     }
