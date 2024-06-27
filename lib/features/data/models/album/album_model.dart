@@ -1,9 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:music_app/features/data/base/base_response.dart';
+import 'package:music_app/features/data/models/track_of_album/track_of_album_model.dart';
+
+import '../models.dart';
 
 part 'album_model.g.dart';
 
 @JsonSerializable()
-class AlbumModel {
+class AlbumModel implements BaseDataModel {
   @JsonKey(name: "album_type")
   final AlbumType? albumType;
 
@@ -13,12 +17,34 @@ class AlbumModel {
   @JsonKey(name: "name")
   final String? name;
 
-  final List<AlbumImageModel>? images;
+  final String? thumbnail;
 
-  AlbumModel({this.albumType, this.images, this.name, this.artists});
+  final List<ChildSongHomeMenuModel>? songs;
+
+  final List<SingerHomeMenuModel>? singers;
+
+  final String? id;
+
+  @JsonKey(name: "tracks")
+  final TrackOfAlbumModel? tracks;
+
+  AlbumModel({
+    this.singers,
+    this.albumType,
+    this.id,
+    this.thumbnail,
+    this.name,
+    this.artists,
+    this.tracks,
+    this.songs,
+  });
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) =>
       _$AlbumModelFromJson(json);
+
+  @override
+  T fromJson<T extends BaseDataModel>(Map<String, dynamic> json) =>
+      AlbumModel.fromJson(json) as T;
 }
 
 @JsonSerializable()

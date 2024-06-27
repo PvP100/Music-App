@@ -1,12 +1,16 @@
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/data/exception/failure.dart';
+import 'package:music_app/features/domain/entities/request/register_request.dart';
+import 'package:music_app/features/domain/usecases/domain_use_cases.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
 
 class RegisterBloc extends BaseBloc<RegisterState> {
-  RegisterBloc() : super(RegisterState());
+  final Register _registerUseCase;
+
+  RegisterBloc(this._registerUseCase) : super(RegisterState());
 
   selectBirthday(DateTime birthday) {
     emit(state.copyWith(birthday: birthday));
@@ -16,8 +20,9 @@ class RegisterBloc extends BaseBloc<RegisterState> {
     required String username,
     required String password,
     required String rePassword,
-    required String fullName,
-  }) {
+    required String firstName,
+    required String lastName,
+  }) async {
     if (username.isEmpty) {
       return emit(
           state.copyWith(error: localizations.usernameEmpty.toFailure()));
@@ -33,15 +38,20 @@ class RegisterBloc extends BaseBloc<RegisterState> {
           state.copyWith(error: localizations.rePasswordEmpty.toFailure()));
     }
 
-    if (fullName.isEmpty) {
+    if (firstName.isEmpty) {
       return emit(
-          state.copyWith(error: localizations.fullNameEmpty.toFailure()));
+          state.copyWith(error: localizations.firstNameEmpty.toFailure()));
     }
 
-    if (state.birthday == null) {
-      return emit(state.copyWith(
-          error: localizations.dateOfBirthCannotBeEmpty.toFailure()));
+    if (lastName.isEmpty) {
+      return emit(
+          state.copyWith(error: localizations.lastNameEmpty.toFailure()));
     }
+
+    // if (state.birthday == null) {
+    //   return emit(state.copyWith(
+    //       error: localizations.dateOfBirthCannotBeEmpty.toFailure()));
+    // }
 
     if (!username.isEmail() && !username.isPhoneNumber()) {
       return emit(
@@ -52,5 +62,18 @@ class RegisterBloc extends BaseBloc<RegisterState> {
       return emit(
           state.copyWith(error: localizations.passwordNotMatch.toFailure()));
     }
+
+    emitLoading();
+
+    final useCase = await _registerUseCase(RegisterRequest(
+      email: username,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      // birthday: state.birthday?.convertToString().convertDateTime() ?? "",
+    ));
+
+    useCase.fold(
+        (data) => emit(state.copyWith(isRegisterSuccess: true)), emitError);
   }
 }

@@ -8,11 +8,13 @@ class CommonTabBar extends StatelessWidget {
     required this.tabController,
     required this.listTitle,
     this.padding = EdgeInsets.zero,
+    required this.onTabChanged,
   });
 
   final TabController tabController;
   final List<String> listTitle;
   final EdgeInsets padding;
+  final ValueChanged<int> onTabChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class CommonTabBar extends StatelessWidget {
       labelColor: Colors.white,
       unselectedLabelColor: AppColors.colorCACACA,
       isScrollable: true,
+      onTap: onTabChanged,
       tabs: listTitle
           .map(
             (value) => Text(

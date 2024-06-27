@@ -7,22 +7,28 @@ part of 'album_model.dart';
 // **************************************************************************
 
 AlbumModel _$AlbumModelFromJson(Map<String, dynamic> json) => AlbumModel(
-      albumType: $enumDecodeNullable(_$AlbumTypeEnumMap, json['album_type']),
-      images: (json['images'] as List<dynamic>?)
-          ?.map((e) => AlbumImageModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      name: json['name'] as String?,
-      artists: (json['artists'] as List<dynamic>?)
-          ?.map((e) => ArtistsModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+    albumType: $enumDecodeNullable(_$AlbumTypeEnumMap, json['album_type']),
+    thumbnail: (json['thumbnail'] is Map<String, dynamic>
+        ? json['thumbnail']['id'] as String?
+        : json['thumbnail'] as String?),
+    name: json['name'] as String?,
+    id: json['id'] as String?,
+    artists: (json['artists'] as List<dynamic>?)
+        ?.map((e) => ArtistsModel.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    singers: (json['singers'] as List<dynamic>)
+        .map((e) => SingerHomeMenuModel.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    songs: (json['songs'] as List<dynamic>)
+        .map((e) => ChildSongHomeMenuModel.fromJson(e as Map<String, dynamic>))
+        .toList());
 
 Map<String, dynamic> _$AlbumModelToJson(AlbumModel instance) =>
     <String, dynamic>{
       'album_type': _$AlbumTypeEnumMap[instance.albumType],
       'artists': instance.artists,
       'name': instance.name,
-      'images': instance.images,
+      'images': instance.thumbnail,
     };
 
 const _$AlbumTypeEnumMap = {

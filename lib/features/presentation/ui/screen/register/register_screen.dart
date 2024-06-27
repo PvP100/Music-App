@@ -17,11 +17,21 @@ class _RegisterScreenState
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _rePasswordController = TextEditingController();
-  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+
+  @override
+  void onStateListener(BuildContext context, RegisterState state) {
+    super.onStateListener(context, state);
+    if (state.isRegisterSuccess) {
+      context.pop();
+    }
+  }
 
   @override
   void dispose() {
-    _fullNameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
     _rePasswordController.dispose();
@@ -53,36 +63,41 @@ class _RegisterScreenState
               hintText: localizations.reEnterPassword,
             ),
             CommonTextField(
-              controller: _fullNameController,
+              controller: _lastNameController,
               margin: const EdgeInsets.symmetric(vertical: 12),
-              hintText: localizations.fullName,
+              hintText: localizations.lastName,
             ),
-            Container(
-              height: 45,
-              padding: const EdgeInsets.only(left: 13),
-              alignment: Alignment.centerLeft,
-              decoration: const BoxDecoration(
-                color: AppColors.color3E3E3E,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
-              child: BlocSelector<RegisterBloc, RegisterState, String?>(
-                  selector: (state) => state.birthday?.convertToString(),
-                  builder: (context, value) {
-                    return Text(
-                      value ?? localizations.birthday,
-                      style: AppTextStyles.medium.copyWith(
-                        color: value != null
-                            ? Colors.white
-                            : AppColors.color999999,
-                        fontSize: 14,
-                      ),
-                    );
-                  }),
-            ).onCupertinoClick(() {
-              context.showDatePicker((date) {
-                bloc.selectBirthday(date);
-              }, initialDate: bloc.state.birthday, maxDate: DateTime.now());
-            }),
+            CommonTextField(
+              controller: _firstNameController,
+              margin: const EdgeInsets.only(bottom: 12),
+              hintText: localizations.firstName,
+            ),
+            // Container(
+            //   height: 45,
+            //   padding: const EdgeInsets.only(left: 13),
+            //   alignment: Alignment.centerLeft,
+            //   decoration: const BoxDecoration(
+            //     color: AppColors.color3E3E3E,
+            //     borderRadius: BorderRadius.all(Radius.circular(8)),
+            //   ),
+            //   child: BlocSelector<RegisterBloc, RegisterState, String?>(
+            //       selector: (state) => state.birthday?.convertToString(),
+            //       builder: (context, value) {
+            //         return Text(
+            //           value ?? localizations.birthday,
+            //           style: AppTextStyles.medium.copyWith(
+            //             color: value != null
+            //                 ? Colors.white
+            //                 : AppColors.color999999,
+            //             fontSize: 14,
+            //           ),
+            //         );
+            //       }),
+            // ).onCupertinoClick(() {
+            //   context.showDatePicker((date) {
+            //     bloc.selectBirthday(date);
+            //   }, initialDate: bloc.state.birthday, maxDate: DateTime.now());
+            // }),
             CommonButton(
                 margin: const EdgeInsets.only(top: 50),
                 title: localizations.register,
@@ -91,7 +106,8 @@ class _RegisterScreenState
                     username: _usernameController.text.trim(),
                     password: _passwordController.text.trim(),
                     rePassword: _rePasswordController.text.trim(),
-                    fullName: _fullNameController.text.trim(),
+                    firstName: _firstNameController.text.trim(),
+                    lastName: _firstNameController.text.trim(),
                   );
                 })
           ]),

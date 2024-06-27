@@ -33,7 +33,9 @@ class ScreenDi {
         instanceName: RouteConstants.profile);
     injector.registerFactory<Widget>(() => const SettingScreen(),
         instanceName: RouteConstants.setting);
-    // injector.registerFactory<Widget>(() => const TrackScreen(),
-    //     instanceName: RouteConstants.track);
+    injector.registerFactory<Widget>(() => const AlbumScreen(),
+        instanceName: RouteConstants.album);
+    injector.registerFactory<Widget>(() => const ArtistScreen(),
+        instanceName: RouteConstants.artist);
   }
 }

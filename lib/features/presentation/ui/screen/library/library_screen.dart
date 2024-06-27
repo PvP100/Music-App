@@ -84,6 +84,7 @@ class _LibraryScreenState
                   context.localizations().artist
                 ],
                 tabController: _tabController,
+                onTabChanged: _tabChanged,
               ).paddingOnly(left: 15, top: 8)
             ],
           ),
@@ -101,6 +102,7 @@ class _LibraryScreenState
               child: Row(
                 children: [
                   SearchWidget(
+                    onSearch: (value) {},
                     controller: _controller,
                   ).expanded(),
                 ],
@@ -127,6 +129,8 @@ class _LibraryScreenState
 
   @override
   bool get safeAreaBottom => false;
+
+  _tabChanged(int index) {}
 
   _onCreatePlaylist() {
     showModalBottomSheet(

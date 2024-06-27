@@ -39,6 +39,8 @@ class LoginBloc extends BaseBloc<LoginState> {
     useCase.fold((data) async {
       await _mPrefs.put(
           SharedPreferencesConstants.appToken, data?.data?.accessToken);
+      await _mPrefs.put(
+          SharedPreferencesConstants.appRefreshToken, data?.data?.refreshToken);
       emit(state.copyWith(isLoginSuccess: true));
     }, emitError);
   }

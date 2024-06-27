@@ -12,12 +12,14 @@ class BlocDi {
     injector.registerFactory(() => LoginOrRegisterBloc());
     injector.registerFactory(() => ChangePasswordBloc());
     injector.registerFactory(() => ForgotPasswordBloc());
-    injector.registerFactory(() => RegisterBloc());
+    injector.registerFactory(() => RegisterBloc(injector()));
     injector.registerFactory(() => MainBloc(injector()));
     injector.registerFactory(() => CategoryBloc(injector()));
-    injector.registerFactory(() => SearchBloc());
+    injector.registerFactory(() => SearchBloc(injector()));
     injector.registerFactory(() => LibraryBloc());
     injector.registerFactory(() => ProfileBloc(injector()));
-    injector.registerFactory(() => SettingBloc());
+    injector.registerFactory(() => SettingBloc(injector(), injector()));
+    injector.registerFactory(() => AlbumBloc(injector()));
+    injector.registerFactory(() => ArtistBloc(injector()));
   }
 }

@@ -49,7 +49,6 @@ class _MainScreenState extends BaseScreenState<MainScreen, MainBloc, MainState>
   @override
   void onAppStateListener(BuildContext context, AppState state) {
     if (state.playState?.isPlay == true) {
-      print("32424234 ${state.playState?.songId}");
       bloc.getTrack(state.playState?.songId);
     }
   }

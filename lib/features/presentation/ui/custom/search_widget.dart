@@ -3,10 +3,16 @@ import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
 
 class SearchWidget extends StatelessWidget {
-  const SearchWidget({super.key, this.focusNode, required this.controller});
+  const SearchWidget({
+    super.key,
+    this.focusNode,
+    required this.controller,
+    required this.onSearch,
+  });
 
   final FocusNode? focusNode;
   final TextEditingController controller;
+  final ValueChanged<String> onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +27,7 @@ class SearchWidget extends StatelessWidget {
             .loadImageAsset(height: 14, width: 14)
             .paddingOnly(left: 5),
         TextField(
+          onSubmitted: onSearch,
           focusNode: focusNode,
           controller: controller,
           textInputAction: TextInputAction.search,

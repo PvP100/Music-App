@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:music_app/features/presentation/blocs/app/app_bloc.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/loading/custom_loading.dart';
@@ -129,7 +128,10 @@ abstract class BaseScreenState<V extends StatefulWidget, B extends BaseBloc<S>,
 
   @protected
   Future<bool> willPopCallback() async {
-    return !LoadingIndicator.isShowing;
+    if (!LoadingIndicator.isShowing) {
+      context.pop();
+    }
+    return false;
   }
 
   @override
@@ -157,7 +159,8 @@ abstract class BaseScreenState<V extends StatefulWidget, B extends BaseBloc<S>,
                   } else {
                     CustomLoading.dismiss();
                     if (state.error != null) {
-                      context.handleError(state.error!, state is! LoginState);
+                      context.handleError(state.error!,
+                          state is! LoginState && state is! RegisterState);
                     }
                     onStateListener(context, state);
                   }

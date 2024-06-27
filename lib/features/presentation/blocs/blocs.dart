@@ -12,3 +12,5 @@ export 'library/library_bloc.dart';
 export 'profile/profile_bloc.dart';
 export 'category/category_bloc.dart';
 export 'setting/setting_bloc.dart';
+export 'album/album_bloc.dart';
+export 'artist/artist_bloc.dart';

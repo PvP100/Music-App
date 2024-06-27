@@ -90,11 +90,11 @@ class _TrackScreenState extends State<TrackScreen> {
       List<TrackModel> tracks = (state.trackState?.track?.models ?? []);
       _audioService.addQueueItems(tracks
           .map((e) => MediaItem(
-                id: e.previewUrl ?? "",
-                title: e.album?.name ?? "",
+                id: e.fileId.filePathUrl(),
+                title: e.name ?? "",
                 duration: (e.durationMs ?? 0).milliseconds,
                 artist: e.singers?.map((e) => e.data?.name ?? "").join(", "),
-                artUri: Uri.parse(e.album?.images?.firstOrNull?.url ?? ""),
+                artUri: Uri.parse(e.thumbnailId.filePathUrl()),
               ))
           .toList());
       _audioService.play();
@@ -282,11 +282,7 @@ class _TrackScreenState extends State<TrackScreen> {
   _onPageChanged(int index) async {
     int oldIndex = bloc.state.trackState?.currentIndex ?? 0;
     bloc.changeTrack(index);
-    if (oldIndex < index) {
-      await _player.seekToNext();
-    } else {
-      await _player.seekToPrevious(false);
-    }
+    await _player.seek(0.milliseconds, index: index);
     if (!_player.isPlaying) {
       _player.play();
     }

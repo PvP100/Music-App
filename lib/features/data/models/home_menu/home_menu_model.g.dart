@@ -14,6 +14,10 @@ HomeMenuModel _$HomeMenuModelFromJson(Map<String, dynamic> json) =>
             .map((e) =>
                 ChildSongHomeMenuModel.fromJson(e as Map<String, dynamic>))
             .toList(),
+        playlist: (json['playlists'] as List<dynamic>)
+            .map((e) =>
+                ChildPlaylistHomeMenuModel.fromJson(e as Map<String, dynamic>))
+            .toList(),
         albums: (json['albums'] as List<dynamic>)
             .map((e) =>
                 ChildAlbumHomeMenuModel.fromJson(e as Map<String, dynamic>))
@@ -37,6 +41,12 @@ ChildAlbumHomeMenuModel _$ChildAlbumHomeMenuModelFromJson(
       data: SongHomeMenu.fromJson(json['Album_id'] as Map<String, dynamic>),
     );
 
+ChildPlaylistHomeMenuModel _$ChildPlaylistHomeMenuModelFromJson(
+        Map<String, dynamic> json) =>
+    ChildPlaylistHomeMenuModel(
+      data: SongHomeMenu.fromJson(json['Playlist_id'] as Map<String, dynamic>),
+    );
+
 SingerHomeMenuModel _$SingerHomeMenuModelFromJson(Map<String, dynamic> json) =>
     SingerHomeMenuModel(
       data: SingerModel.fromJson(json['Singer_id'] as Map<String, dynamic>),
@@ -47,7 +57,7 @@ SongHomeMenu _$SongHomeMenuModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       name: json['name'] as String?,
       thumbnail: json['thumbnail'] as String?,
-      singers: (json['singers'] as List<dynamic>)
-          .map((e) => SingerHomeMenuModel.fromJson(e))
+      singers: (json['singers'] as List<dynamic>?)
+          ?.map((e) => SingerHomeMenuModel.fromJson(e))
           .toList(),
     );

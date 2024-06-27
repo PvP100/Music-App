@@ -34,4 +34,7 @@ class ImageConstants {
   static const String iconAudioOutput = "icon_audio_output";
   static const String iconLyric = "icon_lyric";
   static const String musicPlaceholder = "music_placeholder";
+  static const String iconBackGreen = "icon_back_green";
+  static const String iconPlayPrimary = "icon_play_primary";
+  static const String iconShufflePrimary = "icon_shuffle_primary";
 }

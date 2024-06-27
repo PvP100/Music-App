@@ -26,7 +26,7 @@ class GetHomeMenu extends UseCase<List<HomeMenuEntity>, None> {
         );
       }).toList();
 
-      return Result.success(entities);
+      return entities;
     });
     return newMap;
   }
@@ -51,6 +51,20 @@ class GetHomeMenu extends UseCase<List<HomeMenuEntity>, None> {
           .map((e) => ChildHomeMenuEntity(
                 id: e.data?.id,
                 name: e.data?.name,
+                thumbnail: e.data?.thumbnail.filePathUrl(),
+                artists: e.data?.singers
+                    ?.map((e) => e.data?.name)
+                    .toList()
+                    .join(', '),
+              ))
+          .toList();
+    }
+    if (menu.playlist?.isNotEmpty == true) {
+      return (menu.playlist ?? [])
+          .map((e) => ChildHomeMenuEntity(
+                id: e.data?.id,
+                name: e.data?.name,
+                isPlaylist: true,
                 thumbnail: e.data?.thumbnail.filePathUrl(),
                 artists: e.data?.singers
                     ?.map((e) => e.data?.name)

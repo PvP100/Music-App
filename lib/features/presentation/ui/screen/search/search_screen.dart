@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/core.dart';
+import 'package:music_app/features/domain/entities/enum/search_type.dart';
+import 'package:music_app/features/domain/entities/object_list_entity.dart';
+import 'package:music_app/features/domain/entities/search_entity.dart';
+import 'package:music_app/features/presentation/blocs/app/app_bloc.dart';
 import 'package:music_app/features/presentation/blocs/search/search_bloc.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/widgets.dart';
 import 'package:music_app/features/presentation/ui/custom/search_widget.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
+
+import '../../common_widgets/artist_item_widget.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -26,6 +33,11 @@ class _SearchScreenState
     _controller = AnimationController(vsync: this, duration: 250.milliseconds);
     _controller.forward();
     _focusNode.requestFocus();
+    _searchController.addListener(() {
+      if (_searchController.text.isEmpty) {
+        bloc.search("", SearchType.values[_tabController.index]);
+      }
+    });
     super.initState();
   }
 
@@ -46,6 +58,10 @@ class _SearchScreenState
         Row(
           children: [
             SearchWidget(
+              onSearch: (value) {
+                bloc.search(
+                    value.trim(), SearchType.values[_tabController.index]);
+              },
               focusNode: _focusNode,
               controller: _searchController,
             ).expanded(),
@@ -63,11 +79,11 @@ class _SearchScreenState
             )
           ],
         ),
-        Text(
-          localizations.recentlySearched,
-          textAlign: TextAlign.start,
-          style: AppTextStyles.bold,
-        ).paddingSymmetric(vertical: 10, horizontal: 13),
+        // Text(
+        //   localizations.recentlySearched,
+        //   textAlign: TextAlign.start,
+        //   style: AppTextStyles.bold,
+        // ).paddingSymmetric(vertical: 10, horizontal: 13),
         CommonTabBar(
           padding: const EdgeInsets.symmetric(horizontal: 13),
           tabController: _tabController,
@@ -78,23 +94,60 @@ class _SearchScreenState
             localizations.song,
             localizations.playlist
           ],
-        ).paddingOnly(bottom: 10),
-        ListView.builder(
-                padding: EdgeInsets.fromLTRB(13, 0, 13,
-                    context.bottomBarHeight + AppConstants.musicPlayHeight),
-                itemCount: 10,
-                itemBuilder: ((context, index) => const SearchItemWidget()))
-            .expanded()
+          onTabChanged: _tabChanged,
+        ).paddingOnly(bottom: 10, top: 10),
+        BlocSelector<SearchBloc, SearchState, ObjectListEntity<SearchEntity>?>(
+            selector: (state) => state.data,
+            builder: (context, v) {
+              return ListView.builder(
+                  padding: EdgeInsets.fromLTRB(13, 0, 13,
+                      context.bottomBarHeight + AppConstants.musicPlayHeight),
+                  itemCount: v?.models.length ?? 0,
+                  itemBuilder: ((context, index) {
+                    final model = v?.models[index];
+                    return switch (model?.type) {
+                      TrackType.artist => ArtistItemWidget(entity: model),
+                      _ => SongItemWidget(
+                          type: model?.type,
+                          id: model?.id,
+                          image: model?.image,
+                          name: model?.name,
+                          artists: model?.artist,
+                        ).paddingSymmetric(horizontal: 15, vertical: 2.5)
+                    };
+                  })).expanded();
+            })
       ],
     );
   }
 
   @override
   bool get safeAreaBottom => false;
+
+  _tabChanged(int index) {
+    bloc.search(_searchController.text.trim(), SearchType.values[index]);
+  }
 }
 
-class SearchItemWidget extends StatelessWidget {
-  const SearchItemWidget({super.key});
+class SongItemWidget extends StatelessWidget {
+  const SongItemWidget({
+    super.key,
+    this.image,
+    this.name,
+    this.id,
+    this.artists,
+    this.type,
+  });
+
+  final String? image;
+
+  final String? name;
+
+  final String? artists;
+
+  final String? id;
+
+  final TrackType? type;
 
   @override
   Widget build(BuildContext context) {
@@ -104,27 +157,56 @@ class SearchItemWidget extends StatelessWidget {
         children: [
           ClipRRect(
                   borderRadius: BorderRadius.all(7.radius),
-                  child:
-                      "https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"
-                          .loadImageUrl(width: 50, height: 50))
+                  child: image.filePathUrl().loadImageUrl(
+                      width: 50,
+                      height: 50,
+                      errorWidget: "music_placeholder".loadImageAsset(),
+                      placeHolder: "music_placeholder".loadImageAsset()))
               .paddingOnly(right: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Name",
+              Text(
+                name ?? "",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.regular,
               ),
-              Text("Bài hát・24kGoldn",
+              Text("${_typeName()} - $artists",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.regular.copyWith(fontSize: 12))
             ],
           ).expanded(),
         ],
-      ),
+      ).onCupertinoClick(() => _click(context)),
     );
   }
+
+  _click(BuildContext context) {
+    switch (type) {
+      case TrackType.album || TrackType.playlist:
+        {
+          context.pushNamed(RouteConstants.album, arguments: {
+            ArgumentKey.albumPlaylistId: id,
+            ArgumentKey.isAlbum: type == TrackType.album,
+          });
+        }
+      case TrackType.song:
+        {
+          if (id != null) {
+            context.read<AppBloc>().playMusic(id!);
+          }
+        }
+      default:
+        {}
+    }
+  }
+
+  String _typeName() => switch (type) {
+        TrackType.album => "Album",
+        TrackType.song => "Bài hát",
+        TrackType.playlist => "Playlist",
+        _ => ""
+      };
 }
