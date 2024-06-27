@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/features/presentation/blocs/register/register_bloc.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/widgets.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
@@ -107,7 +106,7 @@ class _RegisterScreenState
                     password: _passwordController.text.trim(),
                     rePassword: _rePasswordController.text.trim(),
                     firstName: _firstNameController.text.trim(),
-                    lastName: _firstNameController.text.trim(),
+                    lastName: _lastNameController.text.trim(),
                   );
                 })
           ]),

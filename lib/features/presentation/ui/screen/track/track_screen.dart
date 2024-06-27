@@ -92,7 +92,7 @@ class _TrackScreenState extends State<TrackScreen> {
           .map((e) => MediaItem(
                 id: e.fileId.filePathUrl(),
                 title: e.name ?? "",
-                duration: (e.durationMs ?? 0).milliseconds,
+                duration: ((e.durationMs ?? 0) * 1000000).microseconds,
                 artist: e.singers?.map((e) => e.data?.name ?? "").join(", "),
                 artUri: Uri.parse(e.thumbnailId.filePathUrl()),
               ))
@@ -280,7 +280,6 @@ class _TrackScreenState extends State<TrackScreen> {
   }
 
   _onPageChanged(int index) async {
-    int oldIndex = bloc.state.trackState?.currentIndex ?? 0;
     bloc.changeTrack(index);
     await _player.seek(0.milliseconds, index: index);
     if (!_player.isPlaying) {
