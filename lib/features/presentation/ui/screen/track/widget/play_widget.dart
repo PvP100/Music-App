@@ -95,7 +95,8 @@ class PlayWidget extends StatelessWidget {
                     StreamBuilder(
                         stream: HaMusicPlayer.instance.percentChanged,
                         builder: (context, builder) {
-                          int total = track?.durationMs ?? 0;
+                          int total =
+                              ((track?.durationMs ?? 0) * 1000000).toInt();
                           int current = ((builder.data ?? 0) * total).toInt();
                           return TrackTimeWidget(
                             currentTimeMs: current,
