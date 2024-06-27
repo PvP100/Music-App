@@ -12,12 +12,9 @@ class HomeMenuModel implements BaseDataModel {
 
   final List<ChildAlbumHomeMenuModel>? albums;
 
-  HomeMenuModel({
-    this.id,
-    this.title,
-    this.songs,
-    this.albums,
-  });
+  final List<ChildPlaylistHomeMenuModel>? playlist;
+
+  HomeMenuModel({this.id, this.title, this.songs, this.albums, this.playlist});
 
   @override
   T fromJson<T extends BaseDataModel>(Map<String, dynamic> json) =>
@@ -40,6 +37,15 @@ class ChildAlbumHomeMenuModel {
 
   factory ChildAlbumHomeMenuModel.fromJson(Map<String, dynamic> json) =>
       _$ChildAlbumHomeMenuModelFromJson(json);
+}
+
+class ChildPlaylistHomeMenuModel {
+  final SongHomeMenu? data;
+
+  ChildPlaylistHomeMenuModel({this.data});
+
+  factory ChildPlaylistHomeMenuModel.fromJson(Map<String, dynamic> json) =>
+      _$ChildPlaylistHomeMenuModelFromJson(json);
 }
 
 class SingerHomeMenuModel {

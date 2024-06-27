@@ -122,6 +122,7 @@ extension BuildContextExtension on BuildContext {
             HaMusicSharedPreference mPrefs =
                 GetIt.I.get<HaMusicSharedPreference>();
             mPrefs.removeKey(SharedPreferencesConstants.appToken);
+            mPrefs.removeKey(SharedPreferencesConstants.appRefreshToken);
             pushNamedAndRemoveUntil(
                 RouteConstants.loginOrRegister, (p0) => false,
                 rootNavigator: true);

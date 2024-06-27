@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/config/app_routes.dart';
 import 'package:music_app/core/constants/image_constants.dart';
 import 'package:music_app/core/core.dart';
@@ -16,12 +15,6 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState
     extends BaseScreenState<CategoryScreen, CategoryBloc, CategoryState>
     with SingleTickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
-    bloc.getCategories();
-  }
-
   @override
   Widget buildContent(BuildContext context) {
     return CustomScrollView(
@@ -59,44 +52,44 @@ class _CategoryScreenState
             }),
           ),
         ),
-        SliverPadding(
-          padding: EdgeInsets.fromLTRB(15, 0, 15, context.bottomBarHeight + 15),
-          sliver: BlocBuilder<CategoryBloc, CategoryState>(
-            builder: (context, state) {
-              return SliverGrid.builder(
-                  itemCount: 20,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 15,
-                    mainAxisSpacing: 15,
-                    childAspectRatio: 16 / 10,
-                  ),
-                  itemBuilder: (context, index) {
-                    final model = state.categories?[index];
-                    return Stack(
-                      children: [
-                        Positioned.fill(
-                          child: ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(7)),
-                            child: model?.icons?.firstOrNull?.url
-                                .loadImageUrl(fit: BoxFit.fill),
-                          ),
-                        ),
-                        Positioned(
-                          left: 10,
-                          top: 10,
-                          child: Text(
-                            model?.name ?? "",
-                            style: AppTextStyles.bold.copyWith(fontSize: 18),
-                          ),
-                        ),
-                      ],
-                    );
-                  });
-            },
-          ),
-        )
+        // SliverPadding(
+        //   padding: EdgeInsets.fromLTRB(15, 0, 15, context.bottomBarHeight + 15),
+        //   sliver: BlocBuilder<CategoryBloc, CategoryState>(
+        //     builder: (context, state) {
+        //       return SliverGrid.builder(
+        //           itemCount: 20,
+        //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //             crossAxisCount: 2,
+        //             crossAxisSpacing: 15,
+        //             mainAxisSpacing: 15,
+        //             childAspectRatio: 16 / 10,
+        //           ),
+        //           itemBuilder: (context, index) {
+        //             final model = state.categories?[index];
+        //             return Stack(
+        //               children: [
+        //                 Positioned.fill(
+        //                   child: ClipRRect(
+        //                     borderRadius:
+        //                         const BorderRadius.all(Radius.circular(7)),
+        //                     child: model?.icons?.firstOrNull?.url
+        //                         .loadImageUrl(fit: BoxFit.fill),
+        //                   ),
+        //                 ),
+        //                 Positioned(
+        //                   left: 10,
+        //                   top: 10,
+        //                   child: Text(
+        //                     model?.name ?? "",
+        //                     style: AppTextStyles.bold.copyWith(fontSize: 18),
+        //                   ),
+        //                 ),
+        //               ],
+        //             );
+        //           });
+        //     },
+        //   ),
+        // )
       ],
     );
   }

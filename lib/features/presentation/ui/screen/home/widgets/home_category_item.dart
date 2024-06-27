@@ -24,31 +24,38 @@ class HomeCategoryItem extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               final model = entity?.data?[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    child: model?.thumbnail?.loadImageUrl(
-                      height: 150,
-                      width: 150,
-                      placeHolder: "music_placeholder".loadImageAsset(),
-                      errorWidget: "music_placeholder".loadImageAsset(),
-                    ),
-                  ).onCupertinoClick(() => _navigateToAlbumScreen(context)),
-                  Text(
-                    model?.name ?? "",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.medium.copyWith(fontSize: 14),
-                  ).paddingOnly(top: 8, bottom: 2),
-                  Text(
-                    model?.artists ?? "",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.regular.copyWith(fontSize: 12),
-                  )
-                ],
+              return SizedBox(
+                width: 150,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: model?.thumbnail?.loadImageUrl(
+                        height: 150,
+                        width: 150,
+                        placeHolder: "music_placeholder".loadImageAsset(),
+                        errorWidget: "music_placeholder".loadImageAsset(),
+                      ),
+                    ).onCupertinoClick(() {
+                      if (model?.id != null) {
+                        _navigateToAlbumScreen(context, model!);
+                      }
+                    }),
+                    Text(
+                      model?.name ?? "",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.medium.copyWith(fontSize: 14),
+                    ).paddingOnly(top: 8, bottom: 2),
+                    Text(
+                      model?.artists ?? "",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.regular.copyWith(fontSize: 12),
+                    )
+                  ],
+                ),
               );
             },
             separatorBuilder: (context, index) => const SizedBox(width: 15),
@@ -59,5 +66,10 @@ class HomeCategoryItem extends StatelessWidget {
     );
   }
 
-  _navigateToAlbumScreen(BuildContext context) {}
+  _navigateToAlbumScreen(BuildContext context, ChildHomeMenuEntity entity) {
+    context.pushNamed(RouteConstants.album, arguments: {
+      ArgumentKey.albumPlaylistId: entity.id,
+      ArgumentKey.isAlbum: !entity.isPlaylist,
+    });
+  }
 }

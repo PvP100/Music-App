@@ -10,7 +10,7 @@ TrackModel _$TrackModelFromJson(Map<String, dynamic> json) => TrackModel(
     previewUrl: json['preview_url'] as String?,
     album: null,
     // : AlbumModel.fromJson(json['album'] as Map<String, dynamic>),
-    durationMs: json['duration_ms'] as int?,
+    durationMs: 200000,
     name: json['name'] as String?,
     thumbnailId: json['thumbnail'] as String?,
     fileId: json['file'] as String?,

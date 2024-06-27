@@ -29,7 +29,7 @@ class MainBloc extends BaseBloc<MainState> {
   }
 
   void getTrack(String? trackId) async {
-    final useCase = await _getTrackUseCase(trackId);
+    final useCase = await _getTrackUseCase({trackId: ""});
     useCase.fold((data) {
       emit(state.copyWith(
           trackState: TrackState(

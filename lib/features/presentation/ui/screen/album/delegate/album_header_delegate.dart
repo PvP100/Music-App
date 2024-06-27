@@ -5,7 +5,18 @@ import 'package:music_app/core/core.dart';
 class AlbumHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double appBarHeight;
 
-  AlbumHeaderDelegate({required this.appBarHeight});
+  final String? name;
+
+  final String? image;
+
+  final ValueChanged<bool> onPlay;
+
+  AlbumHeaderDelegate({
+    required this.appBarHeight,
+    this.name,
+    this.image,
+    required this.onPlay,
+  });
 
   @override
   Widget build(
@@ -34,7 +45,7 @@ class AlbumHeaderDelegate extends SliverPersistentHeaderDelegate {
                     )
                     .onCupertinoClick(context.pop),
                 Text(
-                  "34234",
+                  name ?? "",
                   style: AppTextStyles.bold,
                 ).paddingOnly(left: 12).expanded()
               ],
@@ -52,9 +63,10 @@ class AlbumHeaderDelegate extends SliverPersistentHeaderDelegate {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child:
-                    "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"
-                        .loadImageUrl(),
+                child: image.filePathUrl().loadImageUrl(
+                      errorWidget: "music_placeholder".loadImageAsset(),
+                      placeHolder: "music_placeholder".loadImageAsset(),
+                    ),
               ),
               Container(
                 margin: EdgeInsets.only(
@@ -87,7 +99,9 @@ class AlbumHeaderDelegate extends SliverPersistentHeaderDelegate {
                           ),
                         ],
                       ),
-                    ).expanded(),
+                    ).onCupertinoClick(() {
+                      onPlay(false);
+                    }).expanded(),
                     const SizedBox(width: 17),
                     Container(
                       decoration: BoxDecoration(
@@ -110,7 +124,9 @@ class AlbumHeaderDelegate extends SliverPersistentHeaderDelegate {
                           ),
                         ],
                       ),
-                    ).expanded()
+                    ).onCupertinoClick(() {
+                      onPlay(true);
+                    }).expanded()
                   ],
                 ),
               )

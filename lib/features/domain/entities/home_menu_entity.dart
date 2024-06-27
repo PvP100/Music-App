@@ -24,5 +24,13 @@ class ChildHomeMenuEntity {
 
   final String? thumbnail;
 
-  ChildHomeMenuEntity({this.id, this.name, this.artists, this.thumbnail});
+  final bool isPlaylist;
+
+  ChildHomeMenuEntity({
+    this.id,
+    this.name,
+    this.artists,
+    this.thumbnail,
+    this.isPlaylist = false,
+  });
 }

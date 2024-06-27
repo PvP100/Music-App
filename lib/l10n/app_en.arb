@@ -17,7 +17,8 @@
     "changePassword": "Change password",
     "continueTitle": "Continue",
     "birthday": "Date of birth",
-    "fullName": "Full name",
+    "firstName": "Tên",
+    "lastName": "Họ",
     "usernameAndPasswordError": "Please enter complete login information",
     "usernameIncorrect": "Invalid email or phone number",
     "passwordLengthError": "Please enter a password of at least 8 characters",
@@ -25,7 +26,8 @@
     "dateOfBirthCannotBeEmpty": "Date of birth cannot be empty",
     "passwordNotMatch": "Password do not match",
     "usernameEmpty": "Email or phone number cannot be empty",
-    "fullNameEmpty": "Full name cannot be empty",
+    "lastNameEmpty": "Họ không được để trống",
+    "firstNameEmpty": "Tên không được để trống",
     "passwordEmpty": "Password cannot be empty",
     "rePasswordEmpty": "Re-enter password cannot be empty",
     "goodEvening": "Good evening",
@@ -57,5 +59,6 @@
     "otherStr": "Other",
     "personalInformation": "Personal information",
     "appInformation": "App information",
-    "logout": "Logout"
+    "logout": "Logout",
+    "artist": "Artist"
 } 

@@ -13,4 +13,5 @@ class RouteConstants {
   static const String category = "category";
   static const String setting = "/setting";
   static const String album = "/album";
+  static const String artist = "/artist";
 }

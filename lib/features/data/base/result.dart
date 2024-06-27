@@ -19,10 +19,10 @@ sealed class Result<T> {
     }
   }
 
-  Result<E> convert<E>(Result<E> Function(T? data) onSuccess) {
+  Result<E> convert<E>(E? Function(T? data) onSuccess) {
     switch (this) {
       case ResultSuccess():
-        return onSuccess(data);
+        return Result.success(onSuccess(data));
       case ResultError():
         return Result.error(error!);
     }

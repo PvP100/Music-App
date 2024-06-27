@@ -3,3 +3,7 @@ export 'get_track.dart';
 export 'get_categories.dart';
 export 'get_profile.dart';
 export 'get_home_menu.dart';
+export 'get_album.dart';
+export 'search_all.dart';
+export 'get_artist.dart';
+export 'register.dart';

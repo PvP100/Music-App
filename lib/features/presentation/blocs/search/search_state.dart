@@ -1,10 +1,20 @@
 part of 'search_bloc.dart';
 
 class SearchState extends BaseState<SearchState> {
-  SearchState({super.isLoading, super.error});
+  final ObjectListEntity<SearchEntity>? data;
+
+  SearchState({super.isLoading, super.error, this.data});
 
   @override
-  SearchState copyWith({bool isLoading = false, Failure? error}) {
-    return SearchState(isLoading: isLoading, error: error);
+  SearchState copyWith({
+    bool isLoading = false,
+    Failure? error,
+    ObjectListEntity<SearchEntity>? data,
+  }) {
+    return SearchState(
+      isLoading: isLoading,
+      error: error,
+      data: data ?? this.data,
+    );
   }
 }
