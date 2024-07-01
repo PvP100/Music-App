@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../core/constants/image_constants.dart';
 import '../../../../../../core/core.dart';
 
 class TrackInformation extends StatelessWidget {
-  const TrackInformation(
-      {super.key, required this.trackName, required this.trackArtists});
+  const TrackInformation({
+    super.key,
+    required this.trackName,
+    required this.trackArtists,
+    required this.isLiked,
+    required this.onFavorite,
+  });
 
   final String trackName;
 
   final String trackArtists;
+
+  final bool isLiked;
+
+  final VoidCallback onFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +37,11 @@ class TrackInformation extends StatelessWidget {
             ),
           ],
         ).expanded(),
-        Container(
-            height: 24,
-            width: 24,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.colorD9D9D9.withOpacity(0.6),
-            ),
-            alignment: Alignment.center,
-            child: ImageConstants.iconThreeDot
-                .loadImageAsset(height: 20, width: 20))
+        Icon(
+          isLiked ? Icons.check_circle : Icons.add_circle_outline,
+          color: isLiked ? AppColors.primary : Colors.white,
+          size: 32,
+        ).onCupertinoClick(onFavorite),
       ],
     );
   }

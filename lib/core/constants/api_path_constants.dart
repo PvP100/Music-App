@@ -10,4 +10,9 @@ class ApiPathConstants {
   static const String artist = "/items/Singer";
   static const String logout = "/auth/logout";
   static const String register = "/users";
+  static const String files = "/files";
+  static const String artistUser = "/items/Artist_directus_users";
+  static const String albumUser = "/items/Album_directus_users";
+  static const String playlistUser = "/items/Playlist_directus_users";
+  static const String songUser = "/items/Song_directus_users";
 }

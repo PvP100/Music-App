@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:music_app/features/data/base/result.dart';
 import 'package:music_app/features/data/models/models.dart';
 import 'package:music_app/features/domain/entities/request/login_request.dart';
@@ -34,4 +35,25 @@ abstract class HamusicRepository {
   Future<Result<bool>> logout(String refreshToken);
 
   Future<Result<bool>> register(RegisterRequest request);
+
+  Future<Result<BaseObjectResponse<Profile>>> updateProfile(
+      Map<String, dynamic> request);
+
+  Future<Result<BaseObjectResponse<UploadModel>>> upload(MultipartFile path);
+
+  Future<Result<bool>> likeArtist(String id, String userId);
+
+  Future<Result<bool>> unlikeArtist(int id);
+
+  Future<Result<bool>> likeAlbum(String id, String userId);
+
+  Future<Result<bool>> unlikeAlbum(int id);
+
+  Future<Result<bool>> likePlaylist(String id, String userId);
+
+  Future<Result<bool>> unlikePlaylist(int id);
+
+  Future<Result<bool>> likeSong(String id, String userId);
+
+  Future<Result<bool>> unlikeSong(int id);
 }

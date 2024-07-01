@@ -11,11 +11,17 @@ class AlbumHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   final ValueChanged<bool> onPlay;
 
+  final VoidCallback favorite;
+
+  final bool isLiked;
+
   AlbumHeaderDelegate({
     required this.appBarHeight,
     this.name,
     this.image,
+    required this.favorite,
     required this.onPlay,
+    this.isLiked = false,
   });
 
   @override
@@ -47,7 +53,12 @@ class AlbumHeaderDelegate extends SliverPersistentHeaderDelegate {
                 Text(
                   name ?? "",
                   style: AppTextStyles.bold,
-                ).paddingOnly(left: 12).expanded()
+                ).paddingOnly(left: 12).expanded(),
+                Icon(
+                  isLiked ? Icons.check_circle : Icons.add_circle_outline,
+                  color: isLiked ? AppColors.primary : Colors.white,
+                  size: 24,
+                ).onCupertinoClick(favorite).paddingOnly(right: 10)
               ],
             ),
           ),

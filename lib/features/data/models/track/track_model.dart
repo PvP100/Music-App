@@ -31,6 +31,8 @@ class TrackModel extends BaseDataModel {
   @JsonKey(name: "singers")
   final List<SingerHomeMenuModel>? singers;
 
+  bool isLiked;
+
   factory TrackModel.fromJson(Map<String, dynamic> json) =>
       _$TrackModelFromJson(json);
 
@@ -39,6 +41,7 @@ class TrackModel extends BaseDataModel {
   TrackModel({
     this.previewUrl,
     this.album,
+    this.isLiked = false,
     this.durationMs,
     this.fileId,
     this.name,

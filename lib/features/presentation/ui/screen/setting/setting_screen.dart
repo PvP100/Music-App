@@ -64,53 +64,53 @@ class _SettingScreenState
                   ],
                 ),
               ).onCupertinoClick(_goToInformation),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
-                height: 35,
-                child: Row(
-                  children: [
-                    Text(
-                      context.localizations().changePassword,
-                      style: AppTextStyles.medium.copyWith(fontSize: 16),
-                    ).expanded(),
-                    ImageConstants.iconRightArrow.loadImageAsset(
-                      height: 24,
-                      width: 24,
-                    ),
-                  ],
-                ),
-              ).onCupertinoClick(_changePassword),
+              // Container(
+              //   margin: const EdgeInsets.symmetric(horizontal: 15),
+              //   height: 35,
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         context.localizations().changePassword,
+              //         style: AppTextStyles.medium.copyWith(fontSize: 16),
+              //       ).expanded(),
+              //       ImageConstants.iconRightArrow.loadImageAsset(
+              //         height: 24,
+              //         width: 24,
+              //       ),
+              //     ],
+              //   ),
+              // ).onCupertinoClick(_changePassword),
             ],
           ),
         ),
-        Text(
-          context.localizations().otherStr,
-          style: AppTextStyles.medium.copyWith(
-            fontSize: 14,
-            color: AppColors.colorCACACA,
-          ),
-        ).paddingLTRB(30, 25, 0, 10),
-        Container(
-          height: 35,
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          margin: const EdgeInsets.symmetric(horizontal: AppDimens.dimen20),
-          decoration: BoxDecoration(
-            color: AppColors.color3D3D3D,
-            borderRadius: BorderRadius.all(8.radius),
-          ),
-          child: Row(
-            children: [
-              Text(
-                context.localizations().appInformation,
-                style: AppTextStyles.medium.copyWith(fontSize: 16),
-              ).expanded(),
-              ImageConstants.iconRightArrow.loadImageAsset(
-                height: 24,
-                width: 24,
-              ),
-            ],
-          ),
-        ).onCupertinoClick(_goToAppInformation),
+        // Text(
+        //   context.localizations().otherStr,
+        //   style: AppTextStyles.medium.copyWith(
+        //     fontSize: 14,
+        //     color: AppColors.colorCACACA,
+        //   ),
+        // ).paddingLTRB(30, 25, 0, 10),
+        // Container(
+        //   height: 35,
+        //   padding: const EdgeInsets.symmetric(horizontal: 15),
+        //   margin: const EdgeInsets.symmetric(horizontal: AppDimens.dimen20),
+        //   decoration: BoxDecoration(
+        //     color: AppColors.color3D3D3D,
+        //     borderRadius: BorderRadius.all(8.radius),
+        //   ),
+        //   child: Row(
+        //     children: [
+        //       Text(
+        //         context.localizations().appInformation,
+        //         style: AppTextStyles.medium.copyWith(fontSize: 16),
+        //       ).expanded(),
+        //       ImageConstants.iconRightArrow.loadImageAsset(
+        //         height: 24,
+        //         width: 24,
+        //       ),
+        //     ],
+        //   ),
+        // ).onCupertinoClick(_goToAppInformation),
         Container(
           height: 35,
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -134,7 +134,9 @@ class _SettingScreenState
 
   _goToAppInformation() {}
 
-  _goToInformation() {}
+  _goToInformation() {
+    context.pushNamed(RouteConstants.personal);
+  }
 
   _changePassword() {}
 

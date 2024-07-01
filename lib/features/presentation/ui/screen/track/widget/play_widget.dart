@@ -25,9 +25,13 @@ class PlayWidget extends StatelessWidget {
     required this.onPrevious,
     required this.onShuffle,
     required this.onLoopChange,
+    required this.isLiked,
+    required this.onFavorite,
   });
 
   final TrackModel? track;
+
+  final bool isLiked;
 
   final ValueNotifier<double> volumeNotifier;
 
@@ -45,6 +49,8 @@ class PlayWidget extends StatelessWidget {
 
   final ValueChanged<LoopMode> onLoopChange;
 
+  final VoidCallback onFavorite;
+
   _onChanged(double v) {
     HaMusicPlayer.instance.isSeeking = false;
     Duration duration = ((track?.durationMs ?? 0) * v).milliseconds;
@@ -59,6 +65,8 @@ class PlayWidget extends StatelessWidget {
       child: Column(
         children: [
           TrackInformation(
+            onFavorite: onFavorite,
+            isLiked: isLiked,
             trackName: track?.name ?? "",
             trackArtists: artists,
           ).paddingSymmetric(horizontal: 24),

@@ -1,42 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:music_app/core/core.dart';
+import 'package:music_app/features/domain/entities/search_entity.dart';
 
 class LibraryItem extends StatelessWidget {
-  const LibraryItem({super.key});
+  const LibraryItem({super.key, required this.type});
+
+  final TrackType type;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          height: 50,
-          width: 50,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [
-                AppColors.colorFF9D9D,
-                AppColors.colorFFE1E1,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.all(7.radius),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Bai hat ua thich", style: AppTextStyles.regular),
-            const SizedBox(height: 3),
-            Text(
-              "87 bai hat",
-              style: AppTextStyles.regular.copyWith(fontSize: 12),
-            )
-          ],
-        ).expanded()
-      ],
-    );
+    return const Placeholder();
   }
 }

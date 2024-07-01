@@ -14,3 +14,5 @@ export 'setting/setting_screen.dart';
 export 'track/track_screen.dart';
 export 'album/album_screen.dart';
 export 'artist/artist_screen.dart';
+export 'personal_information/personal_information_screen.dart';
+export 'like/like_screen.dart';

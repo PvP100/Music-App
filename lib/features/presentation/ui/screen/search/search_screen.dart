@@ -89,9 +89,9 @@ class _SearchScreenState
           tabController: _tabController,
           listTitle: [
             localizations.topResult,
+            localizations.song,
             localizations.artist,
             localizations.album,
-            localizations.song,
             localizations.playlist
           ],
           onTabChanged: _tabChanged,
@@ -137,6 +137,7 @@ class SongItemWidget extends StatelessWidget {
     this.id,
     this.artists,
     this.type,
+    this.songIds,
   });
 
   final String? image;
@@ -146,6 +147,8 @@ class SongItemWidget extends StatelessWidget {
   final String? artists;
 
   final String? id;
+
+  final List<String>? songIds;
 
   final TrackType? type;
 
@@ -195,7 +198,7 @@ class SongItemWidget extends StatelessWidget {
       case TrackType.song:
         {
           if (id != null) {
-            context.read<AppBloc>().playMusic(id!);
+            context.read<AppBloc>().playMusic(id!, songIds);
           }
         }
       default:

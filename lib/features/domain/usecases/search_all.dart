@@ -34,7 +34,7 @@ class SearchAll extends UseCase<List<SearchEntity>, Map<String, SearchType>> {
                 (e) => SearchEntity(
                   name: e.name,
                   id: e.id,
-                  image: e.fileId,
+                  image: e.thumbnailId,
                   type: TrackType.song,
                   artist: e.singers?.map((e) => e.data?.name).join(", "),
                 ),

@@ -5,11 +5,14 @@ class HomeState extends BaseState<HomeState> {
 
   final List<HomeMenuEntity>? entities;
 
+  final Profile? profile;
+
   const HomeState({
     super.isLoading,
     super.error,
     this.imageUrl,
     this.entities,
+    this.profile,
   });
 
   @override
@@ -18,12 +21,14 @@ class HomeState extends BaseState<HomeState> {
     Failure? error,
     String? imageUrl,
     List<HomeMenuEntity>? entities,
+    Profile? profile,
   }) {
     return HomeState(
       isLoading: isLoading,
       error: error,
       imageUrl: imageUrl ?? this.imageUrl,
       entities: entities ?? this.entities,
+      profile: profile ?? this.profile,
     );
   }
 }

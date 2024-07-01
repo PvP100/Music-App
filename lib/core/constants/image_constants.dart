@@ -37,4 +37,6 @@ class ImageConstants {
   static const String iconBackGreen = "icon_back_green";
   static const String iconPlayPrimary = "icon_play_primary";
   static const String iconShufflePrimary = "icon_shuffle_primary";
+  static const String iconAvatarPlaceholder = "icon_avatar_placeholder";
+  static const String iconEdit = "icon_edit";
 }

@@ -22,27 +22,33 @@ class HomeMenuModel implements BaseDataModel {
 }
 
 class ChildSongHomeMenuModel {
+  final int? id;
   final SongHomeMenu? data;
 
-  ChildSongHomeMenuModel({this.data});
+  ChildSongHomeMenuModel({this.data, this.id});
 
   factory ChildSongHomeMenuModel.fromJson(Map<String, dynamic> json) =>
       _$ChildSongHomeMenuModelFromJson(json);
 }
 
 class ChildAlbumHomeMenuModel {
+  final int? id;
   final SongHomeMenu? data;
 
-  ChildAlbumHomeMenuModel({this.data});
+  ChildAlbumHomeMenuModel({this.data, this.id});
 
   factory ChildAlbumHomeMenuModel.fromJson(Map<String, dynamic> json) =>
       _$ChildAlbumHomeMenuModelFromJson(json);
 }
 
 class ChildPlaylistHomeMenuModel {
+  final int? id;
   final SongHomeMenu? data;
 
-  ChildPlaylistHomeMenuModel({this.data});
+  ChildPlaylistHomeMenuModel({
+    this.data,
+    this.id,
+  });
 
   factory ChildPlaylistHomeMenuModel.fromJson(Map<String, dynamic> json) =>
       _$ChildPlaylistHomeMenuModelFromJson(json);
@@ -50,8 +56,9 @@ class ChildPlaylistHomeMenuModel {
 
 class SingerHomeMenuModel {
   final SingerModel? data;
+  final int? id;
 
-  SingerHomeMenuModel({this.data});
+  SingerHomeMenuModel({this.data, this.id});
 
   factory SingerHomeMenuModel.fromJson(Map<String, dynamic> json) =>
       _$SingerHomeMenuModelFromJson(json);
