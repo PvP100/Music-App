@@ -10,7 +10,9 @@ TrackModel _$TrackModelFromJson(Map<String, dynamic> json) => TrackModel(
     previewUrl: json['preview_url'] as String?,
     album: null,
     // : AlbumModel.fromJson(json['album'] as Map<String, dynamic>),
-    durationMs: json['duration'] as double?,
+    durationMs: json['duration'] is int
+        ? (json['duration'] as int).toDouble()
+        : json['duration'] as double?,
     name: json['name'] as String?,
     thumbnailId: json['thumbnail'] as String?,
     fileId: json['file'] as String?,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/core.dart';
 import 'package:music_app/features/domain/entities/search_entity.dart';
-import 'package:music_app/features/presentation/blocs/album/album_bloc.dart';
 import 'package:music_app/features/presentation/ui/screen/album/delegate/album_header_delegate.dart';
 import 'package:music_app/features/presentation/ui/screen/base_screen_state.dart';
 
@@ -38,8 +37,13 @@ class _AlbumScreenState
     final songs = bloc.state.entity?.songs ?? [];
     if (songs.isNotEmpty) {
       int index = isShuffle ? Random().nextInt(songs.length) : 0;
-      context.read<AppBloc>().playMusic(songs[index].data?.id ?? "");
+      context.read<AppBloc>().playMusic(songs[index].data?.id ?? "",
+          songs.map((e) => e.data?.id ?? "").toList());
     }
+  }
+
+  _favorite() {
+    bloc.favorite();
   }
 
   @override
@@ -52,9 +56,11 @@ class _AlbumScreenState
             SliverPersistentHeader(
               pinned: true,
               delegate: AlbumHeaderDelegate(
+                favorite: _favorite,
                 appBarHeight: context.statusBarHeight + 56,
                 name: state.entity?.name,
                 image: state.entity?.thumbnail,
+                isLiked: state.isLiked,
                 onPlay: _play,
               ),
             ),
@@ -65,6 +71,9 @@ class _AlbumScreenState
                 itemBuilder: (context, index) {
                   final model = state.entity?.songs?[index];
                   return SongItemWidget(
+                    songIds: state.entity?.songs
+                        ?.map((e) => e.data?.id ?? "")
+                        .toList(),
                     type: TrackType.song,
                     id: model?.data?.id,
                     name: model?.data?.name,

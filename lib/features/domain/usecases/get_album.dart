@@ -17,6 +17,7 @@ class GetAlbumPlaylist
     if (params.isAlbum) {
       final api = await _repository.getAlbum(params.id);
       useCase = api.convert((data) => AlbumPlaylistEntity(
+            id: data?.data?.id,
             name: data?.data?.name,
             thumbnail: data?.data?.thumbnail,
             songs: data?.data?.songs,
@@ -24,6 +25,7 @@ class GetAlbumPlaylist
     } else {
       final api = await _repository.getPlaylist(params.id);
       useCase = api.convert((data) => AlbumPlaylistEntity(
+            id: data?.data?.id,
             name: data?.data?.name,
             thumbnail: data?.data?.thumbnail,
             songs: data?.data?.songs,

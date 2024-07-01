@@ -7,3 +7,6 @@ export 'get_album.dart';
 export 'search_all.dart';
 export 'get_artist.dart';
 export 'register.dart';
+export 'upload_file.dart';
+export 'like_ha_music.dart';
+export 'delete_ha_music.dart';

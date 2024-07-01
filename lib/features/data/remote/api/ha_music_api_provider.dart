@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:music_app/core/constants/api_path_constants.dart';
 import 'package:music_app/features/data/base/base_dio.dart';
 import 'package:music_app/features/data/base/base_response.dart';
@@ -27,6 +28,17 @@ abstract class HaMusicApiProvider {
   Future<Result<BaseObjectResponse<SingerModel>>> getArtist(String id);
   Future<Result<bool>> logout(String refreshToken);
   Future<Result<bool>> register(RegisterRequest request);
+  Future<Result<BaseObjectResponse<Profile>>> updateProfile(
+      Map<String, dynamic> request);
+  Future<Result<BaseObjectResponse<UploadModel>>> upload(MultipartFile path);
+  Future<Result<bool>> unlikeArtist(int id);
+  Future<Result<bool>> unlikeAlbum(int id);
+  Future<Result<bool>> likeArtist(String id, String userId);
+  Future<Result<bool>> likeAlbum(String id, String userId);
+  Future<Result<bool>> likePlaylist(String id, String userId);
+  Future<Result<bool>> unlikePlaylist(int id);
+  Future<Result<bool>> likeSong(String id, String userId);
+  Future<Result<bool>> unlikeSong(int id);
 }
 
 class HaMusicApiProviderImpl implements HaMusicApiProvider {
@@ -67,6 +79,25 @@ class HaMusicApiProviderImpl implements HaMusicApiProvider {
   @override
   Future<Result<BaseObjectResponse<Profile>>> getProfile() =>
       _baseDio.request(ApiPathConstants.profile,
+          queryParameters: {
+            'fields[]': [
+              '*',
+              'artist_liked.*',
+              'artist_liked.Singer_id.*',
+              'album_liked.*',
+              'album_liked.Album_id.*',
+              'album_liked.Album_id.singers.*',
+              'album_liked.Album_id.singers.Singer_id.*',
+              'user_playlist.*',
+              'user_playlist.Playlist_id.*',
+              'user_playlist.Playlist_id.singers.*',
+              'user_playlist.Playlist_id.singers.Singer_id.*',
+              'song_liked.*',
+              'song_liked.Song_id.*',
+              'song_liked.Song_id.singers.*',
+              'song_liked.Song_id.singers.Singer_id.*',
+            ]
+          },
           fromJson: (json) => BaseObjectResponse.fromJson(json, Profile()));
 
   @override
@@ -118,7 +149,7 @@ class HaMusicApiProviderImpl implements HaMusicApiProvider {
           method: ApiMethod.post,
           part: jsonEncode(<String, dynamic>{
             'query':
-                'query Search(\$searchTerm: String!) { Singer(search: \$searchTerm) { id status sort  date_created  date_updated name gender birthday nation bio thumbnail { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } songs { id Song_id { id status sort  date_created  date_updated name is_featured } } playlist { id Playlist_id { id status sort  date_created  date_updated name } } albums { id Album_id { id status sort  date_created  date_updated name } } } Song(search: \$searchTerm) { id status sort  date_created  date_updated name is_featured singers { id Singer_id { id status sort  date_created  date_updated name gender birthday nation bio } } playlist { id Playlist_id { id status sort  date_created  date_updated name } } liked { id directus_users_id } album { id Album_id { id status sort  date_created  date_updated name } } file { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } thumbnail { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } } Album(search: \$searchTerm) { id status sort  date_created  date_updated name thumbnail { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } singers { id Singer_id { id status sort  date_created  date_updated name gender birthday nation bio } } songs { id Song_id { id status sort  date_created  date_updated name is_featured } } } Playlist(search: \$searchTerm) { id status sort  date_created  date_updated name thumbnail { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } songs { id Song_id { id status sort  date_created  date_updated name is_featured } } singers { id Singer_id { id status sort  date_created  date_updated name gender birthday nation bio } } } }',
+                'query Search(\$searchTerm: String!) { Singer(search: \$searchTerm) { id status sort  date_created  date_updated name gender birthday nation bio thumbnail { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } songs { id Song_id { id status sort  date_created  date_updated name is_featured } } playlist { id Playlist_id { id status sort  date_created  date_updated name } } albums { id Album_id { id status sort  date_created  date_updated name } } } Song(search: \$searchTerm) { id status sort  date_created  date_updated name is_featured singers { id Singer_id { id status sort  date_created  date_updated name gender birthday nation bio } } playlist { id Playlist_id { id status sort  date_created  date_updated name } } liked { id } album { id Album_id { id status sort  date_created  date_updated name } } file { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } thumbnail { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } } Album(search: \$searchTerm) { id status sort  date_created  date_updated name thumbnail { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } singers { id Singer_id { id status sort  date_created  date_updated name gender birthday nation bio } } songs { id Song_id { id status sort  date_created  date_updated name is_featured } } } Playlist(search: \$searchTerm) { id status sort  date_created  date_updated name thumbnail { id storage filename_disk filename_download title type  uploaded_on  modified_on charset filesize width height duration embed description location tags metadata focal_point_x focal_point_y } songs { id Song_id { id status sort  date_created  date_updated name is_featured } } singers { id Singer_id { id status sort  date_created  date_updated name gender birthday nation bio } } } }',
             'variables': {
               'searchTerm': keyword,
             }
@@ -189,6 +220,98 @@ class HaMusicApiProviderImpl implements HaMusicApiProvider {
         ApiPathConstants.register,
         method: ApiMethod.post,
         part: jsonEncode(request.toMap()),
+        fromJson: (json) => true,
+      );
+
+  @override
+  Future<Result<BaseObjectResponse<Profile>>> updateProfile(
+          Map<String, dynamic> request) =>
+      _baseDio.request(
+        ApiPathConstants.profile,
+        part: jsonEncode(request),
+        method: ApiMethod.patch,
+        fromJson: (json) => BaseObjectResponse.fromJson(json, Profile()),
+      );
+
+  @override
+  Future<Result<BaseObjectResponse<UploadModel>>> upload(MultipartFile file) =>
+      _baseDio.request(
+        ApiPathConstants.files,
+        method: ApiMethod.post,
+        part: FormData.fromMap({
+          'avatar': file,
+        }),
+        fromJson: (json) => BaseObjectResponse.fromJson(json, UploadModel()),
+      );
+
+  @override
+  Future<Result<bool>> unlikeArtist(int id) => _baseDio.request(
+        "${ApiPathConstants.artistUser}/$id",
+        method: ApiMethod.delete,
+        fromJson: (json) => true,
+      );
+  @override
+  Future<Result<bool>> likeArtist(String id, String userId) => _baseDio.request(
+        ApiPathConstants.artistUser,
+        method: ApiMethod.post,
+        part: {
+          "Singer_id": id,
+          "directus_users_id": userId,
+        },
+        fromJson: (json) => true,
+      );
+
+  @override
+  Future<Result<bool>> likeAlbum(String id, String userId) => _baseDio.request(
+        ApiPathConstants.albumUser,
+        method: ApiMethod.post,
+        part: {
+          "Album_id": id,
+          "directus_users_id": userId,
+        },
+        fromJson: (json) => true,
+      );
+
+  @override
+  Future<Result<bool>> likePlaylist(String id, String userId) =>
+      _baseDio.request(
+        ApiPathConstants.playlistUser,
+        method: ApiMethod.post,
+        part: {
+          "Playlist_id": id,
+          "directus_users_id": userId,
+        },
+        fromJson: (json) => true,
+      );
+
+  @override
+  Future<Result<bool>> unlikeAlbum(int id) => _baseDio.request(
+        "${ApiPathConstants.albumUser}/$id",
+        method: ApiMethod.delete,
+        fromJson: (json) => true,
+      );
+  @override
+  Future<Result<bool>> unlikePlaylist(int id) => _baseDio.request(
+        "${ApiPathConstants.playlistUser}/$id",
+        method: ApiMethod.delete,
+        fromJson: (json) => true,
+      );
+
+  @override
+  Future<Result<bool>> unlikeSong(int id) => _baseDio.request(
+        "${ApiPathConstants.songUser}/$id",
+        method: ApiMethod.delete,
+        fromJson: (json) => true,
+      );
+
+  @override
+  Future<Result<bool>> likeSong(String id, String userId) => _baseDio.request(
+        ApiPathConstants.songUser,
+        method: ApiMethod.post,
+        part: {
+          "Song_id": id,
+          "directus_users_id": userId,
+        },
         fromJson: (json) => true,
       );
 }

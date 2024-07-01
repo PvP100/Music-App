@@ -21,8 +21,14 @@ class TopProfile extends StatelessWidget {
           selector: (state) => state.profile,
           builder: (context, profile) {
             return Column(children: [
-              const CircleAvatar(
-                radius: 50,
+              Container(
+                height: 100,
+                width: 100,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: profile?.avatar.filePathUrl().loadImageUrl(),
               ).align(heightFactor: 0.5, alignment: Alignment.bottomCenter),
               Text(
                 "${profile?.lastName ?? ""} ${profile?.firstName ?? ""}",
@@ -33,7 +39,7 @@ class TopProfile extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        "10",
+                        "${profile?.artist?.length ?? 0}",
                         style: AppTextStyles.bold.copyWith(fontSize: 18),
                       ),
                       Text(
@@ -55,7 +61,7 @@ class TopProfile extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        "99",
+                        "${profile?.totalSong ?? 0}",
                         style: AppTextStyles.bold.copyWith(fontSize: 18),
                       ),
                       Text(

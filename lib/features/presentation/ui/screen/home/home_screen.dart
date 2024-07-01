@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_app/core/core.dart';
+import 'package:music_app/features/data/models/profile/profile_model.dart';
 import 'package:music_app/features/presentation/blocs/blocs.dart';
 import 'package:music_app/features/presentation/ui/common_widgets/widgets.dart';
 import 'package:music_app/features/presentation/ui/screen/main/main_screen.dart';
@@ -18,6 +19,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState
     extends BaseScreenState<HomeScreen, HomeBloc, HomeState> {
   final ScrollController _controller = ScrollController();
+
+  @override
+  void onAppStateListener(BuildContext context, AppState state) {
+    if (state.isUpdateProfile) {
+      bloc.getProfile();
+    }
+  }
 
   @override
   void dispose() {
@@ -46,7 +54,13 @@ class _HomeScreenState
                 _welcomeStr,
                 style: AppTextStyles.bold.copyWith(fontSize: 28),
               ).expanded(),
-              const AppCircleAvatar()
+              BlocSelector<HomeBloc, HomeState, Profile?>(
+                  selector: (state) => state.profile,
+                  builder: (context, p) {
+                    return AppCircleAvatar(
+                      url: p?.avatar,
+                    );
+                  })
             ]).paddingSymmetric(horizontal: 15, vertical: 20),
           ),
           BlocSelector<HomeBloc, HomeState, List<HomeMenuEntity>?>(

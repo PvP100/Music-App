@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:music_app/features/data/base/base_response.dart';
 import 'package:music_app/features/data/base/result.dart';
 import 'package:music_app/features/data/remote/api/ha_music_api_provider.dart';
@@ -70,4 +71,44 @@ class HaMusicRepositoryImpl implements HamusicRepository {
   @override
   Future<Result<bool>> register(RegisterRequest request) =>
       _haMusicApiProvider.register(request);
+
+  @override
+  Future<Result<BaseObjectResponse<Profile>>> updateProfile(
+          Map<String, dynamic> request) =>
+      _haMusicApiProvider.updateProfile(request);
+
+  @override
+  Future<Result<BaseObjectResponse<UploadModel>>> upload(MultipartFile path) =>
+      _haMusicApiProvider.upload(path);
+
+  @override
+  Future<Result<bool>> likeArtist(String id, String userId) =>
+      _haMusicApiProvider.likeArtist(id, userId);
+
+  @override
+  Future<Result<bool>> unlikeArtist(int id) =>
+      _haMusicApiProvider.unlikeArtist(id);
+
+  @override
+  Future<Result<bool>> likeAlbum(String id, String userId) =>
+      _haMusicApiProvider.likeAlbum(id, userId);
+
+  @override
+  Future<Result<bool>> unlikeAlbum(int id) =>
+      _haMusicApiProvider.unlikeAlbum(id);
+
+  @override
+  Future<Result<bool>> likePlaylist(String id, String userId) =>
+      _haMusicApiProvider.likePlaylist(id, userId);
+
+  @override
+  Future<Result<bool>> unlikePlaylist(int id) =>
+      _haMusicApiProvider.unlikePlaylist(id);
+
+  @override
+  Future<Result<bool>> likeSong(String id, String userId) =>
+      _haMusicApiProvider.likeSong(id, userId);
+
+  @override
+  Future<Result<bool>> unlikeSong(int id) => _haMusicApiProvider.unlikeSong(id);
 }

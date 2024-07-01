@@ -60,6 +60,7 @@ class BaseDio implements IBaseDio {
 enum ApiMethod {
   post("POST"),
   put("PUT"),
+  patch("PATCH"),
   delete("DELETE"),
   get("GET");
 

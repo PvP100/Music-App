@@ -1,1 +1,1 @@
-enum SearchType { top, artist, album, song, playlist }
+enum SearchType { top, song, artist, album, playlist }

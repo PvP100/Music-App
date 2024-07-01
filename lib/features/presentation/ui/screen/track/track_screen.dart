@@ -101,6 +101,10 @@ class _TrackScreenState extends State<TrackScreen> {
     }
   }
 
+  _favorite() {
+    bloc.favoriteSong();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<MainBloc, MainState>(
@@ -164,29 +168,26 @@ class _TrackScreenState extends State<TrackScreen> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: BlocBuilder<MainBloc, MainState>(
-                buildWhen: (previous, current) =>
-                    previous.trackState?.currentIndex !=
-                    current.trackState?.currentIndex,
-                builder: (context, state) {
-                  int currentIndex = state.trackState?.currentIndex ?? 0;
-                  List<TrackModel> tracks =
-                      state.trackState?.track?.models ?? [];
-                  TrackModel? model = tracks.isEmpty
-                      ? null
-                      : state.trackState?.track?.models[currentIndex];
-                  return PlayWidget(
-                    track: model,
-                    onPlay: _onPlay,
-                    onChangeDuration: _durationChanged,
-                    volumeNotifier: _volumeLevelNotifier,
-                    volumeChanged: _volumeChanged,
-                    onPrevious: _onPrevious,
-                    onNext: _onNext,
-                    onShuffle: _player.setShuffle,
-                    onLoopChange: _loop,
-                  );
-                }),
+            child: BlocBuilder<MainBloc, MainState>(builder: (context, state) {
+              int currentIndex = state.trackState?.currentIndex ?? 0;
+              List<TrackModel> tracks = state.trackState?.track?.models ?? [];
+              TrackModel? model = tracks.isEmpty
+                  ? null
+                  : state.trackState?.track?.models[currentIndex];
+              return PlayWidget(
+                onFavorite: _favorite,
+                isLiked: model?.isLiked ?? false,
+                track: model,
+                onPlay: _onPlay,
+                onChangeDuration: _durationChanged,
+                volumeNotifier: _volumeLevelNotifier,
+                volumeChanged: _volumeChanged,
+                onPrevious: _onPrevious,
+                onNext: _onNext,
+                onShuffle: _player.setShuffle,
+                onLoopChange: _loop,
+              );
+            }),
           ),
           Positioned(
               top: 15 + context.statusBarHeight,
