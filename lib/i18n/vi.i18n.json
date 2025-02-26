@@ -11,5 +11,6 @@
   "badRequest": "Yêu cầu không hợp lệ",
   "dataNotFound": "Không tìm thấy URL đã chỉ định",
   "serverError": "Lỗi máy chủ",
-  "unauthorized": "Không được phép"
+  "unauthorized": "Không được phép",
+  "logout:": "Đăng xuất"
 }
