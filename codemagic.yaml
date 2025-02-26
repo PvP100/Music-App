@@ -18,8 +18,13 @@ workflows:
         - pattern: feature/codemagic
           include: true
           source: true
+    artifacts:
+      - build/**/outputs/bundle/developmentRelease/**/*.aab
+      - build/**/outputs/apk/development/**/*.apk
     scripts:
       - name: Pub get
         script: flutter pub get
+      - name: Build apk
+        script: flutter build apk --release --flavor development
       - name: Build aab
         script: flutter build aab --release --flavor development
