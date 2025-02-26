@@ -3,8 +3,16 @@ workflows:
     name: Codemagic Sample Workflow
     max_build_duration: 120
     instance_type: mac_mini_m2
+    cache:
+      cache_paths:
+        - ~/.pub-cache
     environment:
       flutter: 3.29.0
+    triggering:
+      events:
+        - push
     scripts:
-      - flutter pub get
-      - echo "Hello World!"
+      - name: Pub get
+        script: flutter pub get
+      - name: Build aab
+        script: flutter build aab --flavor development
