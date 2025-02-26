@@ -13,6 +13,16 @@ workflows:
     triggering:
       events:
         - push
+      branch_patterns: # Include or exclude watched branches
+        - pattern: '*'
+          include: true
+          source: true
+        - pattern: excluded-target
+          include: false
+          source: false
+        - pattern: included-source
+          include: true
+          source: true
     scripts:
       - name: Pub get
         script: flutter pub get
