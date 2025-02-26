@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/core/core.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:music_app/core/extensions/date_time_extension.dart';
 import 'package:music_app/features/data/exception/failure.dart';
 import 'package:music_app/utils/app_utils.dart';
+
+import '../../i18n/strings.g.dart' show Translations;
 
 extension BuildContextExtension on BuildContext {
   void pop<T extends Object?>({bool rootNavigator = false, T? result}) {
@@ -27,6 +28,7 @@ extension BuildContextExtension on BuildContext {
         context: this,
         builder: (context) {
           DateTime dateTime = DateTime.now();
+          final t = Translations.of(context);
           return Container(
             height: 300,
             color: Colors.white,
@@ -37,7 +39,7 @@ extension BuildContextExtension on BuildContext {
                   alignment: Alignment.centerRight,
                   padding: const EdgeInsets.only(right: 12),
                   child: Text(
-                    AppLocalizations.of(this)!.done,
+                    t.done,
                     style: AppTextStyles.bold.copyWith(
                       color: AppColors.primary,
                       fontSize: 18,
@@ -61,7 +63,7 @@ extension BuildContextExtension on BuildContext {
   }
 
   showError(Failure exception) {
-    final localizations = AppLocalizations.of(this)!;
+    final localizations = Translations.of(this);
     switch (exception) {
       case NetWorkConnection():
         return AppUtils.showToast(localizations.noInternetConnection);

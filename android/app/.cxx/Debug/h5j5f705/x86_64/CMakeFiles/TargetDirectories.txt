@@ -1,0 +1,2 @@
+/Users/phong-beetech/Documents/music_app/android/app/.cxx/Debug/h5j5f705/x86_64/CMakeFiles/edit_cache.dir
+/Users/phong-beetech/Documents/music_app/android/app/.cxx/Debug/h5j5f705/x86_64/CMakeFiles/rebuild_cache.dir

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:music_app/i18n/strings.g.dart' show Translations;
 
 import '../../../../../core/core.dart';
 import '../../custom/loading_indicator.dart';
@@ -27,9 +27,9 @@ abstract class BaseScreen<B extends BaseBloc<Object, S>,
   B get bloc => _bloc;
 
   @protected
-  late AppLocalizations _localizations;
+  late Translations _localizations;
 
-  AppLocalizations get localizations => _localizations;
+  Translations get localizations => _localizations;
 
   BaseScreen({this.arguments});
 
@@ -114,7 +114,7 @@ abstract class BaseScreen<B extends BaseBloc<Object, S>,
 
   _buildCallBack(BuildContext ctx, ValueChanged<Widget> buildWidget) {
     _context = ctx;
-    _localizations = AppLocalizations.of(context)!;
+    _localizations = Translations.of(context);
     bloc.localizations = _localizations;
     buildWidget(buildChild());
   }

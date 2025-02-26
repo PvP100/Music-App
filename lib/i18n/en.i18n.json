@@ -1,0 +1,15 @@
+{
+  "hello": "Hello $name",
+  "save": "Save",
+  "login": {
+    "success": "Logged in successfully",
+    "fail": "Logged in failed"
+  },
+  "done": "Done",
+  "screenNotFound": "Screen not found",
+  "noInternetConnection": "No internet connection",
+  "badRequest": "Bad request",
+  "dataNotFound": "Data not found",
+  "serverError": "Server Error",
+  "unauthorized": "Unauthorized"
+}

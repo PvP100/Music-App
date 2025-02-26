@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_app/features/presentation/blocs/base/base_bloc.dart';
 import 'package:music_app/features/presentation/ui/custom/loading_indicator.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../../i18n/strings.g.dart' show Translations;
 
 abstract class BaseScreenState<V extends StatefulWidget,
         B extends BaseBloc<Object, S>, S extends BaseState> extends State<V>
@@ -17,9 +17,9 @@ abstract class BaseScreenState<V extends StatefulWidget,
   B get bloc => _bloc;
 
   @protected
-  late AppLocalizations _localizations;
+  late Translations _localizations;
 
-  AppLocalizations get localizations => _localizations;
+  Translations get localizations => _localizations;
 
   @protected
   Widget buildContent(BuildContext context);
@@ -118,7 +118,7 @@ abstract class BaseScreenState<V extends StatefulWidget,
 
   @override
   Widget build(BuildContext context) {
-    _localizations = AppLocalizations.of(context)!;
+    _localizations = Translations.of(context);
     bloc.localizations = _localizations;
     return Platform.isAndroid
         ? WillPopScope(onWillPop: (willPopCallback), child: _body(context))
