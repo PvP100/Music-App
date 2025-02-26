@@ -5,7 +5,9 @@ workflows:
     instance_type: mac_mini_m2
     cache:
       cache_paths:
-        - ~/.pub-cache
+        - $FLUTTER_ROOT/.pub-cache
+        - $HOME/.gradle/caches
+        - $HOME/Library/Caches/CocoaPods
     environment:
       flutter: 3.29.0
     triggering:
