@@ -28,7 +28,7 @@ workflows:
       - name: Pub get
         script: flutter pub get
       - name: Build apk
-        script: flutter build apk --release --build-name=1.0.2 --build-number=5 --flavor development --dart-define=BASE_URL=https://api.unsplash.com/
+        script: flutter build apk --release --build-name=1.0.2 --build-number=6 --flavor development --dart-define=BASE_URL=https://api.unsplash.com/
       - name: Build aab
         script: flutter build aab --release --flavor development
     publishing:
