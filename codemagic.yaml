@@ -23,6 +23,7 @@ workflows:
     artifacts:
       - build/**/outputs/bundle/developmentRelease/**/*.aab
       - build/**/outputs/apk/development/**/*.apk
+      - build/**/outputs/apk/production/**/*.apk
     scripts:
       - name: Pub get
         script: flutter pub get
