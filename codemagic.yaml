@@ -24,12 +24,10 @@ workflows:
       - build/**/outputs/bundle/developmentRelease/**/*.aab
       - build/**/outputs/apk/development/**/*.apk
     scripts:
-      - name: Show firebase token
-        script: echo $FIREBASE_TOKEN
       - name: Pub get
         script: flutter pub get
       - name: Build apk
-        script: flutter build apk --release --flavor development
+        script: flutter build apk --release --build-name=1.0.2 --build-number=2 --flavor development
       - name: Build aab
         script: flutter build aab --release --flavor development
     publishing:
@@ -38,6 +36,6 @@ workflows:
         android:
           app_id: 1:220062871728:android:17d8024f4a5fc9e32b8b75
           groups:
-            - PhongPV's Team
+            - phongpvs-team
           artifact_type: 'apk'
 
