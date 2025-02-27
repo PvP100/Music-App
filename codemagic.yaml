@@ -1,5 +1,5 @@
 workflows:
-  sample-workflow:
+  android-workflow:
     name: Codemagic Sample Workflow
     max_build_duration: 120
     instance_type: mac_mini_m2
@@ -28,3 +28,11 @@ workflows:
         script: flutter build apk --release --flavor development
       - name: Build aab
         script: flutter build aab --release --flavor development
+    publishing:
+      firebase:
+        firebase_token: ya29.a0AeXRPp7M-ekO6WadbTB13Sm4_nLLJBVqDqnwdMlsivrMn1u1Zdr2dFb4mi6U_rRXbldc9RGbhGVTrdTkwRKdZDVZTora-q8VzUqG7itoK4G_NsMHTEv4D6mHeMHJcul2pCNNO0nKyOlmatWvf9ojv8FwDtX4LbRjGmbJXsqmaCgYKAR0SARMSFQHGX2Mi2TVVFp3DTy1s9jqLepJHtg0175
+        android:
+          app_id: 1:220062871728:android:17d8024f4a5fc9e32b8b75
+          groups:
+            - PhongPV's Team
+
