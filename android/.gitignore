@@ -24,4 +24,4 @@ key.properties
 # scan temporary files
 **/fastlane/test_output
 
-/android/app/.cxx
+**/.cxx
