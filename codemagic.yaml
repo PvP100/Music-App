@@ -58,7 +58,7 @@ workflows:
       branch_patterns: # Include or exclude watched branches
         - pattern: main
           include: true
-          source: true
+          source: false
     artifacts:
       - build/**/outputs/bundle/productionRelease/**/*.aab
     scripts:
