@@ -22,7 +22,7 @@ class App extends StatelessWidget {
         supportedLocales: AppLocaleUtils.supportedLocales,
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         locale: translation.flutterLocale,
-        title: 'Flutter Demo',
+        title: 'Flutter',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.getRoute,
         initialRoute: RouteConstants.splash,

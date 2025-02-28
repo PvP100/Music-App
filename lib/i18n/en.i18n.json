@@ -11,5 +11,6 @@
   "badRequest": "Bad request",
   "dataNotFound": "Data not found",
   "serverError": "Server Error",
-  "unauthorized": "Unauthorized"
+  "unauthorized": "Unauthorized",
+  "logout:": "Logout"
 }

@@ -1,3 +1,3 @@
 class EnvConfig {
-  static const baseUrl = String.fromEnvironment("BASE_URL");
+  static const baseUrl = "https://api.unsplash.com/";
 }
