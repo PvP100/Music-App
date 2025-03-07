@@ -28,7 +28,9 @@ workflows:
       - name: Pub get
         script: flutter pub get
       - name: Build apk
-        script: flutter build apk --release --build-name=1.0.2 --build-number=6 --flavor development --dart-define=BASE_URL=https://api.unsplash.com/
+        script: |
+          LATEST_BUILD_VERSION=$(firebase-app-distribution get-latest-build-version -p 220062871728 -a 1:220062871728:android:17d8024f4a5fc9e32b8b75)
+          flutter build apk --release --build-name=1.0.2 --build-number=$(($LATEST_BUILD_VERSION + 1)) --flavor development --dart-define=BASE_URL=https://api.unsplash.com/
       - name: Get last version
         script: |
           LATEST_BUILD_VERSION=$(firebase-app-distribution get-latest-build-version -p 220062871728 -a 1:220062871728:android:17d8024f4a5fc9e32b8b75)
