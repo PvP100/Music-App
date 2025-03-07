@@ -32,7 +32,7 @@ workflows:
       - name: Get last version
         script: |
           LATEST_BUILD_VERSION=$(firebase-app-distribution get-latest-build-version -p 220062871728 -a 1:220062871728:android:17d8024f4a5fc9e32b8b75)
-          echo "LATEST_BUILD_VERSION"
+          echo "$LATEST_BUILD_VERSION"
       - name: Build aab
         script: flutter build aab --release --flavor development
     publishing:
