@@ -78,5 +78,6 @@ workflows:
         track: alpha
         release_name: Pvp Testing code magic
         in_app_update_priority: 3
+        submit_as_draft: true
 
 
