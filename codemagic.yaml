@@ -52,9 +52,11 @@ workflows:
         - $HOME/Library/Caches/CocoaPods
     environment:
       flutter: 3.29.0
+      groups:
+        - google_credentials
     triggering:
       events:
-        - pull_request
+        - push
       branch_patterns: # Include or exclude watched branches
         - pattern: main
           include: true
@@ -64,16 +66,13 @@ workflows:
     scripts:
       - name: Pub get
         script: flutter pub get
-#      - name: Build apk
-#        script: flutter build apk --release --build-name=1.0.2 --build-number=6 --flavor development --dart-define=BASE_URL=https://api.unsplash.com/
       - name: Build aab
         script: flutter build aab --release --build-name=1.0.0 --build-number=1 --flavor production
-#    publishing:
-#      firebase:
-#        firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-#        android:
-#          app_id: 1:220062871728:android:17d8024f4a5fc9e32b8b75
-#          groups:
-#            - phongpvs-team
-#          artifact_type: 'apk'
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: alpha
+        release_name: Pvp Testing code magic
+        in_app_update_priority: 3
+
 
