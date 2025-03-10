@@ -52,7 +52,7 @@ workflows:
         - $HOME/Library/Caches/CocoaPods
     environment:
       android_signing:
-        - music_app_production
+        - music_prod_key
       flutter: 3.29.0
       groups:
         - google_credentials
