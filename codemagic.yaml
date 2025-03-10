@@ -10,6 +10,8 @@ workflows:
         - $HOME/Library/Caches/CocoaPods
     environment:
       flutter: 3.29.0
+      android_signing:
+        - music_app_production
       groups:
         - firebase
     triggering:
