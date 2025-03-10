@@ -69,7 +69,9 @@ workflows:
       - name: Pub get
         script: flutter pub get
       - name: Build aab
-        script: flutter build aab --release --build-name=1.0.0 --build-number=1 --flavor production
+        script: |
+          LATEST_BUILD_NUMBER=$(google-play get-latest-build-number --package-name 'com.phongpv.music_app')
+          flutter build aab --release --build-name=1.0.0 --build-number=$(($LATEST_BUILD_NUMBER + 1)) --flavor production
     publishing:
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
